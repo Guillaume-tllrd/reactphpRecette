@@ -1,3 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Scope+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.nav-active::after {
+    content: "";
+    height: 3px;
+    width: 0;
+    background: rgb(255, 102, 0);
+    position: absolute;
+    border-radius: 10px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: anim 0.6s ease forwards;
+}
+
+@keyframes anim {
+    to {
+        width: 100%;
+    }
+}

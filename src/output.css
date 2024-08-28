@@ -65,6 +65,7 @@ body {
   margin: 0;
   /* 1 */
   line-height: inherit;
+  display: flex;
   /* 2 */
 }
 
