@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from '../components/header/Header';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -23,6 +24,8 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Header />
     <div>
       <h2>Connexion</h2>
       <form onSubmit={handleLogin}>
@@ -32,7 +35,7 @@ const Login = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          />
+            />
         </div>
         <div>
           <label>Mot de passe</label>
@@ -40,12 +43,13 @@ const Login = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+            />
         </div>
         <button type="submit">Se connecter</button>
         {error && <p>{error}</p>}
       </form>
     </div>
+  </>
   );
 };
 
