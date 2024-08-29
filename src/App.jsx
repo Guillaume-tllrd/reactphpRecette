@@ -5,6 +5,8 @@ import Articles from './pages/Articles';
 import Favoris from './pages/Favoris';
 import './input.css';
 import Login from './pages/Login';
+import Register from './pages/Register';
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -14,6 +16,7 @@ const App = () => {
         <Route path="/articles" element={<Articles />} />
         <Route path="/favoris" element={<Favoris />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

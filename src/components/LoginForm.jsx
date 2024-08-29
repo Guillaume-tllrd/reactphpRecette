@@ -25,10 +25,10 @@ const LoginForm = () => {
     }
 }
     return (
-        <div className="min-h-screen flex items-center justify-center bg-yellow-100">
-        <div className="bg-white p-11 rounded-lg shadow-lg">
+        <div className="flex items-center justify-center bg-amber-100">
+        <div className="bg-white p-10 my-28 rounded-lg shadow-lg">
           <h2 className="text-2xl text-center font-scope font-bold mb-6">Connexion</h2>
-          <form className="min-w-72" onSubmit={handleLogin}>
+          <form className="min-w-72 " onSubmit={handleLogin}>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Username</label>
               <input
@@ -47,7 +47,7 @@ const LoginForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="my-4 text-center"><Link className='hover:underline text-blue-500' to="/signup">New here? Create an account</Link></div>
+            <div className="my-4 text-center"><Link className='hover:underline text-blue-500' to="/register">New here? Create an account</Link></div>
             <button className="w-full bg-rose-500 text-white p-2 rounded-md hover:bg-rose-600" type="submit">
               Login
             </button>
@@ -55,8 +55,6 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
-      
-    
     );
 };
 

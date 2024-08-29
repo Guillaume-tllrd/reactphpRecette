@@ -28,8 +28,8 @@ const Footer = () => {
         <div>
             <h3 className='font-bold mb-2'>Newsleter</h3>
             <form>
-                <input type="email" placeholder="Enter your email" className='p-2 rounded text-gray-800'/>
-                <button className='bg-rose-500 text-white p-2 rounded mt-2'>Sign Up</button>
+                <input type="email" placeholder="Enter your email" className='p-2 rounded text-gray-800 focus:border-orange-500 '/>
+                <button className='bg-rose-500 text-white p-2 rounded mt-2 hover:bg-rose-600'>Sign Up</button>
             </form>
         </div>
 
