@@ -28,7 +28,8 @@ const Header = () => {
                 <Navbar />
             </header>
 
-            {visible && <Sidenav visible={visible} toggleMenuBurger={toggleMenuBurger} />}
+            <Sidenav visible={visible} toggleMenuBurger={toggleMenuBurger} />
+            {/* pour que la transition de durée se fasse, il ne faut pas mettre la condition visble pour le composant */}
         </>
     );
 };

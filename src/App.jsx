@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Recipes from './pages/Recipes';
-import Articles from './pages/Articles';
-import Favoris from './pages/Favoris';
+import Home from './pagesFront/Home';
+import Recipes from './pagesFront/Recipes';
+import Articles from './pagesFront/Articles';
+import Favoris from './pagesFront/Favoris';
 import './input.css';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pagesFront/Login';
+import Register from './pagesFront/Register';
 
 const App = () => {
   return (

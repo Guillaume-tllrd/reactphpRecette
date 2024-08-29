@@ -5,7 +5,7 @@ const Sidenav = ({toggleMenuBurger, visible}) => {
 
     return (
         <>
-            <div className={`fixed top-0 bg-white left-0 h-full transition-transform ${visible ? 'translate-x-0' : '-translate-x-full'} w-60 p-4 shadow-lg z-50`}>
+            <div className={`fixed top-0 bg-white left-0 h-full transition-transform duration-500 ease-out ${visible ? 'translate-x-0' : '-translate-x-full'} w-60 p-4 shadow-lg z-50`}>
                 <button onClick={toggleMenuBurger} className="absolute top-4 right-4 text-black hover:text-gray-400">
                     <X className="w-6 h-6" />
                 </button>

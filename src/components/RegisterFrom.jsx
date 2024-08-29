@@ -29,6 +29,11 @@ const RegisterFrom = () => {
           if (response.status === 201) {
             setSuccess('Inscription réussie !');
             setError(null);
+            setFirstname("");
+            setName("");
+            setUsername("");
+            setEmail("");
+            setPassword("")
           }
         } catch (error) {
           setError('Une erreur est survenue lors de l\'inscription');
