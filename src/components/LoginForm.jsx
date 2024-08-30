@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getSessionUser } from '../Redux/actions/user.action';
 
 const LoginForm = () => {
 
@@ -9,6 +11,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleLogin = async (e) => {
       e.preventDefault();
@@ -30,9 +33,10 @@ const LoginForm = () => {
       } else {
           console.error('Token is undefined:', response.data);
       }
-
+          //on attend la réponse de getSessionUser avant de rediriger l'utilisateur pour t'assurer que les données sont bien chargées avant de changer de page.
+          await dispatch(getSessionUser());
         // Rediriger après la connexion
-        navigate('/');  // Utiliser useNavigate pour la redirection
+        navigate('/');  
       } catch (error) {
         if (error.response && error.response.data) {
           // Afficher le message d'erreur retourné par le serveur

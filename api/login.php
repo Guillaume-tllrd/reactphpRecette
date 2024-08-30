@@ -7,6 +7,10 @@ require_once 'lib/php-jwt/src/BeforeValidException.php';
 require_once 'lib/php-jwt/src/ExpiredException.php';
 require_once 'lib/php-jwt/src/SignatureInvalidException.php';
 require_once 'lib/php-jwt/src/JWT.php';
+require_once 'lib/php-jwt/src/JWK.php';
+require_once 'lib/php-jwt/src/Key.php';
+require_once 'lib/php-jwt/src/CachedKeySet.php';
+
 
 use Firebase\JWT\JWT;
 
