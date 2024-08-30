@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$key = "votre_cle_secrete";  // Clé secrète pour signer le JWT
+$key = "votre_cle_secrete";  // Clé secrète pour signer le JWT, elle doit être la même que le login
 
 // Initialisation du token
 $authHeader = '';
@@ -61,11 +61,9 @@ if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
 
 try {
     // Décoder le JWT
-    // avant j'avais mis new Key à la place de $key
-
     $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    print_r($decoded);
     // Récupérer les informations de l'utilisateur à partir de la base de données
+    // pour vérifier son token aller sur https://jwt.io/, pendant un moment j'avais mis manuellement un token dans une var $jwt pour remplacer $token 
     $userId = $decoded->user_id;
     $query = $pdo->prepare("SELECT * FROM users WHERE id = :id");
     $query->bindParam(':id', $userId);

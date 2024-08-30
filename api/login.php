@@ -68,3 +68,10 @@ if ($user && password_verify($password, $user['password'])) {
     echo json_encode(['message' => 'Identifiants incorrects']);
 }
 ob_end_flush(); // Envoyer le buffer de sortie
+
+// 
+// Pour gérer la déconnexion dans le contexte des JSON Web Tokens (JWT), il est important de comprendre que les JWT sont stateless. Cela signifie qu'ils ne sont pas stockés côté serveur et que leur invalidation ne se fait pas de manière traditionnelle (comme la destruction d'une session côté serveur). Au lieu de cela, la déconnexion avec JWT se fait généralement de la manière suivante :
+
+//     Expiration du JWT : Le JWT a une date d'expiration définie dans le payload (dans ton cas, 1 heure après la création). Après cette période, le token devient invalide.
+    
+//     Gestion du stockage côté client : Le token est stocké côté client (souvent dans le stockage local du navigateur ou dans les cookies). Pour se déconnecter, il faut supprimer ce token du stockage côté client.
