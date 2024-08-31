@@ -1,5 +1,8 @@
 import axios from "axios";
+
 export const GET_SESSION_USER = "GET_SESSION_USER";
+export const GET_SESSION_LOGOUT = "GET_SESSION_LOGOUT";
+
 
 export const getSessionUser = () => {
   return async (dispatch) => {
@@ -23,5 +26,13 @@ export const getSessionUser = () => {
     } catch (error) {
       console.error("Erreur lors de la récupération de l'utilisateur :", error);
     }
+  };
+};
+
+export const getSessionLogOut = () => {
+  return (dispatch) => {
+    localStorage.removeItem('token');
+    
+    dispatch({ type: GET_SESSION_LOGOUT });
   };
 };

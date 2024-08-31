@@ -4,26 +4,28 @@ import Searchbar from './Searchbar';
 import Navbar from './Navbar';
 import { useState, useEffect } from 'react';
 import Sidenav from './Sidenav';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
     const [visible, setVisible] = useState(false);
     const user = useSelector((state) => state.userReducer)
     const navigate = useNavigate()
-
-    useEffect(() => {
-        // Effectuer une vérification ou une action chaque fois que le composant est monté ou que l'état change
-        if (!user) {
-            navigate('/');
-        }
-    }, [user, navigate]);    
+    const dispatch = useDispatch();
+    
+    // useEffect(() => {
+    //     // Effectuer une vérification ou une action chaque fois que le composant est monté ou que l'état change
+    //     if (!user) {
+    //         navigate('/');
+    //     }
+    // }, [user, navigate]);    
     
     function toggleMenuBurger() {
         setVisible(!visible);
     }
-    function logout(){
-        localStorage.removeItem('token')
-        navigate('/')
+    function logout() {
+        // Déclencher l'action de déconnexion via Redux
+        dispatch(getSessionLogOut());
+        navigate('/');
     }
     return (
         <>
