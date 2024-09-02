@@ -8,6 +8,7 @@ const store = configureStore({
   reducer: rootReducer,
   devTools: true,
 })
+
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <App />

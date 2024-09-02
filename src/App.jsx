@@ -9,6 +9,8 @@ import './input.css';
 import Login from './pagesFront/Login';
 import Register from './pagesFront/Register';
 import { getSessionUser } from './Redux/actions/user.action';
+import CreateRecipe from './pagesBack/CreateRecipe';
+import Dashboard from './pagesBack/Dashboard';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/favoris" element={<Favoris />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/createRecipe" element={<CreateRecipe />} />
       </Routes>
     </BrowserRouter>
   );
