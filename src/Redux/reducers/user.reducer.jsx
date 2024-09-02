@@ -1,6 +1,9 @@
 import { GET_SESSION_LOGOUT, GET_SESSION_USER } from "../actions/user.action";
 
-const initialState = {};
+const initialState = {
+    id: null,
+    token: null
+  };
 
 export default function userReducer(state = initialState, action){
     console.log("Action reçue:", action);
@@ -8,7 +11,7 @@ export default function userReducer(state = initialState, action){
         case GET_SESSION_USER:
             return action.payload;
         case GET_SESSION_LOGOUT:
-            return initialState;;
+            return initialState;
         default:
             return state;
     }

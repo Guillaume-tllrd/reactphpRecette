@@ -11,8 +11,7 @@ export const getSessionUser = () => {
       if (!token) {
         console.error('Token non trouvé');
         return;
-      }
-      console.log("Token envoyé dans l'en-tête:", token);  // Vérification du token
+      }  
 
       const response = await axios.get('http://localhost:8005/sessionUser.php', {
         headers: {
@@ -32,7 +31,6 @@ export const getSessionUser = () => {
 export const getSessionLogOut = () => {
   return (dispatch) => {
     localStorage.removeItem('token');
-    
     dispatch({ type: GET_SESSION_LOGOUT });
   };
 };

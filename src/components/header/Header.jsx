@@ -1,32 +1,25 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, User, LogOut } from 'lucide-react';
 import Searchbar from './Searchbar';
 import Navbar from './Navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Sidenav from './Sidenav';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSessionLogOut } from '../../Redux/actions/user.action';
 
 const Header = () => {
     const [visible, setVisible] = useState(false);
     const user = useSelector((state) => state.userReducer)
-    const navigate = useNavigate()
+
     const dispatch = useDispatch();
-    
-    // useEffect(() => {
-    //     // Effectuer une vérification ou une action chaque fois que le composant est monté ou que l'état change
-    //     if (!user) {
-    //         navigate('/');
-    //     }
-    // }, [user, navigate]);    
-    
+
     function toggleMenuBurger() {
         setVisible(!visible);
     }
-    function logout() {
-        // Déclencher l'action de déconnexion via Redux
-        dispatch(getSessionLogOut());
-        navigate('/');
-    }
+    // on peut la mettre directement auclick en faisant une action flechée à l'intérieur
+    // function logout() {
+    //     dispatch(getSessionLogOut());
+    // }
     return (
         <>
             <header className="p-4">
@@ -36,7 +29,7 @@ const Header = () => {
                         La cuisine qu'on aime
                     </h1>
                     {/* ne pas oublier de mettre user.id sinon ca vérifie si user est non vide, il faut également le mettre dans le store pour un rendu sans refresh */}
-                    {user && user.id ? (<button className="text-gray-700 w-6 h-6 transition-transform transform hover:scale-110" onClick={logout}><LogOut/></button>) : (
+                    {user && user.id ? (<button className="text-gray-700 w-6 h-6 transition-transform transform hover:scale-110"   onClick={() => dispatch(getSessionLogOut())} ><LogOut/></button>) : (
                         <Link to='/login'>
                         <User className="text-gray-700 w-6 h-6 transition-transform transform hover:scale-110" />
                     </Link>
