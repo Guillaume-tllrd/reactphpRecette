@@ -3,14 +3,9 @@ import RecipeForm from '../components/back-end/RecipeForm';
 
 const CreateRecipe = () => {
     return (
-        <div className='flex h-screen '>
-            <div className='none'>
+        <div className='flex h-screen '> 
             <Sidenav/>
-            </div>
-            <div className='flex-grow  md:overflow-y-auto'>
-               <RecipeForm/> 
-            </div>
-            
+            <RecipeForm/>   
         </div>
     );
 };

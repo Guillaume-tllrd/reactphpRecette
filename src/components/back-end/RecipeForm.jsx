@@ -26,10 +26,10 @@ const RecipeForm = () => {
         form.current.reset();
     }
     return (
-        <div className="flex h-full bg-amber-100">
+        <div className="md:translate-x-60 transition-transform duration-500 flex h-full bg-amber-100">
 
             <div className="bg-white p-10 my-16 rounded-lg shadow-lg">
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleFormSubmit} className='min-w-96'>
                 <label>
                     Name:
                     <input 
