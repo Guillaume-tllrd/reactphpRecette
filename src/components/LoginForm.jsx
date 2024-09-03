@@ -73,7 +73,7 @@ const LoginForm = () => {
             </div>
             <div className="my-4 text-center"><Link className='hover:underline text-blue-500' to="/register">New here? Create an account</Link></div>
             <button className="w-full bg-rose-500 text-white p-2 rounded-md hover:bg-rose-600" type="submit">
-              Login
+              Log in
             </button>
             {error && <p className="text-red-500 mt-4">{error}</p>}
           </form>

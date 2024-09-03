@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react'; // Importing X icon from lucide-react
-
+import { useSelector } from 'react-redux';
+import { X, EggFried, Utensils, CakeSlice, Sandwich, ChefHat } from 'lucide-react'; // Importing X icon from lucide-react
+import { Link } from "react-router-dom"
 const Sidenav = ({toggleMenuBurger, visible}) => {
+
+    const user = useSelector((state) => state.userReducer)
 
     return (
         <>
@@ -11,22 +13,18 @@ const Sidenav = ({toggleMenuBurger, visible}) => {
                 </button>
                 <nav className="mt-12">
                     <ul className="space-y-4">
-                        <li>
-                            <a href="" className="block text-lg hover:text-gray-400">Contact Us</a>
-                        </li>
-                        <li>
-                            <a href="" className="block text-lg hover:text-gray-400">Breakfast</a>
-                        </li>
-                        <li>
-                            <a href="" className="block text-lg hover:text-gray-400">Main</a>
-                        </li>
-                        <li>
-                            <a href="" className="block text-lg hover:text-gray-400">Dessert</a>
-                        </li>
-                        <li>
-                            <a href="" className="block text-lg hover:text-gray-400">Appetizer</a>
-                        </li>
+                        {user && user.id ? (<li className='flex h-[48px] bg-gray-200 items-center justify-center gap-2 text-center font-bold p-2 mb-10 '><ChefHat/> Welcome back {user.firstname}! </li>) : (<li className='flex h-[48px] bg-gray-200 items-center justify-center gap-2 text-center font-bold p-2 mb-10 '> Welcome !</li>) }
+                        
+
+                       <li className='flex h-[48px] items-center hover:bg-slate-200 hover:text-orange-500'><Link className='flex gap-2 pl-2 text-lg' to='/'> <EggFried/> Breakfast</Link></li>
+
+                       <li className='flex h-[48px] bg-gray-50 items-center hover:bg-slate-200 hover:text-white'><Link className='flex gap-2 pl-2 text-lg' to='/'> <Utensils/>Main</Link></li>
+
+                       <li className='flex h-[48px] items-center hover:bg-slate-200 hover:text-orange-500'><Link className='flex gap-2 pl-2 text-lg' to='/'> <CakeSlice/> Dessert</Link></li>
+
+                       <li className='flex h-[48px] bg-gray-50 items-center hover:bg-slate-200 hover:text-white'><Link className='flex gap-2 pl-2 text-lg' to='/'> <Sandwich/>Appetizer</Link></li>
                     </ul>
+                    
                 </nav>
             </div>
 
