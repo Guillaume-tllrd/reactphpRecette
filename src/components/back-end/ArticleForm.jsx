@@ -8,6 +8,7 @@ const ArticleForm = () => {
         <div className="md:translate-x-60 transition-transform duration-500 h-max w-full flex justify-center bg-amber-100">
     <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32">
         <form onSubmit={handleFormSubmit} className="min-w-96 flex flex-col">
+        <h2 className="text-2xl text-center font-scope font-bold mb-6">Create your article</h2>
             <div className="mb-4">
                 <label htmlFor="title" className="block text-gray-700 mb-2 text-center">
                     Title

@@ -1,34 +1,60 @@
-import React, {useRef} from 'react';
+import axios from 'axios';
+import {useRef, useState} from 'react';
 
 const RecipeForm = () => {
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null)
     const form = useRef()
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault()
 
-        const recipeData = {
-            name: form.current[0].value,
-            ingredients: form.current[1].value,
-            summary: form.current[2].value,
-            description: form.current[3].value,
-            tags: form.current[4].value,
-            country: form.current[5].value,
-            picture1: form.current[6].value,
-            picture2: form.current[7].value,
-            picture3: form.current[8].value,
-            categories: form.current[9].value,
-            difficulty: form.current[10].value,
-            number_of_servings: form.current[11].value,
-            prep_time: form.current[12].value,
-            cooking_time: form.current[13].value,
-            top: form.current[14].value,
+        // Crée un nouvel objet FormData
+        // FormData est une interface JavaScript qui permet de construire facilement un ensemble de paires clé-valeur représentant des données de formulaire. Les données peuvent être texte (comme les champs de saisie) ou des fichiers binaires (comme des images).
+        const formData = new FormData();
+
+        // Ajoute les champs texte au FormData
+        //  append est une méthode utilisée pour ajouter des paires clé-valeur à un objet FormData
+        formData.append('name', form.current[0].value);
+        formData.append('ingredients', form.current[1].value);
+        formData.append('summary', form.current[2].value);
+        formData.append('description', form.current[3].value);
+        formData.append('tags', form.current[4].value);
+        formData.append('country', form.current[5].value);
+        formData.append('categories', form.current[9].value);
+        formData.append('difficulty', form.current[10].value);
+        formData.append('number_of_servings', form.current[11].value);
+        formData.append('prep_time', form.current[12].value);
+        formData.append('cooking_time', form.current[13].value);
+        formData.append('top', form.current[14].value);
+
+        // Ajoute les fichiers au FormData
+        formData.append('picture1', form.current[6].files[0]);
+        formData.append('picture2', form.current[7].files[0]);
+        formData.append('picture3', form.current[8].files[0]);
+
+        try {
+            const response = await axios.post("http://localhost:8005/recipes.php", formData, {headers: {
+                'Content-Type': 'multipart/form-data',
+            },})
+
+            if(response.status === 201){
+                setSuccess('Recipe created !');
+                form.current.reset();
+            }
+        } catch (error){
+            setError('An error occurred during registration');
+            setSuccess(null)
         }
-        form.current.reset();
+        
     }
     return (
         <div className="md:translate-x-60 transition-transform duration-500 h-max w-full flex justify-center bg-amber-100">
     <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32">
-        <form onSubmit={handleFormSubmit} className="min-w-96 flex flex-col">
+        <form onSubmit={handleFormSubmit} ref={form} className="min-w-96 flex flex-col">
+            {error && <p style ={{color: 'red'}}>{error}</p>}
+            {success && <p style={{color: 'green'}}>{success}</p>}
+        <h2 className="text-2xl text-center font-scope font-bold mb-6">Create your recipe</h2>
             <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 mb-2 text-center">
                     Name
@@ -106,6 +132,7 @@ const RecipeForm = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="file"
                         name="picture1"
+                        accept="image/*"
                     />
                 </label>
             </div>
@@ -118,6 +145,7 @@ const RecipeForm = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="file"
                         name="picture2"
+                        accept="image/*"
                     />
                 </label>
             </div>
@@ -130,6 +158,7 @@ const RecipeForm = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="file"
                         name="picture3"
+                        accept="image/*"
                     />
                 </label>
             </div>
@@ -137,12 +166,16 @@ const RecipeForm = () => {
             <div className="mb-4">
                 <label htmlFor="categories" className="block text-gray-700 mb-2 text-center">
                     Categories
-                    <input
+                    <select
                         id="categories"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
-                        type="text"
+                        className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="categories"
-                    />
+                    >
+                        <option className="text-center" value="breakfast">Breakfast</option>
+                        <option className="text-center" value="main">Main</option>
+                        <option className="text-center" value="dessert">Dessert</option>
+                        <option className="text-center" value="appetizer">Appetizer</option>
+                    </select>
                 </label>
             </div>
 
@@ -199,7 +232,7 @@ const RecipeForm = () => {
                     Top
                     <select
                         id="top"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
+                        className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="top"
                     >
                         <option className="text-center" value="yes">Yes</option>

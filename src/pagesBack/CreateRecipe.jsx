@@ -10,7 +10,7 @@ const CreateRecipe = () => {
                 <div className="flex justify-center items-center mt-4 md:translate-x-28">
                     <Logo />
                 </div>
-                <div className="flex justify-center items-center flex-grow">
+                <div className="flex justify-center items-center">
                     <RecipeForm />
                 </div>
             </div>
