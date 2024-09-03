@@ -11,6 +11,7 @@ import Register from './pagesFront/Register';
 import { getSessionUser } from './Redux/actions/user.action';
 import CreateRecipe from './pagesBack/CreateRecipe';
 import Dashboard from './pagesBack/Dashboard';
+import CreateArticle from './pagesBack/CreateArticle';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/createRecipe" element={<CreateRecipe />} />
+        <Route path="/createArticle" element={<CreateArticle />} />
       </Routes>
     </BrowserRouter>
   );

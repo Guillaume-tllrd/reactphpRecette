@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, House, CookingPot, Newspaper, ChefHat, Undo2 } from 'lucide-react';
 import { useState } from 'react';
 const Sidenav = () => {
     const user = useSelector((state) => state.userReducer)
@@ -27,11 +27,16 @@ const Sidenav = () => {
                     <X onClick={toggleSidebar} className="w-6 h-6" />
                 </button>
             <nav className="mt-12">
-                <ul>
-                    <li className='block '>Hello {user.username}!</li>
-                    <li className='block'><Link to='/'>Back on the website</Link></li>
-                    <li className='block'><Link to='/dashboard'>Dashboard</Link></li>
-                    <li><Link to='/createRecipe'>Create recipe</Link></li>
+                <ul >
+                    <li className='flex h-[48px] bg-gray-200 items-center justify-center gap-2 text-center font-bold p-2 mb-10 '><ChefHat/> Hello {user.username}!</li>
+
+                    <li className='flex h-[48px] items-center hover:bg-slate-200 hover:text-orange-500'><Link className='flex gap-2 pl-2 ' to='/'> <Undo2/>Back to the site</Link></li>
+
+                    <li className='flex h-[48px] bg-gray-50 items-center hover:bg-slate-200 hover:text-white'><Link className='flex gap-2 pl-2' to='/dashboard'><House/> Dashboard</Link></li>
+
+                    <li className='flex h-[48px] items-center hover:bg-slate-200 hover:text-orange-500'><Link className='flex gap-2 pl-2' to='/createRecipe'><CookingPot/>Create recipe</Link></li>
+
+                    <li className='flex h-[48px] bg-gray-50 items-center hover:bg-slate-200 hover:text-white'><Link className='flex gap-2 pl-2' to='/createArticle'><Newspaper/>Create article</Link></li>
                     <li></li>
                 </ul>
             </nav>

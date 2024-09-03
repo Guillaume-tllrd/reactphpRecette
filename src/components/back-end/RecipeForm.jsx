@@ -27,181 +27,197 @@ const RecipeForm = () => {
     }
     return (
         <div className="md:translate-x-60 transition-transform duration-500 h-max w-full flex justify-center bg-amber-100">
-
-            <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32 ">
-            <form onSubmit={handleFormSubmit} className="min-w-96 flex flex-col">
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center  ">
+    <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32">
+        <form onSubmit={handleFormSubmit} className="min-w-96 flex flex-col">
+            <div className="mb-4">
+                <label htmlFor="name" className="block text-gray-700 mb-2 text-center">
                     Name
                     <input
+                        id="name"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="name"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="ingredients" className="block text-gray-700 mb-2 text-center">
                     Ingredients
                     <textarea
+                        id="ingredients"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="ingredients"
                     ></textarea>
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="summary" className="block text-gray-700 mb-2 text-center">
                     Summary
                     <textarea
+                        id="summary"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="summary"
                     ></textarea>
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="description" className="block text-gray-700 mb-2 text-center">
                     Description
                     <textarea
+                        id="description"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="description"
                     ></textarea>
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="tags" className="block text-gray-700 mb-2 text-center">
                     Tags
                     <input
+                        id="tags"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="tags"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="country" className="block text-gray-700 mb-2 text-center">
                     Country
                     <input
+                        id="country"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="country"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="picture1" className="block text-gray-700 mb-2 text-center">
                     Picture 1
                     <input
+                        id="picture1"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="file"
                         name="picture1"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="picture2" className="block text-gray-700 mb-2 text-center">
                     Picture 2
                     <input
+                        id="picture2"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="file"
                         name="picture2"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="picture3" className="block text-gray-700 mb-2 text-center">
                     Picture 3
                     <input
+                        id="picture3"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="file"
                         name="picture3"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="categories" className="block text-gray-700 mb-2 text-center">
                     Categories
                     <input
+                        id="categories"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="categories"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="difficulty" className="block text-gray-700 mb-2 text-center">
                     Difficulty
                     <input
+                        id="difficulty"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="difficulty"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="number_of_servings" className="block text-gray-700 mb-2 text-center">
                     Number of Servings
                     <input
+                        id="number_of_servings"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="number"
                         name="number_of_servings"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="prep_time" className="block text-gray-700 mb-2 text-center">
                     Prep Time (minutes)
                     <input
+                        id="prep_time"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="number"
                         name="prep_time"
                     />
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
+            <div className="mb-4">
+                <label htmlFor="cooking_time" className="block text-gray-700 mb-2 text-center">
                     Cooking Time (minutes)
                     <input
+                        id="cooking_time"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="number"
                         name="cooking_time"
                     />
-                    </label>
-                </div>
-
-                <div className="mb-4">
-                    <label className="block text-gray-700 mb-2 text-center">
-                    Top
-                    <input
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
-                        type="number"
-                        name="top"
-                    />
-                    </label>
-                </div>
-
-                <button
-                    className="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
-                >
-                    Submit
-                </button>
-                </form>
-
+                </label>
             </div>
-        </div>
+
+            <div className="mb-4">
+                <label htmlFor="top" className="block text-gray-700 mb-2 text-center">
+                    Top
+                    <select
+                        id="top"
+                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
+                        name="top"
+                    >
+                        <option className="text-center" value="yes">Yes</option>
+                        <option className="text-center" value="no">No</option>
+                    </select>
+                </label>
+            </div>
+
+            <button
+                className="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded"
+                type="submit"
+            >
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+
     );
 };
 
