@@ -14,18 +14,18 @@ if ($method == 'OPTIONS'){
 }
 
 switch ($method){
-    case 'GET':
-        handleGet();
-    break;
+    // case 'GET':
+    //     handleGet();
+    // break;
     case 'POST':
         handlePost();
     break;
-    case 'PUT':
-        handlePut();
-    break;
-    case 'DELETE':
-        handleDelete();
-    break;
+    // case 'PUT':
+    //     handlePut();
+    // break;
+    // case 'DELETE':
+    //     handleDelete();
+    // break;
     default :
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Méthode non autorisée']);
@@ -34,53 +34,71 @@ switch ($method){
 
 function handlePost() {
     global $pdo;
-    $data = json_decode(file_get_contents('php://input'), true);
 
-    // Vérification des champs obligatoires
-    if (!isset(
-        $data['name'],
-        $data['ingredients'],
-        $data['summary'],
-        $data['description'],
-        $data['tags'],
-        $data['country'],
-        $data['picture1'],
-        $data['picture2'],
-        $data['picture3'],
-        $data['categories'],
-        $data['difficulty'],
-        $data['number_of_servings'],
-        $data['prep_time'],
-        $data['cooking_time'],
-        $data['top']
-    )) {
-        http_response_code(400);
-        echo json_encode(['message' => 'Missing data']);
-        return;
+    // S'assurer que les inputs sont envoyés
+    $requiredFields = ['name', 'ingredients', 'summary', 'description', 'tags', 'country', 'categories', 'difficulty', 'number_of_servings', 'prep_time', 'cooking_time', 'top'];
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            http_response_code(400);
+            echo json_encode(['message' => "Missing field: $field"]);
+            return;
+        }
     }
 
+    // S'assurer que les fichiers ont été envoyés
+    if (empty($_FILES['picture1']) || empty($_FILES['picture2']) || empty($_FILES['picture3'])) {
+        http_response_code(400);
+        echo json_encode(['message' => 'Missing file']);
+        return;
+    }
+        $fileNames = [];
+        $fileKeys = ['picture1', 'picture2', 'picture3'];
+        $allowed = ["jpg", "jpeg", "png", "svg"];
+
+        foreach ($fileKeys as $key) {
+        $file = $_FILES[$key];
+        $imageExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($imageExtension, $allowed)) {
+            http_response_code(400);
+            echo json_encode(['message' => "Unauthorized file type. Only JPG, JPEG, PNG, and SVG files are allowed"]);
+            return;
+        }
+        
+       
+        $newname=md5(uniqid());
+        $newfilename = "uploads/$newname.$imageExtension";
+            
+        if(!move_uploaded_file($file["tmp_name"], $newfilename)){
+            http_response_code(500);
+            echo json_encode(['message' => "Error saving file: $key"]);
+            return;
+            }
+        $fileNames[$key] = $newfilename;
+    }
     try {
         
         $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture1, picture2, picture3, categories, difficulty, number_of_servings, prep_time, cooking_time, top) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :picture_3, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top)');
-        ;
+        
 
         // Exécution de la requête avec les données fournies
+        //htmlspecialchars pour les injonctions sql
         $result = $stmt->execute([
-            $data['name'],
-            $data['ingredients'],
-            $data['summary'],
-            $data['description'],
-            $data['tags'],
-            $data['country'],
-            $data['picture1'],
-            $data['picture2'],
-            $data['picture3'],
-            $data['categories'],
-            $data['difficulty'],
-            $data['number_of_servings'],
-            $data['prep_time'],
-            $data['cooking_time'],
-            $data['top'],
+           ':name' => htmlspecialchars($_POST['name']),
+            ':ingredients' => htmlspecialchars($_POST['ingredients']),
+            ':summary' => htmlspecialchars($_POST['summary']),
+            ':description' => htmlspecialchars($_POST['description']),
+            ':tags' => htmlspecialchars($_POST['tags']),
+            ':country' => htmlspecialchars($_POST['country']),
+            ':picture1' => $fileNames['picture1'],
+            ':picture2' => $fileNames['picture2'],
+            ':picture3' => $fileNames['picture3'],
+            ':categories' => htmlspecialchars($_POST['categories']),
+            ':difficulty' => htmlspecialchars($_POST['difficulty']),
+            ':number_of_servings' => htmlspecialchars($_POST['number_of_servings']),
+            ':prep_time' => htmlspecialchars($_POST['prep_time']),
+            ':cooking_time' => htmlspecialchars($_POST['cooking_time']),
+            ':top' => htmlspecialchars($_POST['top']),
         ]);
         
 
@@ -95,6 +113,6 @@ function handlePost() {
         }
     } catch (Exception $e) {
         http_response_code(500);
-        echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
+        echo json_encode(['message' => 'Server error', 'error' => $e->getMessage()]);
     }
 }
