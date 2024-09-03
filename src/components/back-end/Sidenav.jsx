@@ -20,7 +20,7 @@ const Sidenav = () => {
     return (
         <>
         <button onClick={toggleSidebar} className='md:hidden fixed top-4 left-4 hover:text-gray-400'><Menu/></button>
-        <div className={`fixed h-full bg-gray-100 w-60 p-4 shadow-lg transform transition-transform duration-500 ${
+        <div className={`fixed h-full bg-white w-60 p-4 shadow-lg transform transition-transform duration-500 ${
                 visible ? 'translate-x-0' : '-translate-x-full' // Cacher la sidebar en dehors de l'écran quand elle est masquée
             } md:translate-x-0 md:block`}>
             <button  className="md:hidden absolute top-4 right-4 text-black hover:text-gray-400">
