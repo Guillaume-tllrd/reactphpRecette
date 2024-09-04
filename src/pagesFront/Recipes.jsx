@@ -1,44 +1,47 @@
-
 import Header from '../components/header/Header';
 import Footer from '../components/Footer';
 import Caroussel from '../components/Caroussel';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-// page des 4 catégories
+import Category from '../components/Category';
+
 const Recipes = () => {
-    
+    const [recipesByCategory, setRecipesByCategory] = useState([]);
+
     useEffect(() => {
-        axios.get("http://localhost:8005/recipes.php?categoryLimit=true").then((res) => console.log(res.data))
-    },[])
+        axios.get("http://localhost:8005/recipes.php?categoryLimit=true")
+        .then(response => {
+            const recipes = response.data;
+            
+            // Filtrer en fonction du nom de la catégorie
+            const categories = ["breakfast", "main", "dessert", "appetizer"];
+            const recipesByCategory = categories.map(category => {
+                return {
+                    category: category,
+                    recipes: recipes.filter(recipe => recipe.categories === category)
+                };
+            });
 
-    // axios.get("http://localhost:8005/recipes.php")
-    // .then(response => {
-    //     const recipes = response.data;
-        
-    //     // Filtrer et limiter à 3 recettes par catégorie
-    //     const categories = ["breakfast", "main", "dessert", "appetizer"];
-    //     const recipesByCategory = categories.map(category => {
-    //         return {
-    //             category: category,
-    //             recipes: recipes.filter(recipe => recipe.categories === category).slice(0, 3)
-    //         };
-    //     });
+            
+            setRecipesByCategory(recipesByCategory);
+        })
+        .catch(error => {
+            console.error("Error fetching recipes:", error);
+        });
+    }, []); 
 
-    //     // Utilisation des recettes filtrées dans l'UI
-    //     recipesByCategory.forEach(categoryData => {
-    //         console.log(`Category: ${categoryData.category}`, categoryData.recipes);
-    //         // Ajoute ici le code pour rendre les recettes dans ton interface utilisateur
-    //     });
-    // })
-    // .catch(error => {
-    //     console.error("Error fetching recipes:", error);
-    // });
     return (
         <div>
-            <Header/>
-            <Caroussel/>
-            
-            <Footer/>
+            <Header />
+            <Caroussel />
+            <div className="bg-amber-100">
+                <h1 className="py-5 text-center font-scope text-3xl">Recipes</h1>
+                {recipesByCategory.map(categoryData => (
+                    <Category key={categoryData.category} 
+                    category={categoryData.category} recipes={categoryData.recipes} />
+                ))}
+            </div>
+            <Footer />
         </div>
     );
 };
