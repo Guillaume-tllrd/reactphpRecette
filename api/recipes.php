@@ -14,9 +14,9 @@ if ($method == 'OPTIONS'){
 }
 
 switch ($method){
-    // case 'GET':
-    //     handleGet();
-    // break;
+    case 'GET':
+        handleGet();
+    break;
     case 'POST':
         handlePost();
     break;
@@ -31,6 +31,45 @@ switch ($method){
         echo json_encode(['message' => 'Method not allowed']);
         break;
 }
+
+function handleGet() {
+    global $pdo;
+
+    // pour  trier les recettes en fonction de leur catégorie. il faudra utiliser useParams pour faire passer la catégorie dans l'url requete axios: axios.get(`http://localhost:8005/recipes.php?categories=${category}) with const param = useParams();
+    // const category = param.category ne pas oublier le route
+    $category = isset($_GET['categories']) ? $_GET['categories'] : null;
+
+    if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
+        $stmt = $pdo->query("
+            SELECT * FROM (
+                SELECT * FROM recipes WHERE categories = 'breakfast' LIMIT 3
+            ) AS breakfast
+            UNION ALL
+            SELECT * FROM (
+                SELECT * FROM recipes WHERE categories = 'main' LIMIT 3
+            ) AS main
+            UNION ALL
+            SELECT * FROM (
+                SELECT * FROM recipes WHERE categories = 'dessert' LIMIT 3
+            ) AS dessert
+            UNION ALL
+            SELECT * FROM (
+                SELECT * FROM recipes WHERE categories = 'appetizer' LIMIT 3
+            ) AS appetizer
+        ");
+
+    } else if ($category) {
+   
+        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE categories = :categories");
+        $stmt->execute([':categories' => htmlspecialchars($category)]);
+    } else {
+        $stmt = $pdo->query("SELECT * FROM recipes");
+    }
+
+    $recipes = $stmt->fetchAll();
+    echo json_encode($recipes, JSON_PRETTY_PRINT);
+}
+
 
 function handlePost() {
     global $pdo;

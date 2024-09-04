@@ -12,6 +12,8 @@ import { getSessionUser } from './Redux/actions/user.action';
 import CreateRecipe from './pagesBack/CreateRecipe';
 import Dashboard from './pagesBack/Dashboard';
 import CreateArticle from './pagesBack/CreateArticle';
+import RecipeByCategory from './pagesFront/RecipeByCategory';
+import RecipePage from './pagesFront/RecipePage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:category" element={<RecipeByCategory />} />
+        <Route path="/recipes/:id" element={<RecipePage />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/favoris" element={<Favoris />} />
         <Route path="/login" element={<Login />} />
