@@ -10,7 +10,7 @@ export const addRecipe = (data) => {
             },
         })
         .then((res) => {
-            dispatch({ type: ADD_RECIPE, payload: data }); 
+            dispatch({ type: ADD_RECIPE, payload: res.data }); 
         })
         .catch((error) => {
             console.error("Error adding recipe:", error);

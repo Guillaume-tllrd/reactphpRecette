@@ -181,12 +181,16 @@ const RecipeForm = () => {
             <div className="mb-4">
                 <label htmlFor="difficulty" className="block text-gray-700 mb-2 text-center">
                     Difficulty
-                    <input
+                    <select
                         id="difficulty"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="difficulty"
-                    />
+                    >
+                        <option className="text-center" value="easy">Easy</option>
+                        <option className="text-center" value="medium">Medium</option>
+                        <option className="text-center" value="hard">Hard</option>
+                    </select>
                 </label>
             </div>
 
@@ -195,7 +199,7 @@ const RecipeForm = () => {
                     Number of Servings
                     <input
                         id="number_of_servings"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
+                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500 text-center"
                         type="number"
                         name="number_of_servings"
                     />
@@ -207,7 +211,7 @@ const RecipeForm = () => {
                     Prep Time (minutes)
                     <input
                         id="prep_time"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
+                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500 text-center"
                         type="number"
                         name="prep_time"
                     />
@@ -219,7 +223,7 @@ const RecipeForm = () => {
                     Cooking Time (minutes)
                     <input
                         id="cooking_time"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
+                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500 text-center"
                         type="number"
                         name="cooking_time"
                     />

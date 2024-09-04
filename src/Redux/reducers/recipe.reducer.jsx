@@ -8,7 +8,6 @@ export default function recipeReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_RECIPE:
             return {
-                ...state,
                 recipes: [...state.recipes, action.payload], // destructure pour ajouter les nouvelles recette au tableau
             };
         default:
