@@ -23,7 +23,7 @@ export const getSessionUser = () => {
       dispatch({ type: GET_SESSION_USER, payload: response.data });
 
     } catch (error) {
-      console.error("Erreur lors de la récupération de l'utilisateur :", error);
+      console.error("Error recovering user :", error);
     }
   };
 };

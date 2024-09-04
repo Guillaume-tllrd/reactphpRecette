@@ -28,7 +28,7 @@ switch ($method){
     // break;
     default :
         http_response_code(405); //métyode non autorisée
-        echo json_encode(['message' => 'Méthode non autorisée']);
+        echo json_encode(['message' => 'Method not allowed']);
         break;
 }
 
@@ -78,7 +78,7 @@ function handlePost() {
     }
     try {
         
-        $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture1, picture2, picture3, categories, difficulty, number_of_servings, prep_time, cooking_time, top) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :picture_3, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top)');
+        $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture_1, picture_2, picture_3, categories, difficulty, number_of_servings, prep_time, cooking_time, top) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :picture_3, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top)');
         
 
         // Exécution de la requête avec les données fournies
@@ -90,9 +90,9 @@ function handlePost() {
             ':description' => htmlspecialchars($_POST['description']),
             ':tags' => htmlspecialchars($_POST['tags']),
             ':country' => htmlspecialchars($_POST['country']),
-            ':picture1' => $fileNames['picture1'],
-            ':picture2' => $fileNames['picture2'],
-            ':picture3' => $fileNames['picture3'],
+            ':picture_1' => $fileNames['picture1'],
+            ':picture_2' => $fileNames['picture2'],
+            ':picture_3' => $fileNames['picture3'],
             ':categories' => htmlspecialchars($_POST['categories']),
             ':difficulty' => htmlspecialchars($_POST['difficulty']),
             ':number_of_servings' => htmlspecialchars($_POST['number_of_servings']),

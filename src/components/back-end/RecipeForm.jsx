@@ -1,11 +1,14 @@
 import axios from 'axios';
 import {useRef, useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { addRecipe } from '../../Redux/actions/recipe.actions';
 
 const RecipeForm = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null)
     const form = useRef()
-
+    const dispatch = useDispatch()
+    
     const handleFormSubmit = async (e) => {
         e.preventDefault()
 
@@ -33,19 +36,15 @@ const RecipeForm = () => {
         formData.append('picture2', form.current[7].files[0]);
         formData.append('picture3', form.current[8].files[0]);
 
-        try {
-            const response = await axios.post("http://localhost:8005/recipes.php", formData, {headers: {
-                'Content-Type': 'multipart/form-data',
-            },})
-
-            if(response.status === 201){
-                setSuccess('Recipe created !');
+            try {
+                await dispatch(addRecipe(formData));
+                setSuccess('Recipe created successfully!');
                 form.current.reset();
+                // ne pas oublier de mette le getPost directement ici pour ne pas avoir à actualiser la page qd on ajoute
+            } catch (error) {
+                setError('An error occurred during registration');
+                setSuccess(null);
             }
-        } catch (error){
-            setError('An error occurred during registration');
-            setSuccess(null)
-        }
         
     }
     return (
