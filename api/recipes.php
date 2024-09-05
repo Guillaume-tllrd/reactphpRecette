@@ -75,7 +75,7 @@ function handlePost() {
     global $pdo;
 
     // S'assurer que les inputs sont envoyés
-    $requiredFields = ['name', 'ingredients', 'summary', 'description', 'tags', 'country', 'categories', 'difficulty', 'number_of_servings', 'prep_time', 'cooking_time', 'top'];
+    $requiredFields = ['name', 'ingredients', 'summary', 'description', 'tags', 'country', 'categories', 'difficulty', 'number_of_servings', 'prep_time', 'cooking_time', 'top', 'background'];
     foreach ($requiredFields as $field) {
         if (empty($_POST[$field])) {
             http_response_code(400);
@@ -85,13 +85,13 @@ function handlePost() {
     }
 
     // S'assurer que les fichiers ont été envoyés
-    if (empty($_FILES['picture1']) || empty($_FILES['picture2']) || empty($_FILES['picture3'])) {
+    if (empty($_FILES['picture1']) || empty($_FILES['picture2'])) {
         http_response_code(400);
         echo json_encode(['message' => 'Missing file']);
         return;
     }
         $fileNames = [];
-        $fileKeys = ['picture1', 'picture2', 'picture3'];
+        $fileKeys = ['picture1', 'picture2'];
         $allowed = ["jpg", "jpeg", "png", "svg"];
 
         foreach ($fileKeys as $key) {
@@ -117,7 +117,7 @@ function handlePost() {
     }
     try {
         
-        $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture_1, picture_2, picture_3, categories, difficulty, number_of_servings, prep_time, cooking_time, top) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :picture_3, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top)');
+        $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture_1, picture_2, categories, difficulty, number_of_servings, prep_time, cooking_time, top, background) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top, :background)');
         
 
         // Exécution de la requête avec les données fournies
@@ -131,13 +131,13 @@ function handlePost() {
             ':country' => htmlspecialchars($_POST['country']),
             ':picture_1' => $fileNames['picture1'],
             ':picture_2' => $fileNames['picture2'],
-            ':picture_3' => $fileNames['picture3'],
             ':categories' => htmlspecialchars($_POST['categories']),
             ':difficulty' => htmlspecialchars($_POST['difficulty']),
             ':number_of_servings' => htmlspecialchars($_POST['number_of_servings']),
             ':prep_time' => htmlspecialchars($_POST['prep_time']),
             ':cooking_time' => htmlspecialchars($_POST['cooking_time']),
             ':top' => htmlspecialchars($_POST['top']),
+            ':background' => htmlspecialchars($_POST['background']),
         ]);
         
 

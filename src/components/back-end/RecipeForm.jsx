@@ -24,17 +24,17 @@ const RecipeForm = () => {
         formData.append('description', form.current[3].value);
         formData.append('tags', form.current[4].value);
         formData.append('country', form.current[5].value);
-        formData.append('categories', form.current[9].value);
-        formData.append('difficulty', form.current[10].value);
-        formData.append('number_of_servings', form.current[11].value);
-        formData.append('prep_time', form.current[12].value);
-        formData.append('cooking_time', form.current[13].value);
-        formData.append('top', form.current[14].value);
+        formData.append('categories', form.current[8].value);
+        formData.append('difficulty', form.current[9].value);
+        formData.append('number_of_servings', form.current[10].value);
+        formData.append('prep_time', form.current[11].value);
+        formData.append('cooking_time', form.current[12].value);
+        formData.append('top', form.current[13].value);
+        formData.append('background', form.current[14].value);
 
         // Ajoute les fichiers au FormData
         formData.append('picture1', form.current[6].files[0]);
         formData.append('picture2', form.current[7].files[0]);
-        formData.append('picture3', form.current[8].files[0]);
 
             try {
                 await dispatch(addRecipe(formData));
@@ -150,19 +150,6 @@ const RecipeForm = () => {
             </div>
 
             <div className="mb-4">
-                <label htmlFor="picture3" className="block text-gray-700 mb-2 text-center">
-                    Picture 3
-                    <input
-                        id="picture3"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
-                        type="file"
-                        name="picture3"
-                        accept="image/*"
-                    />
-                </label>
-            </div>
-
-            <div className="mb-4">
                 <label htmlFor="categories" className="block text-gray-700 mb-2 text-center">
                     Categories
                     <select
@@ -237,6 +224,20 @@ const RecipeForm = () => {
                         id="top"
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="top"
+                    >
+                        <option className="text-center" value="yes">Yes</option>
+                        <option className="text-center" value="no">No</option>
+                    </select>
+                </label>
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="background" className="block text-gray-700 mb-2 text-center">
+                    Background
+                    <select
+                        id="background"
+                        className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
+                        name="background"
                     >
                         <option className="text-center" value="yes">Yes</option>
                         <option className="text-center" value="no">No</option>
