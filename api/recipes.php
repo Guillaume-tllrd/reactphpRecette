@@ -38,6 +38,7 @@ function handleGet() {
     // pour  trier les recettes en fonction de leur catégorie. il faudra utiliser useParams pour faire passer la catégorie dans l'url requete axios: axios.get(`http://localhost:8005/recipes.php?categories=${category}) with const param = useParams();
     // const category = param.category ne pas oublier le route
     $category = isset($_GET['categories']) ? $_GET['categories'] : null;
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
 
     if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
         $stmt = $pdo->query("
@@ -59,9 +60,12 @@ function handleGet() {
         ");
 
     } else if ($category) {
-   
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE categories = :categories");
         $stmt->execute([':categories' => htmlspecialchars($category)]);
+
+    } else if ($id) {
+        $stmt= $pdo->prepare("SELECT * FROM recipes WHERE id = :id");
+        $stmt->execute(['id' => $id]);
     } else {
         $stmt = $pdo->query("SELECT * FROM recipes");
     }
