@@ -48,25 +48,26 @@ const RecipePage = () => {
                 <h1 className='font-scope py-2 text-center text-2xl'>{recipe.name}</h1>
                 <p className='mx-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Tags : {tagsArray.map((tag, index) => ( <Link key={index} className='hover:underline pr-1 font-light'>{tag}</Link>) )}</p>
                 <p className='mx-2 mb-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Country: <Link className='hover:underline font-light'>{recipe.country}</Link></p>
-                <div className='xl:flex'>
-                    <img className="mx-auto xl:mx-28 xl:mb-5" src={imgPath} alt="picture recipe" /> 
-                    <div className="flex justify-around items-center bg-white p-4 ">
-                        <div className="flex-1 text-center p-2 border-r border-gray-300">
+                <div className='xl:flex xl:items-center'> 
+                    {/* le items-center qui me permet de centrer à la verticale le grid */}
+                    <img className="mx-auto xl:mx-9 xl:mb-5 2xl:ml-32" src={imgPath} alt="picture recipe" /> 
+                    <div className="flex bg-white p-4 xl:grid xl:grid-cols-2 xl:grid-rows-2 xl:w-full xl:h-full xl:p-0 xl:pr-9 2xl:px-16">
+                        <div className="flex-1 text-center p-2 border-r xl:border-b border-gray-300 xl:border-r">
                             <UsersRound className="inline-block w-6 h-6 text-amber-700 mb-1" />
                             <div className="font-semibold text-sm text-gray-700">Servings</div>
                             <div className="text-lg text-amber-700">{recipe.number_of_servings}</div>
                         </div>
-                        <div className="flex-1 text-center p-2 border-r border-gray-300">
+                        <div className="flex-1 text-center p-2 border-r xl:border-b border-gray-300 xl:border-r-0 xl:row-span-1 xl:col-span-1">
                             <HandPlatter className="inline-block w-6 h-6 text-amber-700 mb-1" />
                             <div className="font-semibold text-sm text-gray-700">Difficulty</div>
                             <div className="text-lg text-amber-700">{recipe.difficulty}</div>
                         </div>
-                        <div className="flex-1 text-center p-2 border-r border-gray-300">
+                        <div className="flex-1 text-center p-2 border-r border-gray-300 xl:border-r xl:row-span-1 xl:col-span-1">
                             <Timer className="inline-block w-6 h-6 text-amber-700 mb-1" />
                             <div className="font-semibold text-sm text-gray-700">Prep Time</div>
                             <div className="text-lg text-amber-700">{recipe.prep_time} min</div>
                         </div>
-                        <div className="flex-1 text-center p-2">
+                        <div className="flex-1 text-center p-2 xl:border-none xl:row-span-1 xl:col-span-1">
                             <ChefHat className="inline-block w-6 h-6 text-amber-700 mb-1" />
                             <div className="font-semibold text-sm text-gray-700">Cooking Time</div>
                             <div className="text-lg text-amber-700">{recipe.cooking_time} min</div>
