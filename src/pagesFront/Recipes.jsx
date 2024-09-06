@@ -1,11 +1,11 @@
 import Header from '../components/header/Header';
 import Footer from '../components/Footer';
-import Caroussel from '../components/Caroussel';
+import Caroussel from '../components/recipes/Caroussel';
 import { useEffect } from 'react';
-import Category from '../components/Category';
+import Category from '../components/recipes/Category';
 import { useDispatch, useSelector } from 'react-redux';
 import {  getRecipeByCategory } from '../Redux/actions/recipe.actions';
-import { isEmpty } from '../components/Utils';
+
 
 const Recipes = () => {
     const dispatch = useDispatch();

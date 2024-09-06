@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Category from '../components/Category';
+import Category from '../components/recipes/Category';
 // page d'une catégorie
 const RecipeByCategory = () => {
     const param = useParams()

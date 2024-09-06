@@ -12,7 +12,13 @@ const Card = ({recipe}) => {
                 <div className='flex flex-col mx-6'>
                     <h1 className='font-scope text-xl text-center py-2'>{recipe.name}</h1>
                     <p className='my-1'>Difficulty : {recipe.difficulty}</p>
-                <img className='h-60' src={imgPath} alt="recipe" />
+                    <div className='overflow-hidden'>
+                        <img 
+                            className='h-60 transform transition-transform duration-500 ease-in-out hover:scale-110' 
+                            src={imgPath} 
+                            alt="recipe" 
+                        />
+                    </div>
                 </div>
                 </Link>
             </div>

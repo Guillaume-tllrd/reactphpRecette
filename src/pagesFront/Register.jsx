@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/header/Header';
-import RegisterFrom from '../components/RegisterFrom';
+import RegisterFrom from '../components/form/RegisterFrom';
 import Footer from '../components/Footer';
 
 const Register = () => {

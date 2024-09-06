@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getSessionUser } from '../Redux/actions/user.action';
+import { getSessionUser } from '../../Redux/actions/user.action';
 
 const LoginForm = () => {
 
