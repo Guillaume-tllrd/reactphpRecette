@@ -68,6 +68,7 @@ function handleGet() {
         $stmt->execute(['id' => $id]);
     } else {
         $stmt = $pdo->query("SELECT * FROM recipes");
+        
     }
 
     $recipes = $stmt->fetchAll();

@@ -14,9 +14,9 @@ if ($method == 'OPTIONS'){
 }
 
 switch ($method){
-    // case 'GET':
-    //     handleGet();
-    // break;
+    case 'GET':
+        handleGet();
+    break;
     case 'POST':
         handlePost();
     break;
@@ -30,6 +30,12 @@ switch ($method){
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);
         break;
+}
+function handleGet(){
+    global $pdo;
+    $stmt = $pdo->query("SELECT * FROM articles");
+    $articles = $stmt->fetchAll();
+echo json_encode($articles, JSON_PRETTY_PRINT);
 }
 
 function handlePost() {
