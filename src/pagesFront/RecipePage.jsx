@@ -91,7 +91,7 @@ const RecipePage = () => {
                             </ul>
                         </div>
                         <div className='mx-8 pb-4'>
-                            <h2 className='font-scope text-lg text-center py-2'>Recipe instruction</h2>
+                            <h2 className='font-scope text-lg text-center lg:text-start py-2'>Recipe instruction</h2>
                             <ul>
                                {descriptionArray.length > 0 ? (
                                 descriptionArray.map((sentence, index) => (

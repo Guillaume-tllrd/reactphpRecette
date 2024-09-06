@@ -14,9 +14,9 @@ if ($method == 'OPTIONS'){
 }
 
 switch ($method){
-    case 'GET':
-        handleGet();
-    break;
+    // case 'GET':
+    //     handleGet();
+    // break;
     case 'POST':
         handlePost();
     break;
@@ -35,8 +35,12 @@ switch ($method){
 function handlePost() {
     global $pdo;
 
+    file_put_contents('php://stderr', print_r($_POST, true));
+file_put_contents('php://stderr', print_r($_FILES, true));
+
+
     // S'assurer que les inputs sont envoyés
-    $requiredFields = ['name', 'ingredients', 'summary', 'description', 'tags', 'country', 'categories', 'difficulty', 'number_of_servings', 'prep_time', 'cooking_time', 'top', 'background'];
+    $requiredFields = ['title','description', 'tags', 'top', 'user_name', 'date'];
     foreach ($requiredFields as $field) {
         if (empty($_POST[$field])) {
             http_response_code(400);
@@ -46,13 +50,13 @@ function handlePost() {
     }
 
     // S'assurer que les fichiers ont été envoyés
-    if (empty($_FILES['picture1']) || empty($_FILES['picture2'])) {
+    if (empty($_FILES['picture'])) {
         http_response_code(400);
         echo json_encode(['message' => 'Missing file']);
         return;
     }
         $fileNames = [];
-        $fileKeys = ['picture1', 'picture2'];
+        $fileKeys = ['picture'];
         $allowed = ["jpg", "jpeg", "png", "svg"];
 
         foreach ($fileKeys as $key) {
@@ -78,34 +82,25 @@ function handlePost() {
     }
     try {
         
-        $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture_1, picture_2, categories, difficulty, number_of_servings, prep_time, cooking_time, top, background) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top, :background)');
-        
+        $stmt = $pdo->prepare('INSERT INTO articles (user_name, description, title, picture, tags, top, date) VALUES (:user_name, :description, :title, :picture, :tags, :top, :date)');
 
         // Exécution de la requête avec les données fournies
         //htmlspecialchars pour les injonctions sql
         $result = $stmt->execute([
-           ':name' => htmlspecialchars($_POST['name']),
-            ':ingredients' => htmlspecialchars($_POST['ingredients']),
-            ':summary' => htmlspecialchars($_POST['summary']),
-            ':description' => htmlspecialchars($_POST['description']),
+           ':user_name' => ($_POST['user_name']),
+            ':title' => htmlspecialchars($_POST['title']),
             ':tags' => htmlspecialchars($_POST['tags']),
-            ':country' => htmlspecialchars($_POST['country']),
-            ':picture_1' => $fileNames['picture1'],
-            ':picture_2' => $fileNames['picture2'],
-            ':categories' => htmlspecialchars($_POST['categories']),
-            ':difficulty' => htmlspecialchars($_POST['difficulty']),
-            ':number_of_servings' => htmlspecialchars($_POST['number_of_servings']),
-            ':prep_time' => htmlspecialchars($_POST['prep_time']),
-            ':cooking_time' => htmlspecialchars($_POST['cooking_time']),
+            ':description' => htmlspecialchars($_POST['description']),
+            ':picture' => $fileNames['picture'],
+            ':date' => ($_POST['date']),
             ':top' => htmlspecialchars($_POST['top']),
-            ':background' => htmlspecialchars($_POST['background']),
         ]);
         
 
         // Vérification du résultat
         if ($result) {
             http_response_code(201);
-            echo json_encode(['message' => 'Recipe created']);
+            echo json_encode(['message' => 'Article created']);
         } else {
             http_response_code(500);
             $error = $stmt->errorInfo();
