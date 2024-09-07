@@ -15,6 +15,7 @@ import CreateArticle from './pagesBack/CreateArticle';
 import RecipeByCategory from './pagesFront/RecipeByCategory';
 import RecipePage from './pagesFront/RecipePage';
 import ArticlePage from './pagesFront/ArticlePage';
+import { getCarousselRecipe } from './Redux/actions/recipe.actions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const App = () => {
     if (token) {
       dispatch(getSessionUser());  // Au moment de recharger la page si un token est présent dans le localStorage on redemande le les données de user car sinon elles disparaissent du store
     }
+    dispatch(getCarousselRecipe())
   }, [dispatch]);
 
   return (

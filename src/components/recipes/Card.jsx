@@ -3,10 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Card = ({recipe}) => {
    const location = useLocation();
-    console.log(location);
-    
-    
-    
+    // console.log(location);
    
    const basePath = location.pathname.includes(`/recipes/${recipe.categories}`)
    ? `/recipes/${recipe.categories}/${recipe.id}` // Already in category path, only add the ID

@@ -36,8 +36,8 @@ function handleGet(){
     global $pdo;
 
     $id = isset($_GET['id']) ? $_GET['id'] : null;
-
     if($id){
+    
         $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = :id");
         $stmt->execute(['id' => $id]);
     } else {
@@ -54,8 +54,7 @@ function handlePost() {
     global $pdo;
 
     file_put_contents('php://stderr', print_r($_POST, true));
-file_put_contents('php://stderr', print_r($_FILES, true));
-
+    file_put_contents('php://stderr', print_r($_FILES, true));
 
     // S'assurer que les inputs sont envoyés
     $requiredFields = ['title','description', 'tags', 'top', 'user_name', 'date'];

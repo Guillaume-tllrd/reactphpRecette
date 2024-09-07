@@ -30,20 +30,24 @@ const ArticlePage = () => {
         axios.get(`http://localhost:8005/articles.php?id=${id}`).then((res) => setArticleData(res.data[0]));
         setLoading(false);
     },[])
-
-    const formatDescription = (description) => {
-        return description
-            .split(/(\d+\.\s)/g)
-            .map((section, index) => {
-                return index % 2 === 0 
-                    ? `<p class='py-5 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9'>${section.trim()}</p>` 
-                    : `<h3 class='font-bold md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9'>${section.trim()}</h3>`;
-            })
-            .join('');
-    };
+      
+    // console.log(articleData.description.split('\n').map((paragraph, index) => `<p class="mx-4 my-4 lg:mx-5 xl:mx-7 2xl:mx-9"key=${index}>${paragraph}</p>`).join(''));
     
+    const formatDescription = (description) => {
+        return description.split('\n').map((paragraph, index) => `<p class="mx-4 my-4 lg:mx-5 xl:mx-7 2xl:mx-9"key=${index}>${paragraph}</p>`).join('');
+    };
+    // \n signifie un saut de ligne \n\n 2 sauts de lignes
+        // Après avoir mappé toutes les sections en balises HTML, join('') les combine en une seule chaîne de caractères, sans aucun séparateur entre elles. 
+
+            // d+ correspond à une ou plusieurs chiffres.
+            // \. correspond à un point littéral (le point doit être échappé avec \
+            // \s correspond à un espace.
+            // g ici signifie qu'il faut chercher toutes les occurrences qui correspondent à ce motif dans le texte, et non pas seulement la première.
+            //split est un tableau où chaque section du texte est séparée, et les numéros sont inclus dans le tableau en tant qu'éléments individuels
+   
     const img = articleData.picture;
     const imgPath = "../../api/" + img;
+
     return (
         <div>
             <Header/>

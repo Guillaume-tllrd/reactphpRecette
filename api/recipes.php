@@ -40,7 +40,11 @@ function handleGet() {
     $category = isset($_GET['categories']) ? $_GET['categories'] : null;
     $id = isset($_GET['id']) ? $_GET['id'] : null;
 
-    if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
+    if (isset($_GET['background']) && $_GET['background'] == 'true') {
+        $stmt = $pdo->prepare("SELECT id, name, summary, background, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
+        $stmt->execute([':yes' => 'yes']);
+
+    }else if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
         $stmt = $pdo->query("
             SELECT * FROM (
                 SELECT * FROM recipes WHERE categories = 'breakfast' LIMIT 3
@@ -58,7 +62,7 @@ function handleGet() {
                 SELECT * FROM recipes WHERE categories = 'appetizer' LIMIT 3
             ) AS appetizer
         ");
-
+  
     } else if ($category) {
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE categories = :categories");
         $stmt->execute([':categories' => htmlspecialchars($category)]);
