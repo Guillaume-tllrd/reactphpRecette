@@ -14,6 +14,7 @@ import Dashboard from './pagesBack/Dashboard';
 import CreateArticle from './pagesBack/CreateArticle';
 import RecipeByCategory from './pagesFront/RecipeByCategory';
 import RecipePage from './pagesFront/RecipePage';
+import ArticlePage from './pagesFront/ArticlePage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/recipes/:category" element={<RecipeByCategory />} />
         <Route path="/recipes/:category/:id" element={<RecipePage />} />
         <Route path="/articles" element={<Articles />} />
+        <Route path="/articles/:id" element={<ArticlePage />} />
         <Route path="/favoris" element={<Favoris />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

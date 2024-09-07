@@ -31,12 +31,24 @@ switch ($method){
         echo json_encode(['message' => 'Method not allowed']);
         break;
 }
+
 function handleGet(){
     global $pdo;
-    $stmt = $pdo->query("SELECT * FROM articles");
+
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+
+    if($id){
+        $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+    } else {
+        $stmt = $pdo->query("SELECT * FROM articles");
+
+    }   
     $articles = $stmt->fetchAll();
-echo json_encode($articles, JSON_PRETTY_PRINT);
+    echo json_encode($articles, JSON_PRETTY_PRINT); //mettre à l'extérieur d'un if/ else/ pour que ça encode n'importe quel condition
 }
+
+    
 
 function handlePost() {
     global $pdo;

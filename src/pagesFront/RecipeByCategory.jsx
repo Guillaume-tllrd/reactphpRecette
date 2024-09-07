@@ -7,7 +7,7 @@ import Category from '../components/recipes/Category';
 // page d'une catégorie
 const RecipeByCategory = () => {
     const param = useParams()
-    console.log(param.category)
+    // console.log(param.category)
     const category = param.category
     const [recipes, setRecipes] = useState([])
 

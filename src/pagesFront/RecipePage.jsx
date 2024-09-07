@@ -11,6 +11,7 @@ const RecipePage = () => {
     const id = param.id;
     const [recipe , setRecipe] = useState([]); //on met un set loading pour attendre les données
     const [loading, setLoading] = useState(true);
+    
     const img = recipe.picture_1;
     const imgPath= "../../api/" + img;
 
@@ -30,6 +31,7 @@ const RecipePage = () => {
 
     console.log(rawTags);
     console.log(tagsArray)
+
     useEffect(() => {
         axios.get(`http://localhost:8005/recipes.php?id=${id}`).then((res) => {
             setRecipe(res.data[0]);
