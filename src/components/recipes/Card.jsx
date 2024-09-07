@@ -1,14 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Card = ({recipe}) => {
+   const location = useLocation();
+   console.log(recipe);
    
+   const basePath = location.pathname.includes(`/recipes/${recipe.categories}`)
+   ? `/recipes/${recipe.categories}/${recipe.id}` // Already in category path, only add the ID
+   : `/recipes/${recipe.categories}/${recipe.id}`;
+
+
     const img = recipe.picture_1;
     const imgPath= "../../api/" + img;
     
     return (
         
-            <div className='bg-white w-96 h-[335px] mx-auto mb-5 shadow-lg'><Link to={`recipePage/${recipe.id}`}>
+            <div className='bg-white w-96 h-[335px] mx-auto mb-5 shadow-lg'><Link to={`${basePath}`}>
                 <div className='flex flex-col mx-6'>
                     <h1 className='font-scope text-xl text-center py-2'>{recipe.name}</h1>
                     <p className='my-1'>Difficulty : {recipe.difficulty}</p>
