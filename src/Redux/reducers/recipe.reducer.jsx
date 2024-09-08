@@ -1,9 +1,10 @@
-import { ADD_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE} from "../actions/recipe.actions";
+import { ADD_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX} from "../actions/recipe.actions";
 
 const initialState = {
     recipes: [],
     recipesByCategory: [], // Initialisez un tableau pour les recettes
-    Caroussel: []
+    Caroussel: [],
+    recipesToIndex: []
 };
 
 export default function recipeReducer(state = initialState, action) {
@@ -17,6 +18,11 @@ export default function recipeReducer(state = initialState, action) {
             return {
                 ...state,
                 Caroussel: action.payload
+            };
+        case GET_FOUR_RECIPES_TO_INDEX:
+            return {
+                ...state,
+                recipesToIndex: action.payload
             };
         case ADD_RECIPE:
             return {

@@ -21,7 +21,7 @@ const Caroussel = () => {
     const imgPath = "../../../api/" + img;
 
     return (
-        <div className='relative '> 
+        <div className='relative'> 
             <img className='max-h-[680px] mx-auto w-full object-cover' src={imgPath} alt="caroussel" />
             <div className='absolute top-16 left-[5%] bg-opacity-50 bg-black px-6 py-4 lg:top-20 '>
                 <h1 className='font-scope mb-2 text-lg text-center text-white'>{caroussel.name}</h1>

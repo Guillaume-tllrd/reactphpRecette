@@ -44,6 +44,14 @@ function handleGet() {
         $stmt = $pdo->prepare("SELECT id, name, summary, categories, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
         $stmt->execute([':yes' => 'yes']);
 
+    }else if (isset($_GET['indexLimit']) && is_numeric($_GET['indexLimit'])) {
+        //vérifie que le paramètre indexLimit est bien défini et qu'il s'agit d'un nombre.
+        $limit = intval($_GET['indexLimit']); //ermet de convertir la valeur de indexLimit en entier
+        $stmt = $pdo->prepare("SELECT picture_1, name, id FROM recipes ORDER BY RAND() LIMIT :limit");
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+            //il faudra par contre ne pas oublier de mettre le nbre limit dans le axios. ex: axios.get('http://localhost:8005/recipes.php?indexLimit=4')
+
     }else if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
         $stmt = $pdo->query("
             SELECT * FROM (
@@ -74,7 +82,6 @@ function handleGet() {
         $stmt = $pdo->query("SELECT * FROM recipes");
         
     }
-
     $recipes = $stmt->fetchAll();
     echo json_encode($recipes, JSON_PRETTY_PRINT);
 }

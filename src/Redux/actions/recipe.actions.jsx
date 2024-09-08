@@ -3,6 +3,7 @@ import axios from "axios";
 export const ADD_RECIPE = "ADD_RECIPE";
 export const GET_RECIPE_BY_CATEGORY = 'GET_RECIPE_BY_CATEGORY';
 export const GET_CAROUSSEL_RECIPE = 'GET_CAROUSSEL_RECIPE';
+export const GET_FOUR_RECIPES_TO_INDEX = 'GET_FOUR_RECIPES_TO_INDEX';
 
 export const addRecipe = (data) => {
     return (dispatch) => {
@@ -55,3 +56,12 @@ export const getCarousselRecipe = () => {
     })
 }
 };
+
+export const getFourRecipesToIndex = () => {
+    return (dispatch) => {
+        axios.get('http://localhost:8005/recipes.php?indexLimit=4')
+        .then((res) => {
+            dispatch({ type: GET_FOUR_RECIPES_TO_INDEX, payload: res.data})
+        })
+    }
+}
