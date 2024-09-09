@@ -1,14 +1,19 @@
-import { ADD_ARTICLE, GET_ARTICLES } from "../actions/article.actions";
+import { ADD_ARTICLE, GET_ARTICLES, GET_ARTICLES_TO_INDEX } from "../actions/article.actions";
 
 const initialState = {
     articles : [],
+    articlesToIndex: []
 };
 
 export default function articleReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ARTICLES:
             return action.payload;
-            
+        case GET_ARTICLES_TO_INDEX:
+            return {
+                ...state,
+                articlesToIndex: action.payload
+            }
         case ADD_ARTICLE:
             return {
                 ...state, // Conserver l'état précédent

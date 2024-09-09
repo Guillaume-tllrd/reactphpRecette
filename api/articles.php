@@ -37,9 +37,15 @@ function handleGet(){
 
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     if($id){
-    
         $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = :id");
         $stmt->execute(['id' => $id]);
+
+    } else if (isset($_GET['indexLimit']) && is_numeric($_GET['indexLimit'])){
+        $limit = intval($_GET['indexLimit']);
+        $stmt = $pdo->prepare("SELECT id, title, picture FROM articles ORDER BY RAND() LIMIT :limit");
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
     } else {
         $stmt = $pdo->query("SELECT * FROM articles");
 
@@ -52,9 +58,6 @@ function handleGet(){
 
 function handlePost() {
     global $pdo;
-
-    file_put_contents('php://stderr', print_r($_POST, true));
-    file_put_contents('php://stderr', print_r($_FILES, true));
 
     // S'assurer que les inputs sont envoyés
     $requiredFields = ['title','description', 'tags', 'top', 'user_name', 'date'];
