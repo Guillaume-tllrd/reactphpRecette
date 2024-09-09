@@ -4,16 +4,18 @@ import Footer from '../components/Footer';
 import Caroussel from '../components/recipes/Caroussel';
 import FourRecipesToIndex from '../components/recipes/FourRecipesToIndex';
 import ArticlesToIndex from '../components/articles/ArticlesToIndex';
-import { getFourRecipesToIndex } from '../Redux/actions/recipe.actions';
+import { getBestRecipesIndex, getFourRecipesToIndex } from '../Redux/actions/recipe.actions';
 import { getArticlesToIndex } from '../Redux/actions/article.actions';
 import { useDispatch } from 'react-redux';
+import BestRecipesIndex from '../components/recipes/BestRecipesIndex';
 
 const Home = () => {
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch(getFourRecipesToIndex());
         dispatch(getArticlesToIndex())
+        dispatch(getBestRecipesIndex())
     },[dispatch])
 
     return (
@@ -22,6 +24,7 @@ const Home = () => {
             <Caroussel/>
             <ArticlesToIndex />
             <FourRecipesToIndex/>
+            <BestRecipesIndex/>
             <Footer/>
         </div>
     );

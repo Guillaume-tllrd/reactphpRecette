@@ -44,6 +44,10 @@ function handleGet() {
         $stmt = $pdo->prepare("SELECT id, name, summary, categories, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
         $stmt->execute([':yes' => 'yes']);
 
+    }else if(isset($_GET['top']) && $_GET["top"] == 'true'){
+        $stmt = $pdo->prepare('SELECT id, name, picture_1, categories FROM recipes WHERE top = :yes ORDER BY RAND() LIMIT 3');
+        $stmt->execute([':yes' => 'yes']);
+
     }else if (isset($_GET['indexLimit']) && is_numeric($_GET['indexLimit'])) {
         //vérifie que le paramètre indexLimit est bien défini et qu'il s'agit d'un nombre.
         $limit = intval($_GET['indexLimit']); //ermet de convertir la valeur de indexLimit en entier
