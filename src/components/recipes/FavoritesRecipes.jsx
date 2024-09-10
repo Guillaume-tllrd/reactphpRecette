@@ -18,10 +18,10 @@ const FavoritesRecipes = () => {
                             ))}
                         </ul>
                     ) : (
-                        <p className="text-center">You haven't selected a recipe yet.</p>
+                        <p className="text-center">You haven't selected a recipe yet. 😟</p>
                     )
                 ) : (
-                    <p className="text-center">You need to log in to see your favorite recipes.</p>
+                    <p className="text-center">You need to log in to see your favorite recipes. 🤙</p>
                 )}
             </div>
         </div>

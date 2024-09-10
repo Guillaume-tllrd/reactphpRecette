@@ -1,37 +1,51 @@
 import { Heart } from 'lucide-react';
-import { useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRecipesToFavorites, fetchFavoritesRecipes } from '../../Redux/actions/favoritesRecipe.actions';
+import { addRecipesToFavorites, deleteFavoritesRecipe, fetchFavoritesRecipes } from '../../Redux/actions/favoritesRecipe.actions';
 
-const LikedRecipes = ({recipe}) => {
-    // console.log(recipe);
+const LikedRecipes = ({ recipe }) => {
     const dispatch = useDispatch();
     const [liked, setLiked] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
-    const user = useSelector((state) => state.userReducer)
+    const user = useSelector((state) => state.userReducer);
+    // on récupères les recettes de notre store , si elles y sont on garde le state true 
+    const recipes = useSelector((state) => state.favoritesRecipeReducer.favoritesRecipesByUser);
 
-     async function handleFormSubmit(e)  {
+    // Utilisation du useEffect pour gérer l'état initial du like si la recette est déjà en favoris
+    useEffect(() => {
+        if (recipes && recipes.some((favRecipe) => favRecipe.recipe_id === recipe.id)) {
+            setLiked(true);
+        }
+    }, [recipes, recipe.id]);
+
+    async function handleFormSubmit(e) {
+        // si on ne met pas en asynchrone cela ne va pas attendre de finir et par conséquent les recette ne s'afficheront pas directement dans les fav
         e.preventDefault();
 
         const favoritesRecipesData = {
-            user_id : user.id,
-            user_name : user.name,
-            recipe_id : recipe.id,
+            user_id: user.id,
+            user_name: user.name,
+            recipe_id: recipe.id,
             recipe_name: recipe.name,
             recipe_picture: recipe.picture_1,
             recipe_categorie: recipe.categories,
+        };
+
+        if (liked) {
+            // Supprimer la recette des favoris
+            await dispatch(deleteFavoritesRecipe(recipe.id, user.id));
+        } else {
+            // Ajouter la recette aux favoris
+            await dispatch(addRecipesToFavorites(favoritesRecipesData));
+        }
+
+        // on doit refecth les favoris après une modif pour que ça s'affiche bien sans refresh
+        dispatch(fetchFavoritesRecipes(user.id));
+
+        // Inverser l'état du like
+        setLiked(!liked);
     }
-    if (liked) {
-        // dispatch(removeRecipesToFavorites(favoritesRecipesData));
-    } else {
-        // ne pas oublier de mettre en async await la function pour voir apparaitre les données
-        await dispatch(addRecipesToFavorites(favoritesRecipesData));
-        dispatch(fetchFavoritesRecipes(user.id))
-        //penser a garder l'état du liked avec le store redux
-    }
-    setLiked(!liked)
-    
-}
+
     return (
         <div className="relative">
             <form onSubmit={handleFormSubmit}>

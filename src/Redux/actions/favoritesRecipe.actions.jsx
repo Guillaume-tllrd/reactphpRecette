@@ -33,8 +33,8 @@ export const deleteFavoritesRecipe = (recipeId, userId) => {
     return (dispatch) => {
         return axios.delete('http://localhost:8005/favoriteRecipe.php', {
             data: {
-                id: recipeId,
-                user_id: userId
+                id: parseInt(recipeId, 10),
+                user_id: parseInt(userId, 10)
             }
         })
         .then((res) => {
