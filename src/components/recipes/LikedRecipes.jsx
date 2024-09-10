@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addRecipesToFavorites } from '../../Redux/actions/favoritesRecipe.actions';
 
 const LikedRecipes = ({recipe}) => {
-    console.log(recipe);
+    // console.log(recipe);
     const dispatch = useDispatch();
     const [liked, setLiked] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
@@ -19,13 +19,15 @@ const LikedRecipes = ({recipe}) => {
             recipe_id : recipe.id,
             recipe_name: recipe.name,
             recipe_picture: recipe.picture_1,
+            recipe_categorie: recipe.categories,
     }
     if (liked) {
         // dispatch(removeRecipesToFavorites(favoritesRecipesData));
     } else {
         dispatch(addRecipesToFavorites(favoritesRecipesData));
-        //penser a garder l'état du liked
+        //penser a garder l'état du liked avec le store redux
     }
+    setLiked(!liked)
 }
     return (
         <div className="relative">

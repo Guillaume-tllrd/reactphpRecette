@@ -35,24 +35,56 @@ switch ($method){
 function handleGet() {
     global $pdo;
 
-    $stmt = $pdo->query('SELECT * FROM favoris');
-    $favoritesRecipes = $stmt->fetchAll();
-    echo json_encode($favoritesRecipes, JSON_PRETTY_PRINT);
+        // on doit d'abord vérifier l'idendité de user_id via une requête $_GET
+    $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
+    if ($user_id){
+     //on spécifie exactement les colonnes qu'on récupère
+        $stmt = $pdo->prepare('SELECT 
+                               r.picture_1 AS recipe_picture, 
+                               r.name AS recipe_name, 
+                               r.categories AS recipe_categorie,
+                               u.name AS user_name,
+                               u.id AS user_id
+                           FROM favoris f
+                           JOIN recipes r ON f.recipe_id = r.id
+                           JOIN users u ON f.user_id = u.id
+                           WHERE f.user_id = :user_id');
+                           //comme on a une colonne user_name dans la table favoris, et que je veuw que ces données soient toujours à jour et synchronisées avec la table users je dois églmt JOIN avec users sinon pas besoin
+                       //Le WHERE f.user_id = :user_id est là pour filtrer les résultats de la table favoris en fonction de l'utilisateur connecté
+        $stmt->execute(['user_id' => $user_id]);
+        $favoritesRecipesByUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Vérifier si des favoris sont trouvés
+        if ($favoritesRecipesByUser) {
+            echo json_encode($favoritesRecipesByUser, JSON_PRETTY_PRINT);
+        } else {
+            // Si aucun favori n'est trouvé pour cet utilisateur
+            echo json_encode(['message' => 'No favorite recipes found for this user']);
+        }
+    // } else {
+    //     // Si aucun user_id n'est passé, retourner une erreur
+    //     http_response_code(400);
+    //     echo json_encode(['message' => 'Missing user_id parameter']);
     
+    }else {
+        $stmt = $pdo->query('SELECT * FROM favoris');
+        $favoritesRecipes = $stmt->fetchAll();
+        echo json_encode($favoritesRecipes, JSON_PRETTY_PRINT);
+    }
 }
 
 function handlePost(){
     global $pdo;
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($data['user_id'], $data['user_name'], $data['recipe_id'], $data['recipe_name'], $data['recipe_picture'])) {
+    if (!isset($data['user_id'], $data['user_name'], $data['recipe_id'], $data['recipe_name'], $data['recipe_picture'], $data['recipe_categorie'])) {
         http_response_code(400);
         echo json_encode(['message' => 'Missing data']);
         return;
     }
     try {
         
-        $stmt = $pdo->prepare('INSERT INTO favoris (user_id, user_name, recipe_id, recipe_name, recipe_picture) VALUES (:user_id, :user_name, :recipe_name, :recipe_id, :recipe_picture)');
+        $stmt = $pdo->prepare('INSERT INTO favoris (user_id, user_name, recipe_id, recipe_name, recipe_picture, recipe_categorie) VALUES (:user_id, :user_name, :recipe_name, :recipe_id, :recipe_picture, :recipe_categorie)');
 
         // Exécution de la requête avec les données fournies
         $result = $stmt->execute([
@@ -60,7 +92,8 @@ function handlePost(){
             $data['user_name'],
             $data['recipe_id'],
             $data['recipe_name'],
-            $data['recipe_picture']
+            $data['recipe_picture'],
+            $data['recipe_categorie']
         ]);
 
         // Vérification du résultat
