@@ -12,7 +12,7 @@ export default function articleReducer(state = initialState, action) {
         case GET_ARTICLES_TO_INDEX:
             return {
                 ...state,
-                articlesToIndex: action.payload
+                articlesToIndex: action.payload,
             }
         case ADD_ARTICLE:
             return {

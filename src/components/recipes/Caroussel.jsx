@@ -16,7 +16,7 @@ const Caroussel = () => {
 
 
 
-    console.log(caroussel);
+    // console.log(caroussel);
     const img = caroussel.picture_2;
     const imgPath = "../../../api/" + img;
 

@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const ADD_RECIPE_TO_FAVORITES = "ADD_RECIPE_TO_FAVORITES";
 export const FETCH_RECIPES_BY_USER = "FETCH_RECIPES_BY_USER";
+export const DELETE_RECIPE_BY_USER = "DELETE_RECIPE_BY_USER";
 
 export const addRecipesToFavorites = (data) => {
     return (dispatch) => {
@@ -28,3 +29,19 @@ export const fetchFavoritesRecipes = (userId) => {
     }
 }
 
+export const deleteFavoritesRecipe = (recipeId, userId) => {
+    return (dispatch) => {
+        return axios.delete('http://localhost:8005/favoriteRecipe.php', {
+            data: {
+                id: recipeId,
+                user_id: userId
+            }
+        })
+        .then((res) => {
+            dispatch({type: DELETE_RECIPE_BY_USER, payload: recipeId}); // il faut utiliser l'id 
+        })
+        .catch((error) => {
+            console.error("Error removing favorites", error);
+        });
+    };
+};

@@ -1,7 +1,7 @@
 import { Heart } from 'lucide-react';
-import {useRef, useState} from 'react';
+import { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRecipesToFavorites } from '../../Redux/actions/favoritesRecipe.actions';
+import { addRecipesToFavorites, fetchFavoritesRecipes } from '../../Redux/actions/favoritesRecipe.actions';
 
 const LikedRecipes = ({recipe}) => {
     // console.log(recipe);
@@ -10,7 +10,7 @@ const LikedRecipes = ({recipe}) => {
     const [showMessage, setShowMessage] = useState(false);
     const user = useSelector((state) => state.userReducer)
 
-    function handleFormSubmit(e){
+     async function handleFormSubmit(e)  {
         e.preventDefault();
 
         const favoritesRecipesData = {
@@ -24,10 +24,13 @@ const LikedRecipes = ({recipe}) => {
     if (liked) {
         // dispatch(removeRecipesToFavorites(favoritesRecipesData));
     } else {
-        dispatch(addRecipesToFavorites(favoritesRecipesData));
+        // ne pas oublier de mettre en async await la function pour voir apparaitre les données
+        await dispatch(addRecipesToFavorites(favoritesRecipesData));
+        dispatch(fetchFavoritesRecipes(user.id))
         //penser a garder l'état du liked avec le store redux
     }
     setLiked(!liked)
+    
 }
     return (
         <div className="relative">

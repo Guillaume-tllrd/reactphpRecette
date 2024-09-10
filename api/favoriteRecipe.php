@@ -23,9 +23,9 @@ switch ($method){
     // case 'PUT':
     //     handlePut();
     // break;
-    // case 'DELETE':
-    //     handleDelete();
-    // break;
+    case 'DELETE':
+        handleDelete();
+    break;
     default :
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);
@@ -61,10 +61,6 @@ function handleGet() {
             // Si aucun favori n'est trouvé pour cet utilisateur
             echo json_encode(['message' => 'No favorite recipes found for this user']);
         }
-    // } else {
-    //     // Si aucun user_id n'est passé, retourner une erreur
-    //     http_response_code(400);
-    //     echo json_encode(['message' => 'Missing user_id parameter']);
     
     }else {
         $stmt = $pdo->query('SELECT * FROM favoris');
@@ -108,5 +104,43 @@ function handlePost(){
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
+    }
+}
+
+function handleDelete() {
+    global $pdo;
+
+    // On utilise file_get_contents('php://input') pour récupérer les données envoyées par le client dans la requête DELETE
+    $data = json_decode(file_get_contents('php://input'), true);
+
+
+    // Vérifier que les données nécessaires sont présentes
+    if (!isset($data['id'], $data['user_id'])) {
+        http_response_code(400);
+        echo json_encode(['message' => 'Missing data']);
+        return;
+    }
+
+    try {
+        // Préparer la requête SQL pour supprimer la recette favorite de l'utilisateur
+        $stmt = $pdo->prepare("DELETE FROM favoris WHERE recipe_id = :recipe_id AND user_id = :user_id");
+
+        // Exécuter la requête avec les données fournies
+        $result = $stmt->execute([
+            'recipe_id' => $data['id'],
+            'user_id' => $data['user_id'],
+        ]);
+
+  
+        if ($result) {
+            http_response_code(200);
+            echo json_encode(['message' => 'Favorite recipe successfully removed']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['message' => 'Error removing favorite recipe']);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['message' => 'Server error', 'error' => $e->getMessage()]);
     }
 }
