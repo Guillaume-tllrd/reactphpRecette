@@ -3,8 +3,9 @@ import Footer from '../components/Footer';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { UsersRound, HandPlatter, Timer, ChefHat, Heart } from 'lucide-react';
+import { UsersRound, HandPlatter, Timer, ChefHat } from 'lucide-react';
 import LikedRecipes from '../components/recipes/LikedRecipes';
+import CommentArea from '../components/comments/commentArea';
 
 //Page d'une seule recette
 const RecipePage = () => {
@@ -116,6 +117,7 @@ const RecipePage = () => {
                   
                 
             </div>
+            <CommentArea recipe={recipe}/>
             <Footer/>
         </div>
     );
