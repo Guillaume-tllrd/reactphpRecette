@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addComment } from '../../Redux/actions/comment.actions';
+import { addComment, fetchComment } from '../../Redux/actions/comment.actions';
 
 const CommentForm = ({recipe}) => {
     const user = useSelector((state) => state.userReducer);
     const [comment, setComment] = useState("");
     const dispatch = useDispatch();
-    // console.log(user)
 
+    // useEffect(() => {
+    //     dispatch(fetchComment(recipe.id))
+    // },[dispatch, recipe])
+    // console.log(recipe.id);
     async function handleFormSubmit(e){
         e.preventDefault();
 
@@ -20,11 +23,16 @@ const CommentForm = ({recipe}) => {
             comment: comment,
         };
         try{
-            await dispatch(addComment(data))
+            await dispatch(addComment(data));
+            dispatch(fetchComment(recipe.id));
             setComment("");
+            // window.location.reload();
+            
         } catch(error){
             console.error("Failed to post the comment", error);
         }
+        
+
         
     }
 

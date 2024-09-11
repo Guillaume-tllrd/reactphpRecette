@@ -35,10 +35,29 @@ switch ($method){
 function handleGet() {
     global $pdo;
 
-    $stmt = $pdo->query('SELECT * FROM comments');
-        $favoritesRecipes = $stmt->fetchAll();
-        echo json_encode($favoritesRecipes, JSON_PRETTY_PRINT);
+    // Vérifie si 'recipe_id' est présent dans les paramètres GET
+    $recipe_id = isset($_GET['recipe_id']) ? intval($_GET['recipe_id']) : null;
+
+    if ($recipe_id) {
+        // Prépare la requête pour récupérer les commentaires pour une recette spécifique
+        $stmt = $pdo->prepare('SELECT * FROM comments WHERE recipe_id = :recipe_id');
+        $stmt->execute(['recipe_id' => $recipe_id]);
+        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Vérifie si des commentaires ont été trouvés
+        if ($comments) {
+            echo json_encode($comments, JSON_PRETTY_PRINT);
+        } else {
+            echo json_encode(['message' => 'No comments found for this recipe'], JSON_PRETTY_PRINT);
+        }
+    } else {
+        // Prépare la requête pour récupérer tous les commentaires si 'recipe_id' n'est pas fourni
+        $stmt = $pdo->query('SELECT * FROM comments');
+        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($comments, JSON_PRETTY_PRINT);
+    }
 }
+
 
 function handlePost(){
     global $pdo;
@@ -67,7 +86,7 @@ function handlePost(){
         // Vérification du résultat
         if ($result) {
             http_response_code(201);
-            echo json_encode(['message' => 'Now, this recipes is one of your favorite']);
+            echo json_encode(['message' => 'New comments']);
         } else {
             http_response_code(500);
             $error = $stmt->errorInfo();

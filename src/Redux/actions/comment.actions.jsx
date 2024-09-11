@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const ADD_COMMENT = "ADD_COMMENT";
+export const FETCH_COMMENT = "FETCH_COMMENT";
 
 export const addComment = (data) => {
     return (dispatch) => {
@@ -18,3 +19,15 @@ export const addComment = (data) => {
         });
     };
 };
+
+export const fetchComment = (recipeId) => {
+    return (dispatch) => {
+        return axios.get(`http://localhost:8005/comments.php?recipe_id=${recipeId}`)
+        .then((res) => {
+            dispatch({type: FETCH_COMMENT, payload: res.data})
+        })
+        .catch((error) => {
+            console.error("Error fetching comment",error)
+        })
+    }
+}

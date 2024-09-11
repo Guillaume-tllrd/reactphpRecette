@@ -32,7 +32,7 @@ const App = () => {
     dispatch(getArticlesToIndex())
     dispatch(getBestRecipesIndex())
     dispatch(getCarousselRecipe());
-    dispatch(fetchFavoritesRecipes(user.id))
+    // dispatch(fetchFavoritesRecipes(user.id))
   },[dispatch, user.id]);
 
   return (
