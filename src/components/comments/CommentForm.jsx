@@ -1,23 +1,31 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addComment } from '../../Redux/actions/comment.actions';
 
 const CommentForm = ({recipe}) => {
     const user = useSelector((state) => state.userReducer);
     const [comment, setComment] = useState("");
+    const dispatch = useDispatch();
+    // console.log(user)
 
-
-    function handleFormSubmit(e){
+    async function handleFormSubmit(e){
         e.preventDefault();
 
-        const formData = new formData();
-        formData.append('user_id', user.id);
-        formData.append("username", user.username);
-        formData.append("recipe_id", recipe.id);
-        formData.append("date", new Date().toISOString().split('T')[0]);
-        formData.append("comment", comment);
-
-  
+        const data = {
+            user_id: user.id,
+            username: user.username,
+            recipe_id: recipe.id,
+            date:  new Date().toISOString().split('T')[0],
+            comment: comment,
+        };
+        try{
+            await dispatch(addComment(data))
+            setComment("");
+        } catch(error){
+            console.error("Failed to post the comment", error);
+        }
+        
     }
 
     return (
@@ -27,7 +35,7 @@ const CommentForm = ({recipe}) => {
                     <p className='text-center'>Post your comments! 🥰</p>
                     <form onSubmit={handleFormSubmit}>
                         <textarea className='border w-full py-7' value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
-                        <div className='flex justify-end'><button className='bg-rose-500 text-white px-5 p-2 rounded mt-2 hover:bg-rose-600'>Post</button></div>
+                        <div type="submit" className='flex justify-end'><button className='bg-rose-500 text-white px-5 p-2 rounded mt-2 hover:bg-rose-600'>Post</button></div>
                     </form>
                 </div>
             ) : (
