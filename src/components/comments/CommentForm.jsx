@@ -24,7 +24,7 @@ const CommentForm = ({recipe}) => {
         };
         try{
             await dispatch(addComment(data));
-            dispatch(fetchComment(recipe.id));
+            await dispatch(fetchComment(recipe.id));
             setComment("");
             // window.location.reload();
             

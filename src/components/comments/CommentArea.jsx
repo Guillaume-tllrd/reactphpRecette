@@ -9,12 +9,12 @@ const CommentArea = ({recipe}) => {
     const dispatch = useDispatch();
     const comments = useSelector((state) => state.commentReducer.commentsByRecipe);
     const commentaire = useSelector((state) => state.commentReducer.comments)
-    console.log(commentaire);
     
     useEffect(() => {
         dispatch(fetchComment(recipe.id))
-    },[commentaire])
-    // une fois que commentaire change ca met automatiquement le comentaire a jour par contre qd on refresh ca nous marque tous les comment reunie donc il faurdiat mettre ensuite dispatch, recipe.id en dependance
+    },[recipe.id,commentaire])
+    // le useeffect est déclenché qd on ajoute cad qd on joue commentaire qui est le 1er tableau et ensuite cela passe à commentsByrecipe et donc il faut jouer recipe.id pour faire afficher la data 
+    
     return (
         <div className='py-5'>
             <div className='flex gap-1 mx-4'>
