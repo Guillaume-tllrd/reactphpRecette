@@ -22,12 +22,6 @@ switch ($method) {
     case 'POST':
         handlePost();
         break;
-    case 'PUT':
-        handlePut();
-        break;
-    case 'DELETE':
-        handleDelete();
-        break;
     default:
         http_response_code(405); // Méthode non autorisée
         echo json_encode(['message' => 'Méthode non autorisée']);
@@ -61,7 +55,7 @@ function handlePost() {
     // Vérification des champs obligatoires
     if (!isset($data['firstname'], $data['name'], $data['username'], $data['email'], $data['password'])) {
         http_response_code(400);
-        echo json_encode(['message' => 'Données manquantes']);
+        echo json_encode(['message' => 'Missing datas']);
         return;
     }
 
@@ -81,7 +75,7 @@ function handlePost() {
         // Vérification du résultat
         if ($result) {
             http_response_code(201);
-            echo json_encode(['message' => 'Utilisateur créé']);
+            echo json_encode(['message' => 'User created']);
         } else {
             http_response_code(500);
             $error = $stmt->errorInfo();
@@ -89,60 +83,7 @@ function handlePost() {
         }
     } catch (Exception $e) {
         http_response_code(500);
-        echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
-    }
-}
-
-function handlePut() {
-    global $pdo;
-    $data = json_decode(file_get_contents('php://input'), true);
-    $id = isset($data['id']) ? intval($data['id']) : null;
-
-    if (!$id || !isset($data['firstname'], $data['name'], $data['username'], $data['email'], $data['password'], $data['role'])) {
-        http_response_code(400);
-        echo json_encode(['message' => 'Données manquantes ou ID manquant']);
-        return;
-    }
-
-    $stmt = $pdo->prepare('UPDATE users SET firstname = ?, name = ?, username = ?, email = ?, password = ?, role = ? WHERE id = ?');
-    $result = $stmt->execute([
-        $data['firstname'],
-        $data['name'],
-        $data['username'],
-        $data['email'],
-        password_hash($data['password'], PASSWORD_DEFAULT),
-        $data['role'],
-        $id
-    ]);
-
-    if ($result) {
-        echo json_encode(['message' => 'Utilisateur mis à jour']);
-    } else {
-        http_response_code(500);
-        $error = $stmt->errorInfo();
-        echo json_encode(['message' => 'Erreur de mise à jour', 'error' => $error]);
-    }
-}
-
-function handleDelete() {
-    global $pdo;
-    $id = isset($_GET['id']) ? intval($_GET['id']) : null;
-
-    if (!$id) {
-        http_response_code(400);
-        echo json_encode(['message' => 'ID manquant']);
-        return;
-    }
-
-    $stmt = $pdo->prepare('DELETE FROM users WHERE id = ?');
-    $result = $stmt->execute([$id]);
-
-    if ($result) {
-        echo json_encode(['message' => 'Utilisateur supprimé']);
-    } else {
-        http_response_code(500);
-        $error = $stmt->errorInfo();
-        echo json_encode(['message' => 'Erreur de suppression', 'error' => $error]);
+        echo json_encode(['message' => 'Servor error', 'error' => $e->getMessage()]);
     }
 }
 

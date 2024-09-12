@@ -2,7 +2,7 @@ import { ADD_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECI
 
 const initialState = {
     recipes: [],
-    recipesByCategory: [], // Initialisez un tableau pour les recettes
+    recipesByCategory: [], // Initialise un tableau pour les recettes
     Caroussel: [],
     recipesToIndex: [],
     bestRecipesToIndex: []

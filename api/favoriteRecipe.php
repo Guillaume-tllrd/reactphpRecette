@@ -20,9 +20,6 @@ switch ($method){
     case 'POST':
         handlePost();
     break;
-    // case 'PUT':
-    //     handlePut();
-    // break;
     case 'DELETE':
         handleDelete();
     break;

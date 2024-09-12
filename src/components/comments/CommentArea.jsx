@@ -8,11 +8,11 @@ import { fetchComment } from '../../Redux/actions/comment.actions';
 const CommentArea = ({recipe}) => {
     const dispatch = useDispatch();
     const comments = useSelector((state) => state.commentReducer.commentsByRecipe);
-    const commentaire = useSelector((state) => state.commentReducer.comments)
+    const allComments = useSelector((state) => state.commentReducer.comments)
     
     useEffect(() => {
         dispatch(fetchComment(recipe.id))
-    },[recipe.id,commentaire])
+    },[recipe.id,allComments])
     // le useeffect est déclenché qd on ajoute cad qd on joue commentaire qui est le 1er tableau et ensuite cela passe à commentsByrecipe et donc il faut jouer recipe.id pour faire afficher la data 
     
     return (

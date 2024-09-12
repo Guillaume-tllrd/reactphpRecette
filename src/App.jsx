@@ -15,25 +15,21 @@ import CreateArticle from './pagesBack/CreateArticle';
 import RecipeByCategory from './pagesFront/RecipeByCategory';
 import RecipePage from './pagesFront/RecipePage';
 import ArticlePage from './pagesFront/ArticlePage';
-import { getBestRecipesIndex, getCarousselRecipe, getFourRecipesToIndex } from './Redux/actions/recipe.actions';
-import { fetchFavoritesRecipes } from './Redux/actions/favoritesRecipe.actions';
-import { getArticlesToIndex } from './Redux/actions/article.actions';
+import {  getCarousselRecipe } from './Redux/actions/recipe.actions';
+
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer);
+  // const user = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(getSessionUser());  // Au moment de recharger la page si un token est présent dans le localStorage on redemande le les données de user car sinon elles disparaissent du store
     }
-    dispatch(getFourRecipesToIndex());
-    dispatch(getArticlesToIndex())
-    dispatch(getBestRecipesIndex())
     dispatch(getCarousselRecipe());
-    // dispatch(fetchFavoritesRecipes(user.id))
-  },[dispatch, user.id]);
+
+  },[dispatch]);
 
   return (
     <BrowserRouter>

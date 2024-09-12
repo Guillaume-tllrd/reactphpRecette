@@ -20,12 +20,6 @@ switch ($method){
     case 'POST':
         handlePost();
     break;
-    // case 'PUT':
-    //     handlePut();
-    // break;
-    // case 'DELETE':
-    //     handleDelete();
-    // break;
     default :
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);

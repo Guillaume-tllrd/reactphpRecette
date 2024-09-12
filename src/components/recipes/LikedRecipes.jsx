@@ -47,7 +47,7 @@ const LikedRecipes = ({ recipe }) => {
     }
 
     return (
-        <div className="relative">
+        <div className="relative mx-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9">
             <form onSubmit={handleFormSubmit}>
                 {user && user.id ? (
                     <button type="submit">
