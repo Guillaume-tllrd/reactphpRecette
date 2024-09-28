@@ -33,12 +33,12 @@ function handleGet() {
     // const category = param.category ne pas oublier le route
     $category = isset($_GET['categories']) ? $_GET['categories'] : null;
     $id = isset($_GET['id']) ? $_GET['id'] : null;
+    $searchRecipe= isset($_GET['search']) ? ($_GET['search']) : null;
 
-    // if (isset($_GET['search'])){
-    // $searchRecipe= $_GET['search'];
-    // $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ?")
-    // $stmt->execute(['%' . $searchRecipe . '%']);
-     if(isset($_GET['background']) && $_GET['background'] == 'true') {
+    if ($searchRecipe){
+    $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ")
+    $stmt->execute(['%' . $searchRecipe . '%']);
+    }else if(isset($_GET['background']) && $_GET['background'] == 'true'){
         $stmt = $pdo->prepare("SELECT id, name, summary, categories, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
         $stmt->execute([':yes' => 'yes']);
 
@@ -82,8 +82,7 @@ function handleGet() {
         $stmt->execute(['id' => $id]);
     } else {
         $stmt = $pdo->query("SELECT * FROM recipes");
-        
-    }
+    } 
     $recipes = $stmt->fetchAll();
     echo json_encode($recipes, JSON_PRETTY_PRINT);
 }

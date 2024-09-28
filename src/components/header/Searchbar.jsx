@@ -1,19 +1,21 @@
 import { Search } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { getSearchRecipes } from '../../Redux/actions/recipe.actions';
+import { useNavigate } from 'react-router-dom';
 
 const Searchbar = () => {
 const dispatch = useDispatch();
+const navigate = useNavigate();
     function handleSearchSubmit(e){
         e.preventDefault()
         const searchRecipe = e.target.value;
         dispatch(getSearchRecipes(searchRecipe))
-        console.log(searchRecipe)
+        navigate(`/searchResulst?query=${searchRecipe}`)
     }
     return (
         <form className='relative flex items-center max-w-md mx-auto my-4'>  
         {/* pour centrer mx-auto */}
-            <button onClick={handleSearchSubmit} type='submit'  className='absolute left-3' ><Search className='text-gray-500' /></button>
+            <button onClick={handleSearchSubmit} type='submit' className='absolute left-3' ><Search className='text-gray-500' /></button>
             <input
                 type="search"
                 id="searchbar"
