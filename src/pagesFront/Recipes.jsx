@@ -17,7 +17,7 @@ const Recipes = () => {
         dispatch(getRecipeByCategory())
     }, [dispatch]); 
 
-//    console.log(recipesByCategory)
+   console.log(recipesByCategory)
     return (
         <div>
             <Header />
