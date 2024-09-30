@@ -18,7 +18,7 @@ const SearchResult = () => {
     return (
         <div>
             <Header />
-            <div className='bg-amber-100 py-5 pb-5 min-h-80'>
+            <div className='bg-amber-100 py-5 pb-5 min-h-96'>
                 {searchRecipe && searchRecipe.length > 0 ? (
                     <div className='xl:w-[1350px] mx-auto '>
                         <h1 className='font-scope text-2xl text-center mb-6'>Search result for "{searchTerm}" :</h1>

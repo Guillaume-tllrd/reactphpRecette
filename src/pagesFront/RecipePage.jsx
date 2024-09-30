@@ -53,7 +53,7 @@ const RecipePage = () => {
                 <div className='flex justify-between'>
                     <div>
                         <p className='mx-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Tags : {tagsArray.map((tag, index) => ( <Link key={index} className='hover:underline pr-1 font-light'>{tag}</Link>) )}</p>
-                        <p className='mx-2 mb-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Country: <Link className='hover:underline font-light'>{recipe.country}</Link></p>
+                        <p className='mx-2 mb-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Country: <Link to="" className='hover:underline font-light'>{recipe.country}</Link></p>
                     </div>
                     
                 <LikedRecipes recipe={recipe}/>
