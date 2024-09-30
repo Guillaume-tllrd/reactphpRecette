@@ -16,6 +16,7 @@ import RecipeByCategory from './pagesFront/RecipeByCategory';
 import RecipePage from './pagesFront/RecipePage';
 import ArticlePage from './pagesFront/ArticlePage';
 import {  getCarousselRecipe } from './Redux/actions/recipe.actions';
+import SearchResult from './pagesFront/SearchResult';
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/createRecipe" element={<CreateRecipe />} />
         <Route path="/createArticle" element={<CreateArticle />} />
+        <Route path="/searchResult" element={<SearchResult />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>
