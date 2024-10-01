@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const CountryForm = ({recipe}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    
+
     function handleCountrySubmit(e){
         e.preventDefault();
         const country = e.target.value;
-        dispatch(getCountryRecipe());
+        dispatch(getCountryRecipe(country));
         navigate(`/searchResult?country=${country}`);
         
     }

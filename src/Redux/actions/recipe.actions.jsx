@@ -7,6 +7,7 @@ export const GET_FOUR_RECIPES_TO_INDEX = 'GET_FOUR_RECIPES_TO_INDEX';
 export const GET_BEST_RECIPES_TO_INDEX = 'GET_BEST_RECIPES_TO_INDEX';
 export const GET_SEARCH_RECIPES = 'GET_SEARCH_RECIPES';
 export const GET_COUNTRY_RECIPES = 'GET_COUNTRY_RECIPES';
+export const GET_TAG_RECIPES = 'GGET_TAG_RECIPES';
 
 export const addRecipe = (data) => {
     return (dispatch) => {
@@ -92,6 +93,14 @@ export const getCountryRecipe = (country) => {
         axios.get(`http://localhost:8005/recipes.php?country=${country}`)
         .then((res) => {
             dispatch({type: GET_COUNTRY_RECIPES, payload: res.data})
+        })
+    }
+}
+export const getTagRecipe = (tag) => {
+    return (dispatch) => {
+        axios.get(`http://localhost:8005/recipes.php?tag=${tag}`)
+        .then((res) => {
+            dispatch({type: GET_TAG_RECIPES, payload: res.data})
         })
     }
 }

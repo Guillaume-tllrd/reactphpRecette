@@ -34,11 +34,16 @@ function handleGet() {
     $category = isset($_GET['categories']) ? $_GET['categories'] : null;
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     $searchRecipe= isset($_GET['search']) ? ($_GET['search']) : null;
+    $countryRecipe= isset($_GET['country']) ? ($_GET['country']) : null;
 
     if ($searchRecipe){
     $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ?");
     $stmt->execute(['%' . $searchRecipe . '%']);
     
+    }else if($countryRecipe){
+        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE country LIKE ?");
+        $stmt->execute(['%' . $countryRecipe . '%']);
+
     }else if(isset($_GET['background']) && $_GET['background'] == 'true'){
         $stmt = $pdo->prepare("SELECT id, name, summary, categories, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
         $stmt->execute([':yes' => 'yes']);
