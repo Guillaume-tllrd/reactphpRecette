@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 const SearchResult = () => {
     const searchRecipe = useSelector((state) => state.recipeReducer.searchRecipe);
+    const countryRecipe = useSelector((state) => state.recipeReducer.countryRecipe);
     // console.log(searchRecipe);
     const location = useLocation();
 

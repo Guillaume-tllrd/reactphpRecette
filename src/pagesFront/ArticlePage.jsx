@@ -66,11 +66,8 @@ const ArticlePage = () => {
                                 <p>Loading content...</p>
                             )}
                      </div>
-                  
                         <p className='text-end px-5 py-2 font-light italic'>By  {articleData.user_name}</p>
-                        
-     
-                    
+
                     </>
 
                 )}

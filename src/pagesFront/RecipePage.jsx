@@ -6,6 +6,7 @@ import axios from 'axios';
 import { UsersRound, HandPlatter, Timer, ChefHat } from 'lucide-react';
 import LikedRecipes from '../components/recipes/LikedRecipes';
 import CommentArea from '../components/comments/commentArea';
+import CountryForm from '../components/form/countryForm';
 
 //Page d'une seule recette
 const RecipePage = () => {
@@ -39,9 +40,9 @@ const RecipePage = () => {
             setRecipe(res.data[0]);
             setLoading(false);
         })
-
     },[])
 
+    
     return (
         <div>
             <Header/>
@@ -52,8 +53,10 @@ const RecipePage = () => {
                 <h1 className='font-scope py-2 text-center text-2xl'>{recipe.name}</h1>
                 <div className='flex justify-between'>
                     <div>
-                        <p className='mx-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Tags : {tagsArray.map((tag, index) => ( <Link key={index} className='hover:underline pr-1 font-light'>{tag}</Link>) )}</p>
-                        <p className='mx-2 mb-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Country: <Link to="" className='hover:underline font-light'>{recipe.country}</Link></p>
+                        <form className='mx-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Tags : {tagsArray.map((tag, index) => ( <button  type='submit' key={index} className='hover:underline pr-1 font-light'>{tag}</button>) )}
+                        </form>
+                        
+                        <CountryForm recipe={recipe}/>
                     </div>
                     
                 <LikedRecipes recipe={recipe}/>

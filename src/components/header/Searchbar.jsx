@@ -10,9 +10,10 @@ const navigate = useNavigate();
 const [searchRecipe, setSearchRecipe] = useState("");
     function handleSearchSubmit(e){
         e.preventDefault();
-        if (searchRecipe.trim() === "") return;  // Si la recherche est vide, on n'envoie pas de requête
+        if (searchRecipe.trim() === "") return;  // Si la recherche est vide, on n'envoie pas de requête, le trim permet d'enlever tous les espaces avant et après
         dispatch(getSearchRecipes(searchRecipe));  // Appelle l'action avec la recherche
         navigate(`/searchResult?query=${searchRecipe}`);  // Navigue vers la page des résultats de recherche
+        
     }
     return (
         <form className='relative flex items-center max-w-md mx-auto my-4'>  
@@ -22,7 +23,7 @@ const [searchRecipe, setSearchRecipe] = useState("");
                 type="search"
                 id="searchbar"
                 placeholder="Search your recipe..."
-                className='pl-10 w-full p-2 border border-gray-300 rounded-3xl  focus:outline-none forcus:ring-2 focus:border-orange-500 '
+                className='pl-10 w-full p-2 border border-gray-300 rounded-3xl  focus:outline-none focus:border-orange-500 '
                 onChange={(e) => setSearchRecipe(e.target.value)}
                 />
             </form>

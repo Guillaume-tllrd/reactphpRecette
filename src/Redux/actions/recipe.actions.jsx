@@ -6,6 +6,7 @@ export const GET_CAROUSSEL_RECIPE = 'GET_CAROUSSEL_RECIPE';
 export const GET_FOUR_RECIPES_TO_INDEX = 'GET_FOUR_RECIPES_TO_INDEX';
 export const GET_BEST_RECIPES_TO_INDEX = 'GET_BEST_RECIPES_TO_INDEX';
 export const GET_SEARCH_RECIPES = 'GET_SEARCH_RECIPES';
+export const GET_COUNTRY_RECIPES = 'GET_COUNTRY_RECIPES';
 
 export const addRecipe = (data) => {
     return (dispatch) => {
@@ -82,6 +83,15 @@ export const getSearchRecipes = (searchRecipe) => {
         axios.get(`http://localhost:8005/recipes.php?search=${searchRecipe}`)
         .then((res) => {
             dispatch({type: GET_SEARCH_RECIPES, payload: res.data})
+        })
+    }
+}
+
+export const getCountryRecipe = (country) => {
+    return (dispatch) => {
+        axios.get(`http://localhost:8005/recipes.php?country=${country}`)
+        .then((res) => {
+            dispatch({type: GET_COUNTRY_RECIPES, payload: res.data})
         })
     }
 }

@@ -38,6 +38,7 @@ function handleGet() {
     if ($searchRecipe){
     $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ?");
     $stmt->execute(['%' . $searchRecipe . '%']);
+    
     }else if(isset($_GET['background']) && $_GET['background'] == 'true'){
         $stmt = $pdo->prepare("SELECT id, name, summary, categories, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
         $stmt->execute([':yes' => 'yes']);
