@@ -1,4 +1,4 @@
-import { ADD_COMMENT, FETCH_COMMENT } from "../actions/comment.actions";
+import { ADD_COMMENT, FETCH_COMMENT, DELETE_COMMENT } from "../actions/comment.actions";
 
 const initialState = {
     comments: [],
@@ -17,6 +17,12 @@ export default function commentReducer(state = initialState, action) {
                ...state,
                commentsByRecipe: action.payload, 
             };
+            case DELETE_COMMENT:
+            return {
+                ...state,
+                commentsByRecipe: state.commentsByRecipe.filter(
+                    (comment) => comment.id !== action.payload)
+            }
         default:
             return state;
     }
