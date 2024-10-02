@@ -3,6 +3,7 @@ import axios from "axios";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const FETCH_COMMENT = "FETCH_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const EDIT_COMMENT = "EDIT_COMMENT";
 
 export const addComment = (data) => {
     return (dispatch) => {
@@ -48,3 +49,14 @@ export const deleteComment = (commentId) => {
         });
     };
 };
+
+export const ediComment= (data) => {
+    return (dispatch) => {
+        // on doit passer l'id dans l'url pour le put
+        return axios.put(`http://localhost:8005/comments.php/${data.id}`, data).then((res) => {
+            // ce dispatch va permettre d'envoyer au reducer le type et le payload qui reprend LE PARAM
+            dispatch({type: EDIT_COMMENT, payload: data})
+            // payload c'est la data que l'on veut recevoir dans le reducer de l'autre côté
+        })
+    }
+}
