@@ -45,8 +45,8 @@ const Comment = ({comment, index}) => {
               {/* // pour éditer on remet dans un form avec textarea et on lui attavche une fonction */}
                 {editToggle ?  (<form onSubmit={handleEditForm}>
           {/* ne pas oublier de mettre un onChange pour réupérer la valeur */}
-                <textarea autoFocus={true} defaultValue={comment.comment}  onChange={e => setEditContent(e.target.value)}></textarea>
-                <button type='submit'>Edit</button>
+                <textarea className='border w-full py-7' autoFocus={true} defaultValue={comment.comment}  onChange={e => setEditContent(e.target.value)}></textarea>
+                <div className='flex justify-end'><button className='bg-rose-500 text-white px-5 p-2 rounded mt-2 hover:bg-rose-600' type='submit'>Edit</button></div>
                 </form>) : (
               <p>{comment.comment}</p>)}
               <p className='font-light text-sm py-2'>

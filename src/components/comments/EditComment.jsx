@@ -9,7 +9,7 @@ const EditComment = ({comment, handleEditToggle}) => {
             <button onClick={handleEditToggle}>
             {/* si l'utilisateur connecté est égal à l'id du comment alors tu m'affiches "pencil" pour edit */}
             {user && user.id == comment.user_id &&
-            <Pencil/>} 
+            <Pencil className='transition-transform transform hover:scale-110'/>} 
             </button>
         </div>
     );
