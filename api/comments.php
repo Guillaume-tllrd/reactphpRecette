@@ -20,9 +20,9 @@ switch ($method){
     case 'POST':
         handlePost();
     break;
-    // case 'PUT':
-    //     handlePut();
-    // break;
+    case 'PUT':
+        handlePut();
+    break;
     case 'DELETE':
         handleDelete();
     break;
@@ -57,7 +57,6 @@ function handleGet() {
         echo json_encode($comments, JSON_PRETTY_PRINT);
     }
 }
-
 
 function handlePost(){
     global $pdo;
@@ -130,5 +129,41 @@ function handleDelete() {
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(['message' => 'Server error', 'error' => $e->getMessage()]);
+    }
+}
+
+function handlePut(){
+    global $pdo;
+
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    if (!isset($data['comment'], $data['date'], $data['id'])) {
+        http_response_code(400);
+        echo json_encode(['message' => 'Missing data']);
+        return;
+    }
+
+    try {
+        // Préparation de la requête pour mettre à jour le commentaire
+        $stmt = $pdo->prepare('UPDATE comments SET comment = :comment, date = :date WHERE id = :id');
+
+        // Exécution de la requête avec les données fournies
+        $result = $stmt->execute([
+            ':comment'   => $data['comment'],     // comment est une chaîne
+            ':date'      => $data['date'],        // date est une chaîne formatée en datetime
+            ':id'        => $data['id'],          // id du commentaire
+        ]);
+        // Vérification du résultat
+        if ($result) {
+            http_response_code(201);
+            echo json_encode(['message' => 'Comment updated']);
+        } else {
+            http_response_code(500);
+            $error = $stmt->errorInfo();
+            echo json_encode(['message' => 'Updating error', 'error' => $error]);
+        }
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
     }
 }

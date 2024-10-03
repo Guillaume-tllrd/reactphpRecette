@@ -1,5 +1,3 @@
-import { useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Comment from './Comment';
 // import { fetchComment } from '../../Redux/actions/comment.actions';

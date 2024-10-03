@@ -50,13 +50,18 @@ export const deleteComment = (commentId) => {
     };
 };
 
-export const ediComment= (data) => {
+export const editCommentAction = (data) => {
     return (dispatch) => {
         // on doit passer l'id dans l'url pour le put
-        return axios.put(`http://localhost:8005/comments.php/${data.id}`, data).then((res) => {
-            // ce dispatch va permettre d'envoyer au reducer le type et le payload qui reprend LE PARAM
-            dispatch({type: EDIT_COMMENT, payload: data})
-            // payload c'est la data que l'on veut recevoir dans le reducer de l'autre côté
-        })
+        return axios.put(`http://localhost:8005/comments.php/${data.id}`, data)
+            .then((res) => {
+                console.log(res.data); // Vérifie la réponse du serveur
+                // Ce dispatch va permettre d'envoyer au reducer le type et le payload avec les nouvelles données
+                dispatch({type: EDIT_COMMENT, payload: data});
+            })
+            .catch((err) => {
+                console.error("Error updating comment:", err);
+            });
     }
 }
+

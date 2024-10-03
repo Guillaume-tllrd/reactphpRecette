@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import DeleteComment from './DeleteComment';
 import EditComment from './EditComment';
+import { useDispatch } from 'react-redux';
+import { editCommentAction } from '../../Redux/actions/comment.actions';
 
 const Comment = ({comment, index}) => {
     const [editToggle, setEditToggle] = useState(false);
     const [editContent, setEditContent] = useState(comment.comment);
+    const dispatch = useDispatch();
 
     function handleEditToggle(){
         setEditToggle(!editToggle);
@@ -17,6 +20,8 @@ const Comment = ({comment, index}) => {
             comment: editContent,
             date: new Date().toISOString().split('T')[0],
         }
+        dispatch(editCommentAction(commentData))
+        // j'ai rajouté Action pour laction du dispatch pour ne pas confondre avec l'icone
         setEditToggle(false)
     }
     return (

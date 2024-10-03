@@ -23,18 +23,15 @@ export default function commentReducer(state = initialState, action) {
                 commentsByRecipe: state.commentsByRecipe.filter(
                     (comment) => comment.id !== action.payload)
             }
-        case EDIT_COMMENT:
-            return comments.map((comment) => {
-                // pour l'edit tu me map tous les states qu'on appelle post, si l'id correspond à celui qu'on edit (action.payload.id) alors tu me retourn le post sauf content qui change et qui est action.payload.content
-                if(comment.id === action.payload.id){
-                    return {
-                        ...comment, 
-                        comment: action.payload.comment
-                    }
-                } else return comment
-                    // ne pas oublier de return les auyres comment au cas ou on ne rentre pas le if
-                
-                })
+            case EDIT_COMMENT:
+                return {
+                    ...state,
+                    commentsByRecipe: state.commentsByRecipe.map((comment) => 
+                        comment.id === action.payload.id 
+                        ? { ...comment, comment: action.payload.comment, date: action.payload.date } 
+                        : comment
+                    )
+                };
         default:
             return state;
     }
