@@ -13,10 +13,11 @@ const LikedRecipes = ({ recipe }) => {
 
     // Utilisation du useEffect pour gérer l'état initial du like si la recette est déjà en favoris
     useEffect(() => {
-        if (recipes && recipes.some((favRecipe) => favRecipe.recipe_id === recipe.id)) {
+        if (recipes && recipes.some((favRecipe) => favRecipe.recipe_id === recipe.id && favRecipe.user_id === user.id)) {
             setLiked(true);
         }
-    }, [recipes, recipe.id]);
+    }, [recipes, recipe.id, user.id]);
+    
 
     async function handleFormSubmit(e) {
         // si on ne met pas en asynchrone cela ne va pas attendre de finir et par conséquent les recette ne s'afficheront pas directement dans les fav

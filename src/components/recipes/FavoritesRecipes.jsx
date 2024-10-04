@@ -1,10 +1,19 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FavRecipePost from './FavRecipePost';
+import { useEffect } from 'react';
+import { fetchFavoritesRecipes } from '../../Redux/actions/favoritesRecipe.actions';
 
 const FavoritesRecipes = () => {
     const favoritesRecipe = useSelector((state) => state.favoritesRecipeReducer.favoritesRecipesByUser);
+    console.log(favoritesRecipe);
     const user = useSelector((state) => state.userReducer);
-    
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (user && user.id) {
+            dispatch(fetchFavoritesRecipes(user.id));
+        }
+    }, [dispatch, user]);
+   
     return (
         <div className='bg-amber-100 '>
             <h1 className='font-scope text-2xl text-center p-6'>My Favorite Recipes</h1>

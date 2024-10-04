@@ -1,4 +1,4 @@
-import { ADD_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX, GET_BEST_RECIPES_TO_INDEX, GET_SEARCH_RECIPES, GET_COUNTRY_RECIPES} from "../actions/recipe.actions";
+import { ADD_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX, GET_BEST_RECIPES_TO_INDEX, GET_SEARCH_RECIPES, GET_COUNTRY_RECIPES, GET_TAG_RECIPES} from "../actions/recipe.actions";
 
 const initialState = {
     recipes: [],
@@ -7,7 +7,8 @@ const initialState = {
     recipesToIndex: [],
     bestRecipesToIndex: [],
     searchRecipe: [],
-    countryRecipe: []
+    countryRecipe: [],
+    tagRecipe: []
 };
 
 export default function recipeReducer(state = initialState, action) {
@@ -41,6 +42,11 @@ export default function recipeReducer(state = initialState, action) {
             return {
                 ...state,
                 countryRecipe: action.payload
+            };
+        case GET_TAG_RECIPES:
+            return {
+                ...state,
+                tagRecipe: action.payload
             };
         case ADD_RECIPE:
             return {

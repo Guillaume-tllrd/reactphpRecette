@@ -35,11 +35,15 @@ function handleGet() {
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     $searchRecipe= isset($_GET['search']) ? ($_GET['search']) : null;
     $countryRecipe= isset($_GET['country']) ? ($_GET['country']) : null;
+    $tagRecipe = isset($_GET['tag']) ? ($_GET['tag']) : null;
 
     if ($searchRecipe){
     $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ?");
     $stmt->execute(['%' . $searchRecipe . '%']);
     
+    }else if($tagRecipe){
+        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE tags LIKE ?");
+        $stmt->execute(['%' . $tagRecipe . '%']);
     }else if($countryRecipe){
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE country LIKE ?");
         $stmt->execute(['%' . $countryRecipe . '%']);

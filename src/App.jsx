@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pagesFront/Home';
 import Recipes from './pagesFront/Recipes';
@@ -17,20 +17,22 @@ import RecipePage from './pagesFront/RecipePage';
 import ArticlePage from './pagesFront/ArticlePage';
 import {  getCarousselRecipe } from './Redux/actions/recipe.actions';
 import SearchResult from './pagesFront/SearchResult';
+import { fetchFavoritesRecipes } from './Redux/actions/favoritesRecipe.actions';
 
 
 const App = () => {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.userReducer);
+  const user = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(getSessionUser());  // Au moment de recharger la page si un token est présent dans le localStorage on redemande le les données de user car sinon elles disparaissent du store
+      dispatch(fetchFavoritesRecipes(user.id))
     }
     dispatch(getCarousselRecipe());
 
-  },[dispatch]);
+  },[dispatch, user.id]);
 
   return (
     <BrowserRouter>

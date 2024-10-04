@@ -13,7 +13,7 @@ const DeleteComment = ({comment}) => {
     return (
         <div>
         <button onClick={handleDeleteComment}>
-            {user && user.role === "admin" || user.id == comment.user_id && 
+            {user && user.role === "admin"  && 
             <Trash2 className='transition-transform transform hover:scale-110'/> }
         </button>
         </div>
