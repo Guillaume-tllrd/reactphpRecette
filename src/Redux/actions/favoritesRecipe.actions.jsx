@@ -19,7 +19,7 @@ export const addRecipesToFavorites = (data) => {
 
 export const fetchFavoritesRecipes = (userId) => {
     return (dispatch) => {
-        return axios.get('http://localhost:8005/favoriteRecipe.php?user_id=${userId}')
+        return axios.get(`http://localhost:8005/favoriteRecipe.php?user_id=${userId}`)
         .then((res) => {
             dispatch({type: FETCH_RECIPES_BY_USER, payload: res.data})
         })

@@ -40,6 +40,7 @@ function handleGet() {
                                r.picture_1 AS recipe_picture, 
                                r.name AS recipe_name, 
                                r.categories AS recipe_categorie,
+                               r.id AS recipe_id,
                                u.name AS user_name,
                                u.id AS user_id
                            FROM favoris f

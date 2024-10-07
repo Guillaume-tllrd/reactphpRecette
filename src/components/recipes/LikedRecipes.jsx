@@ -11,12 +11,15 @@ const LikedRecipes = ({ recipe }) => {
     // on récupères les recettes de notre store , si elles y sont on garde le state true 
     const recipes = useSelector((state) => state.favoritesRecipeReducer.favoritesRecipesByUser);
 
-    // Utilisation du useEffect pour gérer l'état initial du like si la recette est déjà en favoris
+    // Utilisation du useEffect pour gérer l'état initial du like si la recette est déjà en favoris.
+    // avec Array.isArray on vérifie si recipe est bien un tableau car avec some() c'est unasynchrone donc cela mettait un erreur. en rajhoutant cette fonction on confirm bien que recipe est un tableau donc le code peut se jouer. 
+    // Ensuite some est une méthode pour Array qui vérifie dans notre cas si la recette en favoris est égal à la recette affiché. si c'est la cas ont laisse le state en true.
     useEffect(() => {
-        if (recipes && recipes.some((favRecipe) => favRecipe.recipe_id === recipe.id && favRecipe.user_id === user.id)) {
+        if (Array.isArray(recipes) && recipes.some((favRecipe) => favRecipe.recipe_id === recipe.id && favRecipe.user_id === user.id)) {
             setLiked(true);
         }
     }, [recipes, recipe.id, user.id]);
+    
     
 
     async function handleFormSubmit(e) {

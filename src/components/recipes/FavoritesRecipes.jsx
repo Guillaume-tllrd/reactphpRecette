@@ -23,7 +23,8 @@ const FavoritesRecipes = () => {
                     favoritesRecipe && favoritesRecipe.length > 0 ? (
                         <ul className='flex flex-wrap gap-12 max-w-[1200px] mx-auto'>
                             {favoritesRecipe.map((recipe) => (
-                                <FavRecipePost recipe={recipe} key={recipe.id} />
+                                <FavRecipePost recipe={recipe} key={recipe.recipe_id
+                                } />
                             ))}
                         </ul>
                     ) : (
