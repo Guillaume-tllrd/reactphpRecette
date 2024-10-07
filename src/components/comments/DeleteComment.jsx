@@ -12,10 +12,10 @@ const DeleteComment = ({comment}) => {
 
     return (
         <div>
-        <button onClick={handleDeleteComment}>
-            {user && user.role === "admin"  || user.id === comment.user_id &&
-            <Trash2 className='transition-transform transform hover:scale-110'/> }
-        </button>
+            {(user && (user.role === "admin" || user.id === comment.user_id)) && (
+        <button onClick={handleDeleteComment} className="rounded-md border p-1 hover:bg-gray-100">
+                <Trash2 className="w-5"/>
+        </button>)}
         </div>
     );
 };

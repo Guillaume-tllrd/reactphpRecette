@@ -36,7 +36,7 @@ const Comment = ({comment, index}) => {
                   </div>
                   <h1 className='font-semibold'>{comment.username}</h1>
                 </div>
-                <div className='flex'>
+                <div className='flex gap-1'>
                     <EditComment comment={comment} handleEditToggle={handleEditToggle}/>
                     <DeleteComment comment={comment}/> 
                 </div>
