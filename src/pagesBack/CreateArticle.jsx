@@ -1,5 +1,4 @@
 import Sidenav from '../components/back-end/Sidenav';
-import RecipeForm from '../components/back-end/RecipeForm';
 import Logo from '../components/back-end/Logo';
 import ArticleForm from '../components/back-end/ArticleForm';
 

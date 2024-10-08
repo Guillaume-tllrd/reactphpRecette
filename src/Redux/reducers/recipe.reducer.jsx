@@ -1,4 +1,4 @@
-import { ADD_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX, GET_BEST_RECIPES_TO_INDEX, GET_SEARCH_RECIPES, GET_COUNTRY_RECIPES, GET_TAG_RECIPES} from "../actions/recipe.actions";
+import {FETCH_RECIPES, ADD_RECIPE, DELETE_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX, GET_BEST_RECIPES_TO_INDEX, GET_SEARCH_RECIPES, GET_COUNTRY_RECIPES, GET_TAG_RECIPES} from "../actions/recipe.actions";
 
 const initialState = {
     recipes: [],
@@ -13,6 +13,22 @@ const initialState = {
 
 export default function recipeReducer(state = initialState, action) {
     switch (action.type) {
+        case ADD_RECIPE:
+            return {
+                ...state, // Conserver l'état précédent
+                recipes: [...state.recipes, action.payload], // destructure pour ajouter les nouvelles recette au tableau
+            };
+        case FETCH_RECIPES:
+            return {
+                ...state,
+                recipes: action.payload
+            };
+        case DELETE_RECIPE:
+            return {
+                ...state,
+                recipes: state.recipes.filter(
+                    (recipe) => recipe.id !== action.payload)
+        }
         case GET_RECIPE_BY_CATEGORY:
             return {
                 ...state,
@@ -47,11 +63,6 @@ export default function recipeReducer(state = initialState, action) {
             return {
                 ...state,
                 tagRecipe: action.payload
-            };
-        case ADD_RECIPE:
-            return {
-                ...state, // Conserver l'état précédent
-                recipes: [...state.recipes, action.payload], // destructure pour ajouter les nouvelles recette au tableau
             };
         default:
             return state;

@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export const ADD_RECIPE = "ADD_RECIPE";
+export const DELETE_RECIPE = "DELETE_RECIPE";
+export const FETCH_RECIPES = "FETCH_RECIPES";
 export const GET_RECIPE_BY_CATEGORY = 'GET_RECIPE_BY_CATEGORY';
 export const GET_CAROUSSEL_RECIPE = 'GET_CAROUSSEL_RECIPE';
 export const GET_FOUR_RECIPES_TO_INDEX = 'GET_FOUR_RECIPES_TO_INDEX';
@@ -8,6 +10,15 @@ export const GET_BEST_RECIPES_TO_INDEX = 'GET_BEST_RECIPES_TO_INDEX';
 export const GET_SEARCH_RECIPES = 'GET_SEARCH_RECIPES';
 export const GET_COUNTRY_RECIPES = 'GET_COUNTRY_RECIPES';
 export const GET_TAG_RECIPES = 'GGET_TAG_RECIPES';
+
+export const fetchAllRecipes = () => {
+    return (dispatch) => {
+        axios.get("http://localhost:8005/recipes.php")
+        .then((res) => {
+            dispatch({ type: FETCH_RECIPES, payload: res.data }); 
+        })
+    }
+};
 
 export const addRecipe = (data) => {
     return (dispatch) => {
@@ -26,6 +37,21 @@ export const addRecipe = (data) => {
     };
 };
 
+export const deleteRecipe = (recipeId) => {
+    return (dispatch) => {
+        return axios.delete('http://localhost:8005/recipes.php', {
+            data: {
+                id: parseInt(recipeId, 10),
+            }
+        })
+        .then((res) => {
+            dispatch({type: DELETE_RECIPE, payload: recipeId}); // il faut utiliser l'id 
+        })
+        .catch((error) => {
+            console.error("Error removing recipe", error);
+        });
+    };
+};
 
 export const getRecipeByCategory = () => {
     return (dispatch) => {

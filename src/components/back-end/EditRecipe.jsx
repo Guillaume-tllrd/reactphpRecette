@@ -1,9 +1,9 @@
+import React from 'react';
 import {useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addRecipe } from '../../Redux/actions/recipe.actions';
-
-const RecipeForm = () => {
-    const [error, setError] = useState(null);
+const EditRecipe = () => {
+     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null)
     const form = useRef()
     const dispatch = useDispatch()
@@ -46,6 +46,7 @@ const RecipeForm = () => {
             }
         
     }
+ 
     return (
         <div className="md:translate-x-60 transition-transform duration-500 h-max w-full flex justify-center bg-amber-100">
     <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32">
@@ -257,4 +258,4 @@ const RecipeForm = () => {
     );
 };
 
-export default RecipeForm;
+export default EditRecipe;

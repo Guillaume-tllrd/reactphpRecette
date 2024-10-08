@@ -1,5 +1,5 @@
 import Sidenav from '../components/back-end/Sidenav';
-import RecipeForm from '../components/back-end/RecipeForm';
+import AddRecipe from '../components/back-end/AddRecipe';
 import Logo from '../components/back-end/Logo';
 
 const CreateRecipe = () => {
@@ -11,7 +11,7 @@ const CreateRecipe = () => {
                     <Logo />
                 </div>
                 <div className="flex justify-center items-center">
-                    <RecipeForm />
+                    <AddRecipe />
                 </div>
             </div>
         </div>

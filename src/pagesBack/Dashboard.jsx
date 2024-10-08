@@ -6,7 +6,7 @@ import RecipeTable from '../components/back-end/RecipeTable';
 const Dashboard = () => {
     
     return (
-        <div className="flex h-screen bg-amber-100">
+        <div className="flex bg-amber-100">
         <Sidenav />
         <div className="flex flex-col w-full ">
             <div className="flex flex-col justify-center items-center mt-4 md:ml-64 mr-4">

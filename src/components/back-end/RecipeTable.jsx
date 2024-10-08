@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import TableRow from './TableRow';
+import { useDispatch, useSelector } from 'react-redux';
+import recipeReducer from '../../Redux/reducers/recipe.reducer';
+import { fetchAllRecipes } from '../../Redux/actions/recipe.actions';
 
 const RecipeTable = () => {
-    const [recipes, setRecipes] = useState([]);
+
+    const dispatch = useDispatch();
+    const recipes = useSelector((state) => state.recipeReducer.recipes);
 
     useEffect(() => {
-        axios.get("http://localhost:8005/recipes.php")
-            .then((res) => setRecipes(res.data))
-            .catch((err) => console.error("Failed to fetch recipes", err));
-    }, []); // Le tableau de dépendances vide pour éviter le rechargement infini
+        dispatch(fetchAllRecipes())
+    }, [dispatch]); // Le tableau de dépendances vide pour éviter le rechargement infini
 
     
     return (
@@ -28,23 +32,7 @@ const RecipeTable = () => {
                     {recipes && recipes.length > 0 ? (
                         
                         recipes.map((recipe) => (
-                            <tr key={recipe.id} className='border-b'> 
-                                <td className="px-4 py-5 font-medium border sm:pl-6">{recipe.name}</td>
-                                <td className="px-3 py-5 font-medium border">{recipe.ingredients}</td>
-                                {/* {const img1 = recipe.picture_1;
-                                const imgPath1= "../../../api/" + img1;} */}
-                                <td className="px-3 py-5 font-medium border">
-                                  {/* {imgPath1}  */}
-                                </td>
-                                <td className="px-3 py-5 font-medium border">
-                                    <img src={recipe.picture2} alt={recipe.name} className="w-16 h-16 object-cover" />
-                                </td>
-                                <td className="px-3 py-5 font-medium border">{recipe.description}</td>
-                                <td className="py-3 pl-6 pr-3 font-medium border">
-                                    <button className="text-blue-500 hover:underline">Edit</button>
-                                    <button className="ml-2 text-red-500 hover:underline">Delete</button>
-                                </td>
-                            </tr>
+                            <TableRow recipe={recipe} key={recipe.id}/>
                         ))
                     ) : (
                         <tr>
