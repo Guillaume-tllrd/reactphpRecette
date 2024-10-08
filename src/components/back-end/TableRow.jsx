@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from 'lucide-react';
-import DeleteRecipe from './DeleteRecipe';
 import { useDispatch } from 'react-redux';
+import { deleteRecipe } from '../../Redux/actions/recipe.actions';
 
 
 const TableRow = ({recipe}) => {
@@ -13,7 +13,7 @@ const TableRow = ({recipe}) => {
     const dispatch = useDispatch();
 
     function handleDeleteRecipe(){
-        dispatch(DeleteRecipe(recipe.id))
+        dispatch(deleteRecipe(recipe.id))
     }
 
     return (
