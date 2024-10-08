@@ -1,13 +1,14 @@
 import {useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addRecipe } from '../../Redux/actions/recipe.actions';
+import { useNavigate } from 'react-router-dom';
 
 const AddRecipe = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null)
     const form = useRef()
     const dispatch = useDispatch()
-    
+    const navigate = useNavigate();
     const handleFormSubmit = async (e) => {
         e.preventDefault()
 
@@ -39,6 +40,7 @@ const AddRecipe = () => {
                 await dispatch(addRecipe(formData));
                 setSuccess('Recipe created successfully!');
                 form.current.reset();
+                navigate('/dashboard')
                 // ne pas oublier de mette le getPost directement ici pour ne pas avoir à actualiser la page qd on ajoute
             } catch (error) {
                 setError('An error occurred during registration');

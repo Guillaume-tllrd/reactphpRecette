@@ -2,8 +2,8 @@ import React from 'react';
 import {useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addRecipe } from '../../Redux/actions/recipe.actions';
-const EditRecipe = () => {
-     const [error, setError] = useState(null);
+const EditRecipe = ({recipe, closeModal}) => {
+    const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null)
     const form = useRef()
     const dispatch = useDispatch()
@@ -48,12 +48,12 @@ const EditRecipe = () => {
     }
  
     return (
-        <div className="md:translate-x-60 transition-transform duration-500 h-max w-full flex justify-center bg-amber-100">
-    <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32">
+        <div className=" h-max w-full flex justify-center bg-amber-100">
+            <div className="bg-white p-10 my-16 rounded-lg shadow-lg">
         <form onSubmit={handleFormSubmit} ref={form} className="min-w-96 flex flex-col">
             {error && <p style ={{color: 'red'}}>{error}</p>}
             {success && <p style={{color: 'green'}}>{success}</p>}
-        <h2 className="text-2xl text-center font-scope font-bold mb-6">Create your recipe</h2>
+        <h2 className="text-2xl text-center font-scope font-bold mb-6">Edit the {recipe.name}'s recipe</h2>
             <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 mb-2 text-center">
                     Name
@@ -62,6 +62,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="name"
+                        defaultValue={recipe.name}
                     />
                 </label>
             </div>
@@ -73,6 +74,7 @@ const EditRecipe = () => {
                         id="ingredients"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="ingredients"
+                        defaultValue={recipe.ingredients}
                     ></textarea>
                 </label>
             </div>
@@ -84,6 +86,7 @@ const EditRecipe = () => {
                         id="summary"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="summary"
+                        defaultValue={recipe.summary}
                     ></textarea>
                 </label>
             </div>
@@ -95,6 +98,7 @@ const EditRecipe = () => {
                         id="description"
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="description"
+                        defaultValue={recipe.description}
                     ></textarea>
                 </label>
             </div>
@@ -107,6 +111,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="tags"
+                        defaultValue={recipe.tags}
                     />
                 </label>
             </div>
@@ -119,6 +124,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="country"
+                        defaultValue={recipe.country}
                     />
                 </label>
             </div>
@@ -156,11 +162,13 @@ const EditRecipe = () => {
                         id="categories"
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="categories"
+                        defaultValue={recipe.categories}
                     >
                         <option className="text-center" value="breakfast">Breakfast</option>
                         <option className="text-center" value="main">Main</option>
                         <option className="text-center" value="dessert">Dessert</option>
                         <option className="text-center" value="appetizer">Appetizer</option>
+                        
                     </select>
                 </label>
             </div>
@@ -173,6 +181,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         type="text"
                         name="difficulty"
+                        defaultValue={recipe.difficulty}
                     >
                         <option className="text-center" value="easy">Easy</option>
                         <option className="text-center" value="medium">Medium</option>
@@ -189,6 +198,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500 text-center"
                         type="number"
                         name="number_of_servings"
+                        defaultValue={recipe.number_of_servings}
                     />
                 </label>
             </div>
@@ -201,6 +211,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500 text-center"
                         type="number"
                         name="prep_time"
+                        defaultValue={recipe.prep_time}
                     />
                 </label>
             </div>
@@ -213,6 +224,7 @@ const EditRecipe = () => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500 text-center"
                         type="number"
                         name="cooking_time"
+                        defaultValue={recipe.cooking_time}
                     />
                 </label>
             </div>
@@ -224,6 +236,7 @@ const EditRecipe = () => {
                         id="top"
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="top"
+                        defaultValue={recipe.top}
                     >
                         <option className="text-center" value="yes">Yes</option>
                         <option className="text-center" value="no">No</option>
@@ -238,6 +251,7 @@ const EditRecipe = () => {
                         id="background"
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="background"
+                        defaultValue={recipe.background}
                     >
                         <option className="text-center" value="yes">Yes</option>
                         <option className="text-center" value="no">No</option>
