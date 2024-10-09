@@ -20,6 +20,9 @@ switch ($method){
     case 'POST':
         handlePost();
     break;
+    // case 'PUT':
+    //     handlePut();
+    // break;
     case 'DELETE':
         handleDelete();
     break;
@@ -100,6 +103,42 @@ function handleGet() {
     echo json_encode($recipes, JSON_PRETTY_PRINT);
 }
 
+// function handlePut(){
+//     global $pdo;
+
+//     $data = json_decode(file_get_contents('php://input'), true);
+
+//     if (!isset($data['id'], $data['name'], $data['ingredients'], $data['summary'],$data['description'],$data['tags'],$data['country'],$data['categories'],$data['difficulty'],$data['number_of_servings'], $data['prep_time'], $data['cooking_time'], $data['top'], $data['background'])) {
+//         http_response_code(400);
+//         echo json_encode(['message' => 'Missing data']);
+//         return;
+//     }
+
+//     try {
+//         // Préparation de la requête pour mettre à jour le commentaire
+//         ()
+//         $stmt = $pdo->prepare('UPDATE recipes SET name = :name, ingredients = :ingredients, summary = :summary, description =:description, tags = :tags, country = :country, picture_1 = :picture_1, picture_2 = :picture_2, categories = :categories, difficulty = :difficulty, number_of_servings = :number_of_servings, prep_tim = :prep_time, cooking_time = :cooking_time, top = :top, background = :background WHERE id = :id');
+
+//         // Exécution de la requête avec les données fournies
+//         $result = $stmt->execute([
+//             ':comment'   => $data['comment'],     // comment est une chaîne
+//             ':date'      => $data['date'],        // date est une chaîne formatée en datetime
+//             ':id'        => $data['id'],          // id du commentaire
+//         ]);
+//         // Vérification du résultat
+//         if ($result) {
+//             http_response_code(201);
+//             echo json_encode(['message' => 'Comment updated']);
+//         } else {
+//             http_response_code(500);
+//             $error = $stmt->errorInfo();
+//             echo json_encode(['message' => 'Updating error', 'error' => $error]);
+//         }
+//     } catch(Exception $e) {
+//         http_response_code(500);
+//         echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
+//     }
+// }
 
 function handlePost() {
     global $pdo;
