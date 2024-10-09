@@ -1,8 +1,8 @@
-import React from 'react';
 import {useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addRecipe } from '../../Redux/actions/recipe.actions';
-const EditRecipe = ({recipe, closeModal}) => {
+
+const EditRecipe = ({recipe}) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null)
     const form = useRef()

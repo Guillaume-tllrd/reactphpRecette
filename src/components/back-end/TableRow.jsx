@@ -51,9 +51,11 @@ const TableRow = ({recipe}) => {
          {isEditModalOpen && (
             // inset-0 est une combinaison qui correspond à appliquer top: 0, right: 0, bottom: 0, et left: 0. En d'autres termes, elle positionne l'élément à 0 pixels des bords de l'écran, ce qui permet de couvrir toute la zone visible de la fenêtre.
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center overflow-y-auto">
+              {/*overflow-y-auto permet de scroller le contenu à l'intérieur de la modale lorsque nécessaire */}
               <div className="bg-amber-100 p-10 rounded-lg shadow-lg max-h-screen w-full md:w-auto overflow-y-auto">
+                {/* max-h-screen : Cela limite la hauteur du contenu de la modale pour qu'elle ne dépasse jamais la hauteur de l'écran et assure un comportement responsive, même sur des écrans plus petits. */}
                 <button onClick={handleCloseEditModal} className="text-right">✖️</button>
-                <EditRecipe recipe={recipe} closeModal={handleCloseEditModal} />
+                <EditRecipe recipe={recipe}  />
               </div>
             </div>
           )}

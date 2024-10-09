@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const ADD_RECIPE = "ADD_RECIPE";
 export const DELETE_RECIPE = "DELETE_RECIPE";
+export const EDIT_RECIPE = "EDIT_RECIPE";
 export const FETCH_RECIPES = "FETCH_RECIPES";
 export const GET_RECIPE_BY_CATEGORY = 'GET_RECIPE_BY_CATEGORY';
 export const GET_CAROUSSEL_RECIPE = 'GET_CAROUSSEL_RECIPE';
@@ -52,6 +53,20 @@ export const deleteRecipe = (recipeId) => {
         });
     };
 };
+export const editRecipe = (data) => {
+    return (dispatch) => {
+        // on doit passer l'id dans l'url pour le put
+        return axios.put(`http://localhost:8005/recipes.php/${data.id}`, data)
+            .then((res) => {
+                console.log(res.data); // Vérifie la réponse du serveur
+                // Ce dispatch va permettre d'envoyer au reducer le type et le payload avec les nouvelles données
+                dispatch({type: EDIT_RECIPE, payload: data});
+            })
+            .catch((err) => {
+                console.error("Error updating recipe:", err);
+            });
+    }
+}
 
 export const getRecipeByCategory = () => {
     return (dispatch) => {

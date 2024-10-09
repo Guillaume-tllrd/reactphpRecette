@@ -1,4 +1,4 @@
-import {FETCH_RECIPES, ADD_RECIPE, DELETE_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX, GET_BEST_RECIPES_TO_INDEX, GET_SEARCH_RECIPES, GET_COUNTRY_RECIPES, GET_TAG_RECIPES} from "../actions/recipe.actions";
+import {FETCH_RECIPES, ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, GET_RECIPE_BY_CATEGORY, GET_CAROUSSEL_RECIPE, GET_FOUR_RECIPES_TO_INDEX, GET_BEST_RECIPES_TO_INDEX, GET_SEARCH_RECIPES, GET_COUNTRY_RECIPES, GET_TAG_RECIPES} from "../actions/recipe.actions";
 
 const initialState = {
     recipes: [],
@@ -29,6 +29,17 @@ export default function recipeReducer(state = initialState, action) {
                 recipes: state.recipes.filter(
                     (recipe) => recipe.id !== action.payload)
         }
+        case EDIT_RECIPE:
+                return {
+                    ...state, // on retourne l'état actuel avant de le modifier 
+                    recipes: state.recipes.map((recipe) => 
+                        //On compare l'ID de chaque commentaire dans le tableau avec l'ID du commentaire qui a été modifié 
+                        recipe.id === action.payload.id 
+                        // si l'ID correspond, on fait une copie de l'objet comment avec toutes ses propriétés actuelles et on remplace comment et date
+                        ? { ...recipe, name: action.payload.name, ingredients: action.payload.ingredients, date: action.payload.date } 
+                        : recipe
+                    )
+                };
         case GET_RECIPE_BY_CATEGORY:
             return {
                 ...state,
