@@ -20,6 +20,7 @@ const TableRow = ({ recipe, onOpenEditModal }) => {
           </td>
           <td className="px-3 py-5 font-medium border">
               <img src={imgPath2} alt={recipe.name} className="w-16 h-16 object-cover" />
+             
           </td>
           <td className="px-3 py-5 font-medium border">{recipe.description}</td>
           <td className="py-3 pl-6 pr-3 font-medium border">

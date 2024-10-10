@@ -106,16 +106,13 @@ function handleGet() {
 function handlePut() {
     global $pdo;
    
- // S'assurer que les inputs sont envoyés
- $requiredFields = ['id', 'name', 'ingredients', 'summary', 'description', 'tags', 'country', 'categories', 'difficulty', 'number_of_servings', 'prep_time', 'cooking_time', 'top', 'background'];
-
- foreach ($requiredFields as $field) {
-     if (empty($_POST[$field])) {
-         http_response_code(400);
-         echo json_encode(['message' => "Missing field: $field"]);
-         return;
-     }
- }
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    if (!isset($data['id'], $data['name'], $data['ingredients'], $data['summary'], $data['description'], $data['tags'], $data['country'], $data['categories'], $data['difficulty'], $data['number_of_servings'], $data['prep_time'], $data['cooking_time'], $data['top'], $data['background'])) {
+        http_response_code(400);
+        echo json_encode(['message' => 'Missing data']);
+        return;
+    }
  
     try {
         // Prepare the query to update the recipe
@@ -123,20 +120,20 @@ function handlePut() {
 
         // Execute the query with the provided data
         $result = $stmt->execute([
-            'id' => htmlspecialchars($_POST['id']),
-            ':name' => htmlspecialchars($_POST['name']),
-             ':ingredients' => htmlspecialchars($_POST['ingredients']),
-             ':summary' => htmlspecialchars($_POST['summary']),
-             ':description' => htmlspecialchars($_POST['description']),
-             ':tags' => htmlspecialchars($_POST['tags']),
-             ':country' => htmlspecialchars($_POST['country']),
-             ':categories' => htmlspecialchars($_POST['categories']),
-             ':difficulty' => htmlspecialchars($_POST['difficulty']),
-             ':number_of_servings' => htmlspecialchars($_POST['number_of_servings']),
-             ':prep_time' => htmlspecialchars($_POST['prep_time']),
-             ':cooking_time' => htmlspecialchars($_POST['cooking_time']),
-             ':top' => htmlspecialchars($_POST['top']),
-             ':background' => htmlspecialchars($_POST['background']),
+            'id' => $data['id'],
+            ':name' => $data['name'],
+             ':ingredients' => $data['ingredients'],
+             ':summary' => $data['summary'],
+             ':description' => $data['description'],
+             ':tags' => $data['tags'],
+             ':country' => $data['country'],
+             ':categories' => $data['categories'],
+             ':difficulty' => $data['difficulty'],
+             ':number_of_servings' => $data['number_of_servings'],
+             ':prep_time' => $data['prep_time'],
+             ':cooking_time' => $data['cooking_time'],
+             ':top' => $data['top'],
+             ':background' => $data['background'],
          ]);
 
         // Check the result

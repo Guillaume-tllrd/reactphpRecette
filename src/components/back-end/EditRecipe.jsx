@@ -5,36 +5,46 @@ import { editRecipe } from '../../Redux/actions/recipe.actions';
 const EditRecipe = ({recipe, onCloseEditModal}) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
-    console.log(onCloseEditModal)
+    const [editName, setEditName] = useState(recipe.name);
+    const [editIngredients, setEditIngredients] = useState(recipe.ingredients);
+    const [editSummary, setEditSummary] = useState(recipe.summary);
+    const [editDescription, setEditDescription] = useState(recipe.description);
+    const [editTags, setEditTags] = useState(recipe.tags);
+    const [editCountry, setEditCountry] = useState(recipe.country);
+    const [editCategories, setEditCategories] = useState(recipe.categories);
+    const [editDifficulty, setEditDifficulty] = useState(recipe.difficulty);
+    const [editServings, setEditServings] = useState(recipe.number_of_servings);
+    const [editPrep, setEditPrep] = useState(recipe.prep_time);
+    const [editCooking, setEditCooking] = useState(recipe.cooking_time);
+    const [editTop, setEditTop] = useState(recipe.top);
+    const [editBackground, setEditBackground] = useState(recipe.background);
     
     const dispatch = useDispatch();
-    
-
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         // Avec la requête put formData(new Formdata) ne semble pas fonctionné
         const EditformData = {
             id: recipe.id,
-            name: recipe.name,
-            ingredients: recipe.ingredients,
-            summary: recipe.summary,
-            description: recipe.description,
-            tags: recipe.tags, 
-            country: recipe.country,
-            categories: recipe.categories,
-            difficulty: recipe.difficulty,
-            number_of_servings: recipe.number_of_servings,
-            prep_time: recipe.prep_time,
-            cooking_time: recipe.cooking_time,
-            top: recipe.top,
-            background: recipe.background,
+            name: editName,
+            ingredients: editIngredients,
+            summary: editSummary,
+            description: editDescription,
+            tags: editTags, 
+            country: editCountry,
+            categories: editCategories,
+            difficulty: editDifficulty,
+            number_of_servings: editServings,
+            prep_time: editPrep,
+            cooking_time: editCooking,
+            top: editTop,
+            background: editBackground,
         }
 
             try {
                 await dispatch(editRecipe(EditformData));
                 setSuccess('Recipe updated successfully!');
-                
+                onCloseEditModal();
                 // ne pas oublier de mette le getPost directement ici pour ne pas avoir à actualiser la page qd on ajoute
             } catch (error) {
                 setError('An error occurred during registration');
@@ -59,6 +69,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="text"
                         name="name"
                         defaultValue={recipe.name}
+                        onChange={e => setEditName(e.target.value)}
                     />
                 </label>
             </div>
@@ -71,6 +82,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="ingredients"
                         defaultValue={recipe.ingredients}
+                        onChange={e => setEditIngredients(e.target.value)}
                     ></textarea>
                 </label>
             </div>
@@ -83,6 +95,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="summary"
                         defaultValue={recipe.summary}
+                        onChange={e => setEditSummary(e.target.value)}
                     ></textarea>
                 </label>
             </div>
@@ -95,6 +108,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="description"
                         defaultValue={recipe.description}
+                        onChange={e => setEditDescription(e.target.value)}
                     ></textarea>
                 </label>
             </div>
@@ -108,6 +122,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="text"
                         name="tags"
                         defaultValue={recipe.tags}
+                        onChange={e => setEditTags(e.target.value)}
                     />
                 </label>
             </div>
@@ -121,6 +136,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="text"
                         name="country"
                         defaultValue={recipe.country}
+                        onChange={e => setEditCountry(e.target.value)}
                     />
                 </label>
             </div>
@@ -133,6 +149,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="categories"
                         defaultValue={recipe.categories}
+                        onChange={e => setEditCategories(e.target.value)}
                     >
                         <option className="text-center" value="breakfast">Breakfast</option>
                         <option className="text-center" value="main">Main</option>
@@ -152,6 +169,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="text"
                         name="difficulty"
                         defaultValue={recipe.difficulty}
+                        onChange={e => setEditDifficulty(e.target.value)}
                     >
                         <option className="text-center" value="easy">Easy</option>
                         <option className="text-center" value="medium">Medium</option>
@@ -169,6 +187,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="number"
                         name="number_of_servings"
                         defaultValue={recipe.number_of_servings}
+                        onChange={e => setEditServings(e.target.value)}
                     />
                 </label>
             </div>
@@ -182,6 +201,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="number"
                         name="prep_time"
                         defaultValue={recipe.prep_time}
+                        onChange={e => setEditPrep(e.target.value)}
                     />
                 </label>
             </div>
@@ -195,6 +215,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         type="number"
                         name="cooking_time"
                         defaultValue={recipe.cooking_time}
+                        onChange={e => setEditCooking(e.target.value)}
                     />
                 </label>
             </div>
@@ -207,6 +228,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="top"
                         defaultValue={recipe.top}
+                        onChange={e => setEditTop(e.target.value)}
                     >
                         <option className="text-center" value="yes">Yes</option>
                         <option className="text-center" value="no">No</option>
@@ -222,6 +244,7 @@ const EditRecipe = ({recipe, onCloseEditModal}) => {
                         className="w-full mt-1 border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
                         name="background"
                         defaultValue={recipe.background}
+                        onChange={e => setEditBackground(e.target.value)}
                     >
                         <option className="text-center" value="yes">Yes</option>
                         <option className="text-center" value="no">No</option>

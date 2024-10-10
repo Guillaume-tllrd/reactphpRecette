@@ -35,8 +35,8 @@ export default function recipeReducer(state = initialState, action) {
                     recipes: state.recipes.map((recipe) => 
                         //On compare l'ID de chaque commentaire dans le tableau avec l'ID du commentaire qui a été modifié 
                         recipe.id === action.payload.id 
-                        // si l'ID correspond, on fait une copie de l'objet comment avec toutes ses propriétés actuelles et on remplace comment et date
-                        ? { ...recipe, name: action.payload.name, ingredients: action.payload.ingredients, date: action.payload.date } 
+                        // si l'ID correspond, on fait une copie de l'objet recipe avec toutes ses propriétés actuelles et on remplace celle que l'on veut faire afficher sans refresh la page. si on ne met pas les colones, le update se fera dans la bdd mais pas directement sans refresh
+                        ? { ...recipe, name: action.payload.name, ingredients: action.payload.ingredients, description: action.payload.description, tags: action.payload.tags} 
                         : recipe
                     )
                 };
