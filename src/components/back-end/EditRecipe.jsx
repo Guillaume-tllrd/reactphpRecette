@@ -1,44 +1,40 @@
-import {useRef, useState} from 'react';
+import { useState} from 'react';
 import { useDispatch } from 'react-redux';
-import { addRecipe } from '../../Redux/actions/recipe.actions';
+import { editRecipe } from '../../Redux/actions/recipe.actions';
 
-const EditRecipe = ({recipe}) => {
+const EditRecipe = ({recipe, onCloseEditModal}) => {
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null)
-    const form = useRef()
-    const dispatch = useDispatch()
+    const [success, setSuccess] = useState(null);
+    console.log(onCloseEditModal)
     
+    const dispatch = useDispatch();
+    
+
+
     const handleFormSubmit = async (e) => {
-        e.preventDefault()
-
-        // Crée un nouvel objet FormData
-        // FormData est une interface JavaScript qui permet de construire facilement un ensemble de paires clé-valeur représentant des données de formulaire. Les données peuvent être texte (comme les champs de saisie) ou des fichiers binaires (comme des images).
-        const formData = new FormData();
-
-        // Ajoute les champs texte au FormData
-        //  append est une méthode utilisée pour ajouter des paires clé-valeur à un objet FormData
-        formData.append('name', form.current[0].value);
-        formData.append('ingredients', form.current[1].value);
-        formData.append('summary', form.current[2].value);
-        formData.append('description', form.current[3].value);
-        formData.append('tags', form.current[4].value);
-        formData.append('country', form.current[5].value);
-        formData.append('categories', form.current[8].value);
-        formData.append('difficulty', form.current[9].value);
-        formData.append('number_of_servings', form.current[10].value);
-        formData.append('prep_time', form.current[11].value);
-        formData.append('cooking_time', form.current[12].value);
-        formData.append('top', form.current[13].value);
-        formData.append('background', form.current[14].value);
-
-        // Ajoute les fichiers au FormData
-        formData.append('picture1', form.current[6].files[0]);
-        formData.append('picture2', form.current[7].files[0]);
+        e.preventDefault();
+        // Avec la requête put formData(new Formdata) ne semble pas fonctionné
+        const EditformData = {
+            id: recipe.id,
+            name: recipe.name,
+            ingredients: recipe.ingredients,
+            summary: recipe.summary,
+            description: recipe.description,
+            tags: recipe.tags, 
+            country: recipe.country,
+            categories: recipe.categories,
+            difficulty: recipe.difficulty,
+            number_of_servings: recipe.number_of_servings,
+            prep_time: recipe.prep_time,
+            cooking_time: recipe.cooking_time,
+            top: recipe.top,
+            background: recipe.background,
+        }
 
             try {
-                await dispatch(addRecipe(formData));
-                setSuccess('Recipe created successfully!');
-                form.current.reset();
+                await dispatch(editRecipe(EditformData));
+                setSuccess('Recipe updated successfully!');
+                
                 // ne pas oublier de mette le getPost directement ici pour ne pas avoir à actualiser la page qd on ajoute
             } catch (error) {
                 setError('An error occurred during registration');
@@ -50,7 +46,7 @@ const EditRecipe = ({recipe}) => {
     return (
         <div className=" h-max w-full flex justify-center bg-amber-100">
             <div className="bg-white p-10 my-16 rounded-lg shadow-lg">
-        <form onSubmit={handleFormSubmit} ref={form} className="min-w-96 flex flex-col">
+        <form onSubmit={handleFormSubmit} className="min-w-96 flex flex-col">
             {error && <p style ={{color: 'red'}}>{error}</p>}
             {success && <p style={{color: 'green'}}>{success}</p>}
         <h2 className="text-2xl text-center font-scope font-bold mb-6">Edit the {recipe.name}'s recipe</h2>
@@ -125,32 +121,6 @@ const EditRecipe = ({recipe}) => {
                         type="text"
                         name="country"
                         defaultValue={recipe.country}
-                    />
-                </label>
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="picture1" className="block text-gray-700 mb-2 text-center">
-                    Picture 1
-                    <input
-                        id="picture1"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
-                        type="file"
-                        name="picture1"
-                        accept="image/*"
-                    />
-                </label>
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="picture2" className="block text-gray-700 mb-2 text-center">
-                    Picture 2
-                    <input
-                        id="picture2"
-                        className="w-full border-b-2 border-gray-500 focus:outline-none focus:border-orange-500"
-                        type="file"
-                        name="picture2"
-                        accept="image/*"
                     />
                 </label>
             </div>

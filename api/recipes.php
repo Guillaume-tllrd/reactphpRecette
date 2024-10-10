@@ -3,7 +3,7 @@ require_once 'db.php'; // Assure-toi que ce chemin est correct pour inclure le f
 
 header("Access-Control-Allow-Origin: *"); 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS,  DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -20,9 +20,9 @@ switch ($method){
     case 'POST':
         handlePost();
     break;
-    // case 'PUT':
-    //     handlePut();
-    // break;
+    case 'PUT':
+        handlePut();
+    break;
     case 'DELETE':
         handleDelete();
     break;
@@ -103,42 +103,57 @@ function handleGet() {
     echo json_encode($recipes, JSON_PRETTY_PRINT);
 }
 
-// function handlePut(){
-//     global $pdo;
+function handlePut() {
+    global $pdo;
+   
+ // S'assurer que les inputs sont envoyés
+ $requiredFields = ['id', 'name', 'ingredients', 'summary', 'description', 'tags', 'country', 'categories', 'difficulty', 'number_of_servings', 'prep_time', 'cooking_time', 'top', 'background'];
 
-//     $data = json_decode(file_get_contents('php://input'), true);
+ foreach ($requiredFields as $field) {
+     if (empty($_POST[$field])) {
+         http_response_code(400);
+         echo json_encode(['message' => "Missing field: $field"]);
+         return;
+     }
+ }
+ 
+    try {
+        // Prepare the query to update the recipe
+        $stmt = $pdo->prepare('UPDATE recipes SET name = :name, ingredients = :ingredients, summary = :summary, description = :description, tags = :tags, country = :country, categories = :categories, difficulty = :difficulty, number_of_servings = :number_of_servings, prep_time = :prep_time, cooking_time = :cooking_time, top = :top, background = :background WHERE id = :id');
 
-//     if (!isset($data['id'], $data['name'], $data['ingredients'], $data['summary'],$data['description'],$data['tags'],$data['country'],$data['categories'],$data['difficulty'],$data['number_of_servings'], $data['prep_time'], $data['cooking_time'], $data['top'], $data['background'])) {
-//         http_response_code(400);
-//         echo json_encode(['message' => 'Missing data']);
-//         return;
-//     }
+        // Execute the query with the provided data
+        $result = $stmt->execute([
+            'id' => htmlspecialchars($_POST['id']),
+            ':name' => htmlspecialchars($_POST['name']),
+             ':ingredients' => htmlspecialchars($_POST['ingredients']),
+             ':summary' => htmlspecialchars($_POST['summary']),
+             ':description' => htmlspecialchars($_POST['description']),
+             ':tags' => htmlspecialchars($_POST['tags']),
+             ':country' => htmlspecialchars($_POST['country']),
+             ':categories' => htmlspecialchars($_POST['categories']),
+             ':difficulty' => htmlspecialchars($_POST['difficulty']),
+             ':number_of_servings' => htmlspecialchars($_POST['number_of_servings']),
+             ':prep_time' => htmlspecialchars($_POST['prep_time']),
+             ':cooking_time' => htmlspecialchars($_POST['cooking_time']),
+             ':top' => htmlspecialchars($_POST['top']),
+             ':background' => htmlspecialchars($_POST['background']),
+         ]);
 
-//     try {
-//         // Préparation de la requête pour mettre à jour le commentaire
-//         ()
-//         $stmt = $pdo->prepare('UPDATE recipes SET name = :name, ingredients = :ingredients, summary = :summary, description =:description, tags = :tags, country = :country, picture_1 = :picture_1, picture_2 = :picture_2, categories = :categories, difficulty = :difficulty, number_of_servings = :number_of_servings, prep_tim = :prep_time, cooking_time = :cooking_time, top = :top, background = :background WHERE id = :id');
+        // Check the result
+        if ($result) {
+            http_response_code(201);
+            echo json_encode(['message' => 'Recipe updated']);
+        } else {
+            http_response_code(500);
+            $error = $stmt->errorInfo();
+            echo json_encode(['message' => 'Updating error', 'error' => $error]);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['message' => 'Server error', 'error' => $e->getMessage()]);
+    }
+}
 
-//         // Exécution de la requête avec les données fournies
-//         $result = $stmt->execute([
-//             ':comment'   => $data['comment'],     // comment est une chaîne
-//             ':date'      => $data['date'],        // date est une chaîne formatée en datetime
-//             ':id'        => $data['id'],          // id du commentaire
-//         ]);
-//         // Vérification du résultat
-//         if ($result) {
-//             http_response_code(201);
-//             echo json_encode(['message' => 'Comment updated']);
-//         } else {
-//             http_response_code(500);
-//             $error = $stmt->errorInfo();
-//             echo json_encode(['message' => 'Updating error', 'error' => $error]);
-//         }
-//     } catch(Exception $e) {
-//         http_response_code(500);
-//         echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
-//     }
-// }
 
 function handlePost() {
     global $pdo;

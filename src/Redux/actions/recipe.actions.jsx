@@ -53,10 +53,12 @@ export const deleteRecipe = (recipeId) => {
         });
     };
 };
+
 export const editRecipe = (data) => {
     return (dispatch) => {
         // on doit passer l'id dans l'url pour le put
-        return axios.put(`http://localhost:8005/recipes.php/${data.id}`, data)
+        return axios.put(`http://localhost:8005/recipes.php/${data.id}`, data,  
+        )
             .then((res) => {
                 console.log(res.data); // Vérifie la réponse du serveur
                 // Ce dispatch va permettre d'envoyer au reducer le type et le payload avec les nouvelles données

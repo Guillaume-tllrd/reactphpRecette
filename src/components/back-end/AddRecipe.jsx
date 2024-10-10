@@ -37,6 +37,7 @@ const AddRecipe = () => {
         formData.append('picture2', form.current[7].files[0]);
 
             try {
+                
                 await dispatch(addRecipe(formData));
                 setSuccess('Recipe created successfully!');
                 form.current.reset();
