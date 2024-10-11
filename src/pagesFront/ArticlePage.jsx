@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/header/Header';
 import Footer from '../components/Footer';
-import { useParams, Link } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import axios from 'axios';
+import TagsArticleForm from '../components/form/TagsArticleForm';
 
 
 const ArticlePage = () => {
@@ -10,11 +11,6 @@ const ArticlePage = () => {
     const id = params.id;
     const [articleData, setArticleData] = useState([]);
     const [loading, setLoading] = useState(true);
-    // console.log(articleData.description);
-    
-    const rawTags= articleData.tags || '';
-    const tagsArray = rawTags.split('.')
-    .map(tag => tag.trim());
 
     const formatDate = (dateString) =>{
         const date = new Date(dateString);
@@ -56,7 +52,7 @@ const ArticlePage = () => {
                    {loading ? (<h1>Loading...</h1>) : (
                     <>
                      <h1 className='font-scope py-2 text-center text-2xl'>{articleData.title}</h1>
-                     <p className='mx-2 mb-2 md:mx-3 lg:mx-5 xl:mx-7 2xl:mx-9 font-semibold'>Tags : {tagsArray.map((tag, index) => ( <Link key={index} className='hover:underline pr-1 font-light'>{tag}</Link>) )}</p>
+                        <TagsArticleForm articleData={articleData} />
                      <img className='mx-auto' src={imgPath} alt="artcile picture" />
                      <p className='font-light italic text-center'>Published on {formatDate(articleData.date)}</p>
                      <div>

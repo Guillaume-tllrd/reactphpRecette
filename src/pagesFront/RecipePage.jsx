@@ -1,13 +1,13 @@
 import Header from '../components/header/Header';
 import Footer from '../components/Footer';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { UsersRound, HandPlatter, Timer, ChefHat } from 'lucide-react';
 import LikedRecipes from '../components/recipes/LikedRecipes';
 import CommentArea from '../components/comments/commentArea';
 import CountryForm from '../components/form/countryForm';
-import TagsForm from '../components/form/TagsForm';
+import TagsRecipeForm from '../components/form/TagsRecipeForm';
 
 //Page d'une seule recette
 const RecipePage = () => {
@@ -49,7 +49,7 @@ const RecipePage = () => {
                 <h1 className='font-scope py-2 text-center text-2xl'>{recipe.name}</h1>
                 <div className='flex justify-between'>
                     <div>
-                        <TagsForm recipe={recipe}/>
+                        <TagsRecipeForm recipe={recipe}/>
                         <CountryForm recipe={recipe}/>
                     </div>
                     

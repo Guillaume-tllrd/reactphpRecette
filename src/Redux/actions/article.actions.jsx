@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const ADD_ARTICLE = "ADD_ARTICLE";
 export const GET_ARTICLES = "GET_ARTICLES";
+export const GET_TAG_ARTICLES = "GET_TAG_ARTICLES";
 export const GET_ARTICLES_TO_INDEX = "GET_ARTICLES_TO_INDEX";
 
 export const addArticle = (data) => {
@@ -40,6 +41,15 @@ export const getArticlesToIndex = () => {
         axios.get("http://localhost:8005/articles.php?indexLimit=3")
         .then((res) => {
             dispatch({type: GET_ARTICLES_TO_INDEX, payload: res.data})
+        })
+    }
+}
+
+export const getTagArticle = (tag) => {
+    return (dispatch) => {
+        axios.get(`http://localhost:8005/articles.php?tag=${tag}`)
+        .then((res) => {
+            dispatch({type: GET_TAG_ARTICLES, payload: res.data})
         })
     }
 }

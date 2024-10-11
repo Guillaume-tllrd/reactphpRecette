@@ -1,8 +1,9 @@
-import { ADD_ARTICLE, GET_ARTICLES, GET_ARTICLES_TO_INDEX } from "../actions/article.actions";
+import { ADD_ARTICLE, GET_ARTICLES, GET_ARTICLES_TO_INDEX, GET_TAG_ARTICLES } from "../actions/article.actions";
 
 const initialState = {
     articles : [],
-    articlesToIndex: []
+    articlesToIndex: [],
+    tagArticle : []
 };
 
 export default function articleReducer(state = initialState, action) {
@@ -18,6 +19,11 @@ export default function articleReducer(state = initialState, action) {
             return {
                 ...state, // Conserver l'état précédent
                 recipes: [...state.articles, action.payload], // destructure pour ajouter les nouvelles recette au tableau
+            };
+            case GET_TAG_ARTICLES:
+            return {
+                ...state,
+                tagArticle: action.payload
             };
         default:
             return state;

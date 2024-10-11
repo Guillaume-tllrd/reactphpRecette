@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getTagRecipe } from '../../Redux/actions/recipe.actions';
 
-const TagsForm = ({recipe}) => {
+const TagsRecipeForm = ({recipe}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const TagsForm = ({recipe}) => {
 
     function handleTagClick(tag) {
         dispatch(getTagRecipe(tag));
-        navigate(`/searchResult?tag=${tag}`);
+        navigate(`/searchResult?tagRecipe=${tag}`);
     }
     return (
         <div>
@@ -22,4 +22,4 @@ const TagsForm = ({recipe}) => {
     );
 };
 
-export default TagsForm;
+export default TagsRecipeForm;

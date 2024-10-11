@@ -20,13 +20,7 @@ switch ($method){
     case 'POST':
         handlePost();
     break;
-    // case 'PUT':
-    //     handlePut();
-    // break;
-    // case 'DELETE':
-    //     handleDelete();
-    // break;
-    default :
+    default:
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);
         break;
@@ -35,11 +29,15 @@ switch ($method){
 function handleGet(){
     global $pdo;
 
+    $tagArticle = isset($_GET['tag']) ? ($_GET['tag']) : null;
     $id = isset($_GET['id']) ? $_GET['id'] : null;
+
     if($id){
         $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = :id");
         $stmt->execute(['id' => $id]);
-
+    } else if ($tagArticle){
+        $stmt = $pdo->prepare("SELECT * FROM articles WHERE tags LIKE ?");
+        $stmt->execute(['%' . $tagArticle . '%']);
     } else if (isset($_GET['indexLimit']) && is_numeric($_GET['indexLimit'])){
         $limit = intval($_GET['indexLimit']);
         $stmt = $pdo->prepare("SELECT id, title, picture FROM articles ORDER BY RAND() LIMIT :limit");
