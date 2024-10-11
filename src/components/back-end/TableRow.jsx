@@ -1,6 +1,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { deleteRecipe } from "../../Redux/actions/recipe.actions";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const TableRow = ({ recipe, onOpenEditModal }) => {
   const imgPath1 = "../../../../api/" + recipe.picture_1;
@@ -13,7 +14,7 @@ const TableRow = ({ recipe, onOpenEditModal }) => {
 
   return (
       <tr key={recipe.id} className='border-b'> 
-          <td className="px-4 py-5 font-medium border sm:pl-6">{recipe.name}</td>
+          <td className="px-4 py-5 font-medium border sm:pl-6"><Link className="font-bold underline hover:text-gray-500 hover:no-underline" to={`/recipes/${recipe.categories}/${recipe.id}`}>{recipe.name}</Link></td>
           <td className="px-3 py-5 font-medium border">{recipe.ingredients}</td>
           <td className="px-3 py-5 font-medium border">
               <img src={imgPath1} alt={recipe.name} />
