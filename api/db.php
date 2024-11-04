@@ -12,7 +12,7 @@ $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Configure PDO pour lancer des exceptions en cas d'erreurs.
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Définit le mode de récupération par défaut à PDO::FETCH_ASSOC.
-    PDO::ATTR_EMULATE_PREPARES   => false, // Utilise les vraies requêtes préparées pour améliorer la sécurité et la performance.
+    PDO::ATTR_EMULATE_PREPARES => false, // Utilise les vraies requêtes préparées pour améliorer la sécurité et la performance.
 ];
 
 try {

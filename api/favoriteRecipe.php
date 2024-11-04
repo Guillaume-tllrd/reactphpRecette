@@ -1,41 +1,42 @@
 <?php
 require_once 'db.php'; // Assure-toi que ce chemin est correct pour inclure le fichier de connexion à la base de données
 
-header("Access-Control-Allow-Origin: *"); 
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method == 'OPTIONS'){
+if ($method == 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-switch ($method){
+switch ($method) {
     case 'GET':
         handleGet();
-    break;
+        break;
     case 'POST':
         handlePost();
-    break;
+        break;
     case 'DELETE':
         handleDelete();
-    break;
-    default :
+        break;
+    default:
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);
         break;
 }
 
-function handleGet() {
+function handleGet()
+{
     global $pdo;
 
-        // on doit d'abord vérifier l'idendité de user_id via une requête $_GET
+    // on doit d'abord vérifier l'idendité de user_id via une requête $_GET
     $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
-    if ($user_id){
-     //on spécifie exactement les colonnes qu'on récupère
+    if ($user_id) {
+        //on spécifie exactement les colonnes qu'on récupère
         $stmt = $pdo->prepare('SELECT 
                                r.picture_1 AS recipe_picture, 
                                r.name AS recipe_name, 
@@ -47,8 +48,8 @@ function handleGet() {
                            JOIN recipes r ON f.recipe_id = r.id
                            JOIN users u ON f.user_id = u.id
                            WHERE f.user_id = :user_id');
-                           //comme on a une colonne user_name dans la table favoris, et que je veuw que ces données soient toujours à jour et synchronisées avec la table users je dois églmt JOIN avec users sinon pas besoin
-                       //Le WHERE f.user_id = :user_id est là pour filtrer les résultats de la table favoris en fonction de l'utilisateur connecté
+        //comme on a une colonne user_name dans la table favoris, et que je veuw que ces données soient toujours à jour et synchronisées avec la table users je dois églmt JOIN avec users sinon pas besoin
+        //Le WHERE f.user_id = :user_id est là pour filtrer les résultats de la table favoris en fonction de l'utilisateur connecté
         $stmt->execute(['user_id' => $user_id]);
         $favoritesRecipesByUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -59,15 +60,15 @@ function handleGet() {
             // Si aucun favori n'est trouvé pour cet utilisateur
             echo json_encode(['message' => 'No favorite recipes found for this user']);
         }
-    
-    }else {
+    } else {
         $stmt = $pdo->query('SELECT * FROM favoris');
         $favoritesRecipes = $stmt->fetchAll();
         echo json_encode($favoritesRecipes, JSON_PRETTY_PRINT);
     }
 }
 
-function handlePost(){
+function handlePost()
+{
     global $pdo;
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -77,7 +78,7 @@ function handlePost(){
         return;
     }
     try {
-        
+
         $stmt = $pdo->prepare('INSERT INTO favoris (user_id, user_name, recipe_id, recipe_name, recipe_picture, recipe_categorie) VALUES (:user_id, :user_name, :recipe_name, :recipe_id, :recipe_picture, :recipe_categorie)');
 
         // Exécution de la requête avec les données fournies
@@ -105,10 +106,11 @@ function handlePost(){
     }
 }
 
-function handleDelete() {
+function handleDelete()
+{
     global $pdo;
 
-    // On utilise file_get_contents('php://input') pour récupérer les données envoyées par le client dans la requête DELETE
+    // On utilise file_get_contents('php://input') pour récupérer les données envoyées par le client dans la requête DELETE, on met true pour pouvoir récupérer les données sous forme d'un tableau associatif
     $data = json_decode(file_get_contents('php://input'), true);
 
 
@@ -129,7 +131,6 @@ function handleDelete() {
             'user_id' => $data['user_id'],
         ]);
 
-  
         if ($result) {
             http_response_code(200);
             echo json_encode(['message' => 'Favorite recipe successfully removed']);

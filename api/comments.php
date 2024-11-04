@@ -1,45 +1,46 @@
 <?php
-require_once 'db.php'; // Assure-toi que ce chemin est correct pour inclure le fichier de connexion à la base de données
+require_once 'db.php'; // connexion  à la bdd
 
-header("Access-Control-Allow-Origin: *"); 
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method == 'OPTIONS'){
+if ($method == 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-switch ($method){
+switch ($method) {
     case 'GET':
         handleGet();
-    break;
+        break;
     case 'POST':
         handlePost();
-    break;
+        break;
     case 'PUT':
         handlePut();
-    break;
+        break;
     case 'DELETE':
         handleDelete();
-    break;
-    default :
+        break;
+    default:
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);
         break;
 }
 
-function handleGet() {
+function handleGet()
+{
     global $pdo;
 
-    // Vérifie si 'recipe_id' est présent dans les paramètres GET
+    // on vérifie si 'recipe_id' est présent dans les paramètres GET
     $recipe_id = isset($_GET['recipe_id']) ? intval($_GET['recipe_id']) : null;
 
     if ($recipe_id) {
-        // Prépare la requête pour récupérer les commentaires pour une recette spécifique
+        // on prépare la requête pour récupérer les commentaires pour une recette spécifique
         $stmt = $pdo->prepare('SELECT * FROM comments WHERE recipe_id = :recipe_id');
         $stmt->execute(['recipe_id' => $recipe_id]);
         $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -58,10 +59,11 @@ function handleGet() {
     }
 }
 
-function handlePost(){
+function handlePost()
+{
     global $pdo;
     $data = json_decode(file_get_contents('php://input'), true);
-    
+
 
     if (!isset($data['user_id'], $data['username'], $data['recipe_id'], $data['comment'], $data['date'])) {
         http_response_code(400);
@@ -69,7 +71,7 @@ function handlePost(){
         return;
     }
 
-    try{
+    try {
         $stmt = $pdo->prepare('INSERT INTO comments (user_id, username, recipe_id, comment, date) VALUES (:user_id, :username, :recipe_id, :comment, :date)');
 
         // Exécution de la requête avec les données fournies
@@ -80,7 +82,7 @@ function handlePost(){
             ':comment'   => $data['comment'],     // comment est une chaîne
             ':date'      => $data['date'],        // date est une chaîne formatée en datetime
         ]);
-        
+
 
         // Vérification du résultat
         if ($result) {
@@ -91,13 +93,14 @@ function handlePost(){
             $error = $stmt->errorInfo();
             echo json_encode(['message' => 'Creating error', 'error' => $error]);
         }
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
     }
 }
 
-function handleDelete() {
+function handleDelete()
+{
     global $pdo;
 
     // On utilise file_get_contents('php://input') pour récupérer les données envoyées par le client dans la requête DELETE
@@ -118,7 +121,7 @@ function handleDelete() {
             'id' => $data['id'],
         ]);
 
-  
+
         if ($result) {
             http_response_code(200);
             echo json_encode(['message' => 'Favorite recipe successfully removed']);
@@ -132,7 +135,8 @@ function handleDelete() {
     }
 }
 
-function handlePut(){
+function handlePut()
+{
     global $pdo;
 
     $data = json_decode(file_get_contents('php://input'), true);
@@ -162,7 +166,7 @@ function handlePut(){
             $error = $stmt->errorInfo();
             echo json_encode(['message' => 'Updating error', 'error' => $error]);
         }
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         http_response_code(500);
         echo json_encode(['message' => 'Erreur serveur', 'error' => $e->getMessage()]);
     }

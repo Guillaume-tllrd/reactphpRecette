@@ -1,6 +1,6 @@
 <?php
 // Création d'un "point de fin" pour récupérer les informations de l'utilisateur
-require 'db.php';  
+require 'db.php';
 require_once 'lib/php-jwt/src/JWTExceptionWithPayloadInterface.php';
 require_once 'lib/php-jwt/src/BeforeValidException.php';
 require_once 'lib/php-jwt/src/ExpiredException.php';
@@ -13,7 +13,7 @@ require_once 'lib/php-jwt/src/CachedKeySet.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Authorization");
 header("Content-Type: application/json");
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$key = "votre_cle_secrete";  // Clé secrète pour signer le JWT, elle doit être la même que le login
+$key = "M4_CL3_S3Cr3Te";  // Clé secrète pour signer le JWT, elle doit être la même que le login
 
 // Initialisation du token
 $authHeader = '';
@@ -60,7 +60,7 @@ if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
 }
 
 try {
-    // Décoder le JWT
+    // Décoder le JWT en php objet
     $decoded = JWT::decode($token, new Key($key, 'HS256'));
     // Récupérer les informations de l'utilisateur à partir de la base de données
     // pour vérifier son token aller sur https://jwt.io/, pendant un moment j'avais mis manuellement un token dans une var $jwt pour remplacer $token 
@@ -79,12 +79,11 @@ try {
 } catch (\Firebase\JWT\ExpiredException $e) {
     http_response_code(401);
     echo json_encode([
-        'message' => 'Token expiré', 
-        'exp' => isset($decoded->exp) ? $decoded->exp : null, 
+        'message' => 'Token expiré',
+        'exp' => isset($decoded->exp) ? $decoded->exp : null,
         'current_time' => time()
     ]);
-}
- catch (\Firebase\JWT\SignatureInvalidException $e) {
+} catch (\Firebase\JWT\SignatureInvalidException $e) {
     http_response_code(401);
     echo json_encode(['message' => 'Signature du token invalide']);
 } catch (Exception $e) {
