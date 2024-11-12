@@ -9,9 +9,9 @@ const AddRecipe = () => {
     const form = useRef()
     const dispatch = useDispatch()
     const navigate = useNavigate();
+
     const handleFormSubmit = async (e) => {
         e.preventDefault()
-
         // Crée un nouvel objet FormData
         // FormData est une interface JavaScript qui permet de construire facilement un ensemble de paires clé-valeur représentant des données de formulaire. Les données peuvent être texte (comme les champs de saisie) ou des fichiers binaires (comme des images).
         const formData = new FormData();
@@ -37,7 +37,6 @@ const AddRecipe = () => {
         formData.append('picture2', form.current[7].files[0]);
 
             try {
-                
                 await dispatch(addRecipe(formData));
                 setSuccess('Recipe created successfully!');
                 form.current.reset();
@@ -47,8 +46,8 @@ const AddRecipe = () => {
                 setError('An error occurred during registration');
                 setSuccess(null);
             }
-        
     }
+    
     return (
         <div className="md:translate-x-60 transition-transform duration-500 h-max w-full flex justify-center bg-amber-100">
     <div className="bg-white p-10 my-16 rounded-lg shadow-lg md:-translate-x-32">

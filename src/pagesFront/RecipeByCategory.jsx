@@ -6,14 +6,14 @@ import axios from 'axios';
 import Category from '../components/recipes/Category';
 // page d'une catégorie
 const RecipeByCategory = () => {
-    const param = useParams()
-    console.log(param.category)
-    const category = param.category
-    const [recipes, setRecipes] = useState([])
+    const param = useParams();
+    console.log(param.category);
+    const category = param.category;
+    const [recipes, setRecipes] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8005/recipes.php?categories=${category}`).then((res) => setRecipes(res.data))
-    }, [category])
+    }, [category]);
 // rejouer le useEffect à chaque category
     return (
         <div>

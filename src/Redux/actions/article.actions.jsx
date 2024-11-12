@@ -26,8 +26,6 @@ export const getArticles = () => {
     return (dispatch) => {
         axios.get("http://localhost:8005/articles.php")
         .then(res => {
-
-            // Dispatch l'action avec les données transformées
             dispatch({ type: GET_ARTICLES, payload: res.data });
         })
         .catch(error => {
@@ -35,6 +33,8 @@ export const getArticles = () => {
         });
     };
 };
+
+
 
 export const getArticlesToIndex = () => {
     return (dispatch) => {

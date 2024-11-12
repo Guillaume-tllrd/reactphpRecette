@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../components/header/Header';
 import Footer from '../components/Footer';
 import LoginForm from '../components/form/LoginForm';

@@ -5,7 +5,6 @@ export default {
     extend: {
       fontFamily: {
         playfair: ['"Playfair Display"', 'serif'],
-        pinyon: ['"Pinyon Script"', 'cursive'],
         scope: ['"Scope One"', 'cursive'],
       },
     },

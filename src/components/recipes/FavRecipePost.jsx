@@ -13,10 +13,15 @@ const FavRecipePost = ({recipe }) => {
     const handleDeleteRecipe = () => {
         dispatch(deleteFavoritesRecipe(recipe.recipe_id, user.id)) 
             .then(() => {
-                dispatch(fetchFavoritesRecipes(user.id)); // le delete est une fonction asynchrone donc elle prend du temps, avec le then on attend que le delete soit effectué pour lancer le nouveau fetch
+                dispatch(fetchFavoritesRecipes(user.id)); // le delete est une fonction asynchrone donc elle prend du temps, avec le then on attend que le delete soit effectué pour lancer le nouveau fetch. Le then() garantit que le fetch est appelé uniquement après le delete
             });
     };
     
+    // si on souhaite faire une fonction asynchrone de la sorte il faut mettre les 2 dispatch en await pour être sur que delete retourne une promesse et que le fetch ne soit pas appdlé avant. Si on mlet unqiuement le await sur le fetch il faudra 2 clics pour l'état se mette réellement à jour.
+    // async function handleDeleteRecipe() {
+//     await dispatch(deleteFavoritesRecipe(recipe.recipe_id, user.id));
+//     await dispatch(fetchFavoritesRecipes(user.id));
+// }
 
     const img = recipe.recipe_picture;
     const imgPath = "../../../api/" + img;

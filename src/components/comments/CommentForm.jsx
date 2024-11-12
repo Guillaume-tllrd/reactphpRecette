@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addComment, fetchComment } from '../../Redux/actions/comment.actions';
@@ -12,6 +12,7 @@ const CommentForm = ({recipe}) => {
     //     dispatch(fetchComment(recipe.id))
     // },[dispatch, recipe])
     // console.log(recipe.id);
+    
     async function handleFormSubmit(e){
         e.preventDefault();
 
