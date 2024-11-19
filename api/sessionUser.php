@@ -15,7 +15,7 @@ use Firebase\JWT\Key;
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
 // Gérer les requêtes OPTIONS préalables
@@ -35,12 +35,10 @@ if (function_exists('apache_request_headers')) {
     $headers = apache_request_headers();
     if (isset($headers['Authorization'])) {
         $authHeader = $headers['Authorization'];
-    } elseif (isset($headers['X-Authorization'])) {
-        $authHeader = $headers['X-Authorization'];
+    } else {
+        // Pour les environnements où apache_request_headers n'est pas disponible
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
     }
-} else {
-    // Pour les environnements où apache_request_headers n'est pas disponible
-    $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
 }
 
 // Vérifier si le token est bien présent dans les en-têtes
@@ -62,8 +60,6 @@ if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
 try {
     // Décoder le JWT en php objet
     $decoded = JWT::decode($token, new Key($key, 'HS256'));
-    // Récupérer les informations de l'utilisateur à partir de la base de données
-    // pour vérifier son token aller sur https://jwt.io/, pendant un moment j'avais mis manuellement un token dans une var $jwt pour remplacer $token 
     $userId = $decoded->user_id;
     $query = $pdo->prepare("SELECT * FROM users WHERE id = :id");
     $query->bindParam(':id', $userId);

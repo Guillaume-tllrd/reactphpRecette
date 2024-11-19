@@ -66,12 +66,13 @@ function handlePost()
         }
     }
 
-    // S'assurer que les fichiers ont été envoyés
+    // S'assurer que le fichier picture a été envoyé
     if (empty($_FILES['picture'])) {
         http_response_code(400);
         echo json_encode(['message' => 'Missing file']);
         return;
     }
+
     $fileNames = [];
     $fileKeys = ['picture'];
     $allowed = ["jpg", "jpeg", "png", "svg"];

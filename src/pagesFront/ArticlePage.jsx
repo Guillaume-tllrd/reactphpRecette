@@ -26,7 +26,7 @@ const ArticlePage = () => {
         axios.get(`http://localhost:8005/articles.php?id=${id}`).then((res) => setArticleData(res.data[0]));
         setLoading(false);
     },[])
-      
+    //   console.log(articleData)
     // console.log(articleData.description.split('\n').map((paragraph, index) => `<p class="mx-4 my-4 lg:mx-5 xl:mx-7 2xl:mx-9"key=${index}>${paragraph}</p>`).join(''));
     
     const formatDescription = (description) => {

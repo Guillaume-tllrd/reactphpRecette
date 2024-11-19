@@ -1,5 +1,4 @@
 <?php
-// ob_start(); // Démarre la capture de la sortie
 
 require_once 'db.php';  // Inclure la connexion à la base de données
 require_once 'lib/php-jwt/src/JWTExceptionWithPayloadInterface.php';
@@ -35,8 +34,8 @@ if (empty($data->email) || empty($data->password)) {
     exit;
 }
 
-$email = $data->email;
-$password = $data->password;
+$email = strip_tags($data->email);
+$password = strip_tags($data->password);
 
 // Vérifier les informations d'identification de l'utilisateur
 $query = $pdo->prepare("SELECT * FROM users WHERE email = :email");
@@ -45,7 +44,7 @@ $query->execute();
 $user = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['password'])) {
-    // Si les identifiants sont corrects, générer un JWT
+    // Si les identifiants sont corrects, on génère un JWT
     $issuedAt = time();
     $expirationTime = $issuedAt + 3600;  // 1 heure de validité
     $payload = [
@@ -59,14 +58,14 @@ if ($user && password_verify($password, $user['password'])) {
 
     $jwt = JWT::encode($payload, $key, 'HS256');
 
-    // Retourner le JWT au frontend
+    // On retourne le JWT au frontend
     echo json_encode(['token' => $jwt]);
 } else {
     // Identifiants incorrects
     http_response_code(401);
     echo json_encode(['message' => 'Identifiants incorrects']);
 }
-// ob_end_flush(); // Envoyer le buffer de sortie
+
 
 // 
 // Pour gérer la déconnexion dans le contexte des JSON Web Tokens (JWT), il est important de comprendre que les JWT sont stateless. Cela signifie qu'ils ne sont pas stockés côté serveur et que leur invalidation ne se fait pas de manière traditionnelle (comme la destruction d'une session côté serveur). Au lieu de cela, la déconnexion avec JWT se fait généralement de la manière suivante :

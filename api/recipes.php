@@ -1,76 +1,73 @@
 <?php
 require_once 'db.php'; // Assure-toi que ce chemin est correct pour inclure le fichier de connexion à la base de données
 
-header("Access-Control-Allow-Origin: *"); 
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS,  DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method == 'OPTIONS'){
+if ($method == 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-switch ($method){
+switch ($method) {
     case 'GET':
         handleGet();
-    break;
+        break;
     case 'POST':
         handlePost();
-    break;
+        break;
     case 'PUT':
         handlePut();
-    break;
+        break;
     case 'DELETE':
         handleDelete();
-    break;
-    default :
+        break;
+    default:
         http_response_code(405); //métyode non autorisée
         echo json_encode(['message' => 'Method not allowed']);
         break;
 }
 
-function handleGet() {
+function handleGet()
+{
     global $pdo;
 
     // pour  trier les recettes en fonction de leur catégorie. il faudra utiliser useParams pour faire passer la catégorie dans l'url requete axios: axios.get(`http://localhost:8005/recipes.php?categories=${category}) with const param = useParams();
     // const category = param.category ne pas oublier le route
     $category = isset($_GET['categories']) ? $_GET['categories'] : null;
     $id = isset($_GET['id']) ? $_GET['id'] : null;
-    $searchRecipe= isset($_GET['search']) ? ($_GET['search']) : null;
-    $countryRecipe= isset($_GET['country']) ? ($_GET['country']) : null;
+    $searchRecipe = isset($_GET['search']) ? ($_GET['search']) : null;
+    $countryRecipe = isset($_GET['country']) ? ($_GET['country']) : null;
     $tagRecipe = isset($_GET['tag']) ? ($_GET['tag']) : null;
 
-    if ($searchRecipe){
-    $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ?");
-    $stmt->execute(['%' . $searchRecipe . '%']);
-    
-    }else if($tagRecipe){
+    if ($searchRecipe) {
+        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE name LIKE ?");
+        $stmt->execute(['%' . $searchRecipe . '%']);
+    } else if ($tagRecipe) {
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE tags LIKE ?");
         $stmt->execute(['%' . $tagRecipe . '%']);
-    }else if($countryRecipe){
+    } else if ($countryRecipe) {
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE country LIKE ?");
         $stmt->execute(['%' . $countryRecipe . '%']);
-
-    }else if(isset($_GET['background']) && $_GET['background'] == 'true'){
+    } else if (isset($_GET['background']) && $_GET['background'] == 'true') {
         $stmt = $pdo->prepare("SELECT id, name, summary, categories, picture_2 FROM recipes WHERE background = :yes ORDER BY RAND() LIMIT 1");
         $stmt->execute([':yes' => 'yes']);
-
-    }else if(isset($_GET['top']) && $_GET["top"] == 'true'){
+    } else if (isset($_GET['top']) && $_GET["top"] == 'true') {
         $stmt = $pdo->prepare('SELECT id, name, picture_1, categories FROM recipes WHERE top = :yes ORDER BY RAND() LIMIT 3');
         $stmt->execute([':yes' => 'yes']);
-
-    }else if (isset($_GET['indexLimit']) && is_numeric($_GET['indexLimit'])) {
+    } else if (isset($_GET['indexLimit']) && is_numeric($_GET['indexLimit'])) {
         //vérifie que le paramètre indexLimit est bien défini et qu'il s'agit d'un nombre.
         $limit = intval($_GET['indexLimit']); //ermet de convertir la valeur de indexLimit en entier
         $stmt = $pdo->prepare("SELECT picture_1, name, id, categories FROM recipes ORDER BY RAND() LIMIT :limit");
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
-            //il faudra par contre ne pas oublier de mettre le nbre limit dans le axios. ex: axios.get('http://localhost:8005/recipes.php?indexLimit=4')
+        //il faudra par contre ne pas oublier de mettre le nbre limit dans le axios. ex: axios.get('http://localhost:8005/recipes.php?indexLimit=4')
 
-    }else if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
+    } else if (isset($_GET['categoryLimit']) && $_GET['categoryLimit'] == 'true') {
         $stmt = $pdo->query("
             SELECT * FROM (
                 SELECT * FROM recipes WHERE categories = 'breakfast' LIMIT 3
@@ -88,32 +85,31 @@ function handleGet() {
                 SELECT * FROM recipes WHERE categories = 'appetizer' LIMIT 3
             ) AS appetizer
         ");
-  
     } else if ($category) {
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE categories = :categories");
         $stmt->execute([':categories' => htmlspecialchars($category)]);
-
     } else if ($id) {
-        $stmt= $pdo->prepare("SELECT * FROM recipes WHERE id = :id");
+        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE id = :id");
         $stmt->execute(['id' => $id]);
     } else {
         $stmt = $pdo->query("SELECT * FROM recipes");
-    } 
+    }
     $recipes = $stmt->fetchAll();
     echo json_encode($recipes, JSON_PRETTY_PRINT);
 }
 
-function handlePut() {
+function handlePut()
+{
     global $pdo;
-   
+
     $data = json_decode(file_get_contents('php://input'), true);
-    
+
     if (!isset($data['id'], $data['name'], $data['ingredients'], $data['summary'], $data['description'], $data['tags'], $data['country'], $data['categories'], $data['difficulty'], $data['number_of_servings'], $data['prep_time'], $data['cooking_time'], $data['top'], $data['background'])) {
         http_response_code(400);
         echo json_encode(['message' => 'Missing data']);
         return;
     }
- 
+
     try {
         // Prepare the query to update the recipe
         $stmt = $pdo->prepare('UPDATE recipes SET name = :name, ingredients = :ingredients, summary = :summary, description = :description, tags = :tags, country = :country, categories = :categories, difficulty = :difficulty, number_of_servings = :number_of_servings, prep_time = :prep_time, cooking_time = :cooking_time, top = :top, background = :background WHERE id = :id');
@@ -122,19 +118,19 @@ function handlePut() {
         $result = $stmt->execute([
             'id' => $data['id'],
             ':name' => $data['name'],
-             ':ingredients' => $data['ingredients'],
-             ':summary' => $data['summary'],
-             ':description' => $data['description'],
-             ':tags' => $data['tags'],
-             ':country' => $data['country'],
-             ':categories' => $data['categories'],
-             ':difficulty' => $data['difficulty'],
-             ':number_of_servings' => $data['number_of_servings'],
-             ':prep_time' => $data['prep_time'],
-             ':cooking_time' => $data['cooking_time'],
-             ':top' => $data['top'],
-             ':background' => $data['background'],
-         ]);
+            ':ingredients' => $data['ingredients'],
+            ':summary' => $data['summary'],
+            ':description' => $data['description'],
+            ':tags' => $data['tags'],
+            ':country' => $data['country'],
+            ':categories' => $data['categories'],
+            ':difficulty' => $data['difficulty'],
+            ':number_of_servings' => $data['number_of_servings'],
+            ':prep_time' => $data['prep_time'],
+            ':cooking_time' => $data['cooking_time'],
+            ':top' => $data['top'],
+            ':background' => $data['background'],
+        ]);
 
         // Check the result
         if ($result) {
@@ -152,7 +148,8 @@ function handlePut() {
 }
 
 
-function handlePost() {
+function handlePost()
+{
     global $pdo;
 
     // S'assurer que les inputs sont envoyés
@@ -171,11 +168,11 @@ function handlePost() {
         echo json_encode(['message' => 'Missing file']);
         return;
     }
-        $fileNames = [];
-        $fileKeys = ['picture1', 'picture2'];
-        $allowed = ["jpg", "jpeg", "png", "svg"];
+    $fileNames = [];
+    $fileKeys = ['picture1', 'picture2'];
+    $allowed = ["jpg", "jpeg", "png", "svg"];
 
-        foreach ($fileKeys as $key) {
+    foreach ($fileKeys as $key) {
         $file = $_FILES[$key];
         $imageExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
@@ -184,27 +181,27 @@ function handlePost() {
             echo json_encode(['message' => "Unauthorized file type. Only JPG, JPEG, PNG, and SVG files are allowed"]);
             return;
         }
-        
-       
-        $newname=md5(uniqid());
+
+
+        $newname = md5(uniqid());
         $newfilename = "uploads/$newname.$imageExtension";
-            
-        if(!move_uploaded_file($file["tmp_name"], $newfilename)){
+
+        if (!move_uploaded_file($file["tmp_name"], $newfilename)) {
             http_response_code(500);
             echo json_encode(['message' => "Error saving file: $key"]);
             return;
-            }
+        }
         $fileNames[$key] = $newfilename;
     }
     try {
-        
+
         $stmt = $pdo->prepare('INSERT INTO recipes (name, ingredients, summary, description, tags, country, picture_1, picture_2, categories, difficulty, number_of_servings, prep_time, cooking_time, top, background) VALUES (:name, :ingredients, :summary, :description, :tags, :country, :picture_1, :picture_2, :categories, :difficulty, :number_of_servings, :prep_time, :cooking_time, :top, :background)');
-        
+
 
         // Exécution de la requête avec les données fournies
         //htmlspecialchars pour les injonctions sql
         $result = $stmt->execute([
-           ':name' => htmlspecialchars($_POST['name']),
+            ':name' => htmlspecialchars($_POST['name']),
             ':ingredients' => htmlspecialchars($_POST['ingredients']),
             ':summary' => htmlspecialchars($_POST['summary']),
             ':description' => htmlspecialchars($_POST['description']),
@@ -220,7 +217,7 @@ function handlePost() {
             ':top' => htmlspecialchars($_POST['top']),
             ':background' => htmlspecialchars($_POST['background']),
         ]);
-        
+
 
         // Vérification du résultat
         if ($result) {
@@ -238,7 +235,8 @@ function handlePost() {
 }
 
 
-function handleDelete() {
+function handleDelete()
+{
     global $pdo;
 
     $data = json_decode(file_get_contents('php://input'), true);
@@ -258,7 +256,7 @@ function handleDelete() {
         $result = $stmt->execute([
             'id' => $data['id'],
         ]);
-  
+
         if ($result) {
             http_response_code(200);
             echo json_encode(['message' => 'Recipe successfully removed']);

@@ -1,7 +1,7 @@
 <?php
 require_once 'db.php'; // Assure-toi que ce chemin est correct pour inclure le fichier de connexion à la base de données
 
-header("Access-Control-Allow-Origin: *"); 
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -27,7 +27,8 @@ switch ($method) {
         echo json_encode(['message' => 'Méthode non autorisée']);
         break;
 }
-function handleGet() {
+function handleGet()
+{
     global $pdo;
     $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
@@ -48,7 +49,8 @@ function handleGet() {
     }
 }
 
-function handlePost() {
+function handlePost()
+{
     global $pdo;
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -59,16 +61,23 @@ function handlePost() {
         return;
     }
 
+    // Validation de l'email
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode(['message' => 'Invalid email address']);
+        return;
+    }
+
     try {
-        
+
         $stmt = $pdo->prepare('INSERT INTO users (firstname, name, username, email, password) VALUES (:firstname, :name, :username, :email, :password)');
 
         // Exécution de la requête avec les données fournies
         $result = $stmt->execute([
-            $data['firstname'],
-            $data['name'],
-            $data['username'],
-            $data['email'],
+            strip_tags($data['firstname']),
+            strip_tags($data['name']),
+            strip_tags($data['username']),
+            strip_tags($data['email']),
             password_hash($data['password'], PASSWORD_DEFAULT),
         ]);
 
@@ -86,4 +95,3 @@ function handlePost() {
         echo json_encode(['message' => 'Servor error', 'error' => $e->getMessage()]);
     }
 }
-

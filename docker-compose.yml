@@ -1,15 +1,6 @@
 version: '3.8'
 
 services:
-  react:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./src:/app  
-    command: ["sh", "-c", "npm install && npm run dev"]
-    ports:
-      - "3000:5173"
-
   php:
     image: php:8.3-apache
     container_name: projet-react_api

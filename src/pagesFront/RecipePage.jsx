@@ -36,7 +36,7 @@ const RecipePage = () => {
             setRecipe(res.data[0]);
             setLoading(false);
         })
-    },[])
+    },[]);
 
     
     return (
