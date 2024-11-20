@@ -16,9 +16,9 @@ const RecipeByCategory = () => {
     }, [category]);
 // rejouer le useEffect à chaque category
     return (
-        <div>
+        <div >
             <Header/>
-            <section className='bg-amber-100 pt-5'>
+            <section className='bg-amber-100 min-h-[600px] pt-5'>
                 <Category category={category} recipes={recipes}/>
             </section>
             

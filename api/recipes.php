@@ -86,11 +86,11 @@ function handleGet()
             ) AS appetizer
         ");
     } else if ($category) {
-        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE categories = :categories");
+        $stmt = $pdo->prepare("SELECT id, name, picture_1, categories, difficulty FROM recipes WHERE categories = :categories");
         $stmt->execute([':categories' => htmlspecialchars($category)]);
     } else if ($id) {
         $stmt = $pdo->prepare("SELECT * FROM recipes WHERE id = :id");
-        $stmt->execute(['id' => $id]);
+        $stmt->execute(['id' => htmlspecialchars($id)]);
     } else {
         $stmt = $pdo->query("SELECT * FROM recipes");
     }
@@ -116,20 +116,20 @@ function handlePut()
 
         // Execute the query with the provided data
         $result = $stmt->execute([
-            'id' => $data['id'],
-            ':name' => $data['name'],
-            ':ingredients' => $data['ingredients'],
-            ':summary' => $data['summary'],
-            ':description' => $data['description'],
-            ':tags' => $data['tags'],
-            ':country' => $data['country'],
-            ':categories' => $data['categories'],
-            ':difficulty' => $data['difficulty'],
-            ':number_of_servings' => $data['number_of_servings'],
-            ':prep_time' => $data['prep_time'],
-            ':cooking_time' => $data['cooking_time'],
-            ':top' => $data['top'],
-            ':background' => $data['background'],
+            'id' => htmlspecialchars($data['id']),
+            ':name' => htmlspecialchars($data['name']),
+            ':ingredients' => htmlspecialchars($data['ingredients']),
+            ':summary' => htmlspecialchars($data['summary']),
+            ':description' => htmlspecialchars($data['description']),
+            ':tags' => htmlspecialchars($data['tags']),
+            ':country' => htmlspecialchars($data['country']),
+            ':categories' => htmlspecialchars($data['categories']),
+            ':difficulty' => htmlspecialchars($data['difficulty']),
+            ':number_of_servings' => htmlspecialchars($data['number_of_servings']),
+            ':prep_time' => htmlspecialchars($data['prep_time']),
+            ':cooking_time' => htmlspecialchars($data['cooking_time']),
+            ':top' => htmlspecialchars($data['top']),
+            ':background' => htmlspecialchars($data['background']),
         ]);
 
         // Check the result
