@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$key = "M4_CL3_S3Cr3Te";  // Clé secrète pour signer le JWT
+$key = "68V0zWFrS72GbpPreidkQFLfj4v9m3Ti+DXc8OB0gcM=";  // Clé secrète pour signer le JWT
 
 // Récupérer les données JSON envoyées par le frontend
 $data = json_decode(file_get_contents("php://input")); // si on met $data = json_decode(file_get_contents("php://input"), true); on pourrait accéder au valeur de data sous forme d'un tableau assoc sinon c'est obj

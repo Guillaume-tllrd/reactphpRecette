@@ -18,8 +18,13 @@ const RecipePage = () => {
     
     const img = recipe.picture_1;
     const imgPath= "../../api/" + img;
+    
+    const rawIngredients = recipe.ingredients || ''; 
+    console.log('ingredient:', rawIngredients);
 
-    const rawIngredients = recipe.ingredients || ''; //on vérifie si les données sont chargées sinon ça ne fonctione pas
+    console.log('filtered ingredient :', rawIngredients.split('.') .filter(ingredient => ingredient !== ""));
+
+
     const ingredientsArray = rawIngredients.split('.')
     .filter(ingredient => ingredient !== "")// Supprime les éléments vides du tableau (au cas où il y aurait un point final ou des espaces en trop
     .map(ingredient => ingredient.trim() + '.'); // trim enlève les espace superflu au début et à la fin
@@ -28,8 +33,6 @@ const RecipePage = () => {
     const descriptionArray = rawDescription.split(".")
     .filter(sentence => sentence !== "")
     .map(sentence => sentence.trim() + '.');
-
-
 
     useEffect(() => {
         axios.get(`http://localhost:8005/recipes.php?id=${id}`).then((res) => {
@@ -89,7 +92,7 @@ const RecipePage = () => {
                         <div className='bg-amber-50 mx-8 px-4 pt-2 pb-4 lg:mb-4 min-w-72'>
                             <h2 className='font-scope text-lg text-center '>Ingrédients</h2>
                             <ul>
-                            {ingredientsArray.length > 0 ? (
+                                {ingredientsArray.length > 0 ? (
                                         ingredientsArray.map((ingredient, index) => (
                                             <li key={index}>-{ingredient}</li>
                                         ))

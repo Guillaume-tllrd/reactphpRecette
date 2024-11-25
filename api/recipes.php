@@ -74,7 +74,7 @@ function handleGet()
             ) AS breakfast
             UNION ALL
             SELECT * FROM (
-                SELECT * FROM recipes WHERE categories = 'main' LIMIT 3
+                SELECT * FROM recipes WHERE categories = 'main'  LIMIT 3
             ) AS main
             UNION ALL
             SELECT * FROM (

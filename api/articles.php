@@ -105,13 +105,13 @@ function handlePost()
         // Exécution de la requête avec les données fournies
         //htmlspecialchars pour les injonctions sql
         $result = $stmt->execute([
-            ':user_name' => ($_POST['user_name']),
-            ':title' => htmlspecialchars($_POST['title']),
-            ':tags' => htmlspecialchars($_POST['tags']),
-            ':description' => htmlspecialchars($_POST['description']),
-            ':picture' => $fileNames['picture'],
-            ':date' => ($_POST['date']),
-            ':top' => htmlspecialchars($_POST['top']),
+            ':user_name' => (strip_tags($_POST['user_name'])),
+            ':title' => strip_tags($_POST['title']),
+            ':tags' => strip_tags($_POST['tags']),
+            ':description' => strip_tags($_POST['description']),
+            ':picture' => strip_tags($fileNames['picture']),
+            ':date' => (strip_tags($_POST['date'])),
+            ':top' => strip_tags($_POST['top']),
         ]);
 
 

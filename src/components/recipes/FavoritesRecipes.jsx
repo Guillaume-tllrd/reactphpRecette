@@ -18,10 +18,10 @@ const FavoritesRecipes = () => {
         <div className='bg-amber-100 '>
             <h1 className='font-scope text-2xl text-center p-6'>My Favorite Recipes</h1>
 
-            <div className='min-h-[500px] '>
+            <div className='min-h-[500px] pb-10'>
                 {user && user.id ? (
                     favoritesRecipe && favoritesRecipe.length > 0 ? (
-                        <ul className='flex flex-wrap gap-12 max-w-[1200px] mx-auto'>
+                        <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-12 max-w-[1200px] mx-auto px-5">
                             {favoritesRecipe.map((recipe) => (
                                 <FavRecipePost recipe={recipe} key={recipe.recipe_id
                                 } />

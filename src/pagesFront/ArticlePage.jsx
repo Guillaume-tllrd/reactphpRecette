@@ -32,14 +32,9 @@ const ArticlePage = () => {
     const formatDescription = (description) => {
         return description.split('\n').map((paragraph, index) => `<p class="mx-4 my-4 lg:mx-5 xl:mx-7 2xl:mx-9"key=${index}>${paragraph}</p>`).join('');
     };
+
     // \n signifie un saut de ligne \n\n 2 sauts de lignes
         // Après avoir mappé toutes les sections en balises HTML, join('') les combine en une seule chaîne de caractères, sans aucun séparateur entre elles. 
-
-            // d+ correspond à une ou plusieurs chiffres.
-            // \. correspond à un point littéral (le point doit être échappé avec \
-            // \s correspond à un espace.
-            // g ici signifie qu'il faut chercher toutes les occurrences qui correspondent à ce motif dans le texte, et non pas seulement la première.
-            //split est un tableau où chaque section du texte est séparée, et les numéros sont inclus dans le tableau en tant qu'éléments individuels
    
     const img = articleData.picture;
     const imgPath = "../../api/" + img;
@@ -48,7 +43,7 @@ const ArticlePage = () => {
         <div>
             <Header/>
             <div className='bg-amber-100 p-8 md:p-10 '>
-                <div className='bg-white mx-auto'>
+                <article className='bg-white mx-auto'>
                    {loading ? (<h1>Loading...</h1>) : (
                     <>
                      <h1 className='font-scope py-2 text-center text-2xl'>{articleData.title}</h1>
@@ -56,6 +51,7 @@ const ArticlePage = () => {
                      <img className='mx-auto' src={imgPath} alt="artcile picture" />
                      <p className='font-light italic text-center'>Published on {formatDate(articleData.date)}</p>
                      <div>
+                        {/* dangerouslySetInnerHTML permet d'insérer directement du code html dans un composant react */}
                      {articleData.description ? (
                         <div dangerouslySetInnerHTML={{ __html: formatDescription(articleData.description) }} />
                             ) : (
@@ -67,7 +63,7 @@ const ArticlePage = () => {
                     </>
 
                 )}
-                </div>
+                </article>
             </div>
             <Footer/>
         </div>

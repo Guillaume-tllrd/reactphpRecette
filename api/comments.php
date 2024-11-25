@@ -42,7 +42,7 @@ function handleGet()
     if ($recipe_id) {
         // on prépare la requête pour récupérer les commentaires pour une recette spécifique
         $stmt = $pdo->prepare('SELECT * FROM comments WHERE recipe_id = :recipe_id');
-        $stmt->execute(['recipe_id' => $recipe_id]);
+        $stmt->execute(['recipe_id' => strip_tags($recipe_id)]);
         $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Vérifie si des commentaires ont été trouvés
@@ -76,11 +76,11 @@ function handlePost()
 
         // Exécution de la requête avec les données fournies
         $result = $stmt->execute([
-            ':user_id'   => $data['user_id'],     // user_id doit être un entier
-            ':username'  => $data['username'],    // username est une chaîne
-            ':recipe_id' => $data['recipe_id'],   // recipe_id doit être un entier
-            ':comment'   => $data['comment'],     // comment est une chaîne
-            ':date'      => $data['date'],        // date est une chaîne formatée en datetime
+            ':user_id'   => strip_tags($data['user_id']),     // user_id doit être un entier
+            ':username'  => strip_tags($data['username']),    // username est une chaîne
+            ':recipe_id' => strip_tags($data['recipe_id']),   // recipe_id doit être un entier
+            ':comment'   => strip_tags($data['comment']),     // comment est une chaîne
+            ':date'      => strip_tags($data['date']),        // date est une chaîne formatée en datetime
         ]);
 
 
@@ -118,7 +118,7 @@ function handleDelete()
 
         // Exécuter la requête avec les données fournies
         $result = $stmt->execute([
-            'id' => $data['id'],
+            'id' => strip_tags($data['id']),
         ]);
 
 
@@ -148,14 +148,13 @@ function handlePut()
     }
 
     try {
-        // Préparation de la requête pour mettre à jour le commentaire
-        $stmt = $pdo->prepare('UPDATE comments SET comment = :comment, date = :date WHERE id = :id');
+        $stmt = $pdo->prepare('UPDATE comments SET comment = :comment, date =:date WHERE id = :id');
 
         // Exécution de la requête avec les données fournies
         $result = $stmt->execute([
-            ':comment'   => $data['comment'],     // comment est une chaîne
-            ':date'      => $data['date'],        // date est une chaîne formatée en datetime
-            ':id'        => $data['id'],          // id du commentaire
+            ':comment'   => strip_tags($data['comment']),
+            ':date'      => strip_tags($data['date']),
+            ':id'        => strip_tags($data['id']),
         ]);
         // Vérification du résultat
         if ($result) {

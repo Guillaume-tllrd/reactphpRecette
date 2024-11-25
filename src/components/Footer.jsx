@@ -1,5 +1,6 @@
 import React from 'react';
 import { Instagram, Twitter, Facebook } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -37,10 +38,10 @@ const Footer = () => {
         <div>
             <h3 className='font-bold mb-2'>Popular Categories</h3>
             <ul>
-                <li><a href="#" className="hover:underline">Breakfast</a></li>
-                <li><a href="#" className="hover:underline">Desserts</a></li>
-                <li><a href="#" className="hover:underline">Vegan</a></li>
-                <li><a href="#" className="hover:underline">Quick & Easy</a></li>
+                <li><Link to='/recipes/breakfast' className="hover:underline">Breakfast</Link></li>
+                <li><Link to='/recipes/main' className="hover:underline">Main</Link></li>
+                <li><Link to='/recipes/dessert' className="hover:underline">Dessert</Link></li>
+                <li><Link to='/recipes/appetizer' className="hover:underline">Appetizer</Link></li>
             </ul>
         </div>
 

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$key = "M4_CL3_S3Cr3Te";  // Clé secrète pour signer le JWT, elle doit être la même que le login
+$key = "68V0zWFrS72GbpPreidkQFLfj4v9m3Ti+DXc8OB0gcM=";  // Clé secrète pour signer le JWT, elle doit être la même que le login
 
 // Initialisation du token
 $authHeader = '';

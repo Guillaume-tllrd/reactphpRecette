@@ -10,16 +10,7 @@ export const GET_FOUR_RECIPES_TO_INDEX = 'GET_FOUR_RECIPES_TO_INDEX';
 export const GET_BEST_RECIPES_TO_INDEX = 'GET_BEST_RECIPES_TO_INDEX';
 export const GET_SEARCH_RECIPES = 'GET_SEARCH_RECIPES';
 export const GET_COUNTRY_RECIPES = 'GET_COUNTRY_RECIPES';
-export const GET_TAG_RECIPES = 'GGET_TAG_RECIPES';
-
-export const fetchAllRecipes = () => {
-    return (dispatch) => {
-        axios.get("http://localhost:8005/recipes.php")
-        .then((res) => {
-            dispatch({ type: FETCH_RECIPES, payload: res.data }); 
-        })
-    }
-};
+export const GET_TAG_RECIPES = 'GET_TAG_RECIPES';
 
 export const addRecipe = (data) => {
     return (dispatch) => {

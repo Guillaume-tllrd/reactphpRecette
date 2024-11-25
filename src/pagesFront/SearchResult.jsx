@@ -21,10 +21,11 @@ const SearchResult = () => {
      const queryParams = new URLSearchParams(location.search);
     //  console.log(location.search); //on a query=${searchRecipe}
      const searchTerm = queryParams.get('query');
-     const searchCountry = queryParams.get('country') // 'query' est ce que j'ai passé dans navigate(`/SearchResult?query=${searchRecipe}`)//  console.log(searchTerm); // on a ${searchRecipe}
-     const searchTagRecipe = queryParams.get('tagRecipe') // 'query' est ce que j'ai passé dans navigate(`/SearchResult?query=${searchRecipe}`)//  console.log(searchTerm); // on a ${searchRecipe}
+     const searchCountry = queryParams.get('country'); // 'query' est ce que j'ai passé dans navigate(`/SearchResult?query=${searchRecipe}`)//  console.log(searchTerm); // on a ${searchRecipe}
+     const searchTagRecipe = queryParams.get('tagRecipe');
     // sinon  on aurait pu  faire passer le term via le store redux en même temps par le formulaire
      const searchTagArticle = queryParams.get('tagArticle');
+     
     useEffect(() => {
         if(searchTerm){
             dispatch(getSearchRecipes(searchTerm))
