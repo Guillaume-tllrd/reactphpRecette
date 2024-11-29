@@ -23,7 +23,7 @@ const LikedRecipes = ({ recipe }) => {
     
 
     async function handleFormSubmit(e) {
-        // si on ne met pas en asynchrone cela ne va pas attendre de finir et par conséquent les recette ne s'afficheront pas directement dans les fav
+        // si on ne met pas en asynchrone cela ne va pas attendre de finir et par conséquent les recettes ne s'afficheront pas directement dans les fav
         e.preventDefault();
 
         const favoritesRecipesData = {

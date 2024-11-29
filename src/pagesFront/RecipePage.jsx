@@ -64,7 +64,7 @@ const RecipePage = () => {
                     <img className="mx-auto xl:mx-9 xl:mb-5 2xl:ml-32" src={imgPath} alt="picture recipe" /> 
                     <div className="flex bg-white p-4 xl:grid xl:grid-cols-2 xl:grid-rows-2 xl:w-full xl:h-full xl:p-0 xl:pr-9 2xl:px-16">
                         <div className="flex-1 text-center p-2 border-r xl:border-b border-gray-300 xl:border-r">
-                            <UsersRound className="inline-block w-6 h-6 text-amber-700 mb-1" />
+                            <UsersRound className="inline-block w-6 h-6 text-amber-700 mb-1"/>
                             <div className="font-semibold text-sm text-gray-700">Servings</div>
                             <div className="text-lg text-amber-700">{recipe.number_of_servings}</div>
                         </div>

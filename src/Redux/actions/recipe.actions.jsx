@@ -12,6 +12,14 @@ export const GET_SEARCH_RECIPES = 'GET_SEARCH_RECIPES';
 export const GET_COUNTRY_RECIPES = 'GET_COUNTRY_RECIPES';
 export const GET_TAG_RECIPES = 'GET_TAG_RECIPES';
 
+export const fetchAllRecipes = () =>{
+    return (dispatch) => {
+        return axios.get('http://localhost:8005/recipes.php')
+        .then((res) => {
+            dispatch({ type: FETCH_RECIPES, payload: res.data }); 
+    })
+    }
+}
 export const addRecipe = (data) => {
     return (dispatch) => {
         return axios.post("http://localhost:8005/recipes.php", data, {

@@ -76,11 +76,11 @@ function handlePost()
 
         // Exécution de la requête avec les données fournies
         $result = $stmt->execute([
-            ':user_id'   => strip_tags($data['user_id']),     // user_id doit être un entier
-            ':username'  => strip_tags($data['username']),    // username est une chaîne
-            ':recipe_id' => strip_tags($data['recipe_id']),   // recipe_id doit être un entier
-            ':comment'   => strip_tags($data['comment']),     // comment est une chaîne
-            ':date'      => strip_tags($data['date']),        // date est une chaîne formatée en datetime
+            ':user_id'   => strip_tags($data['user_id']),
+            ':username'  => strip_tags($data['username']),
+            ':recipe_id' => strip_tags($data['recipe_id']),
+            ':comment'   => strip_tags($data['comment']),
+            ':date'      => strip_tags($data['date']),
         ]);
 
 

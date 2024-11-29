@@ -8,10 +8,6 @@ const CommentForm = ({recipe}) => {
     const [comment, setComment] = useState("");
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(fetchComment(recipe.id))
-    // },[dispatch, recipe])
-    // console.log(recipe.id);
     
     async function handleFormSubmit(e){
         e.preventDefault();
@@ -27,13 +23,10 @@ const CommentForm = ({recipe}) => {
             await dispatch(addComment(data));
             await dispatch(fetchComment(recipe.id));
             setComment("");
-            // window.location.reload();
             
         } catch(error){
             console.error("Failed to post the comment", error);
         }
-        
-
         
     }
 
